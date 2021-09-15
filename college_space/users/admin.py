@@ -1,4 +1,4 @@
-from .models import User
+from .models import User, Contributor
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import forms 
@@ -26,4 +26,5 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Contributor)
 admin.site.unregister(Group)

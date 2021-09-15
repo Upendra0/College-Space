@@ -63,3 +63,14 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+    def __str__(self) -> str:
+        return self.email
+
+
+class Contributor(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    college_id = models.ImageField(upload_to='college_ids')
+
+    def __str__(self) -> str:
+        return super().__str__()
