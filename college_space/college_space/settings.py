@@ -128,3 +128,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL='home'
+
+LOGIN_URL = 'login'
+
+EMAIL_BACKEND= "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH= str(BASE_DIR.joinpath('sent_emails'))
