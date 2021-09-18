@@ -4,6 +4,8 @@ from . import forms
 # Create your views here.
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect(to='home')
     if request.method=='POST':
         form = forms.UserCreationForm(request.POST)
         if form.is_valid():
