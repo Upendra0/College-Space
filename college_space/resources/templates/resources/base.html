@@ -35,6 +35,10 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'password_change' %}"> Update Password </a>
               </li>
 
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}"> Log Out </a>
+              </li>
+
               {% else %} 
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'register' %}"> Sign Up </a>

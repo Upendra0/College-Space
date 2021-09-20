@@ -11,12 +11,8 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect(to='home')
+        else:
+            return render(request=request, template_name='users/register.html', context={'form':form})
     form = forms.UserCreationForm()
     return render(request=request, template_name='users/register.html', context={'form':form})
 
-
-def login(request):
-    pass
-
-def logout(request):
-    pass

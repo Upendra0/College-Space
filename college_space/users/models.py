@@ -35,10 +35,12 @@ class User(AbstractBaseUser):
         verbose_name="email address",
         max_length=255,
         unique=True,
+        blank=False,
+        null=False,
     )
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    semester = models.SmallIntegerField()
+    first_name = models.CharField(max_length=255, blank=False, null=False)
+    last_name = models.CharField(max_length=255, blank=False, null=False)
+    semester = models.SmallIntegerField(blank=False, null=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
