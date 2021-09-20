@@ -12,56 +12,120 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+      rel="stylesheet"
+    />
 
     {% block title %} 
     {% endblock title %}
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+    <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'home' %}"> College Space </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              {% if user.is_authenticated %}
+          <a class="navbar-brand" href="{% url 'home' %}">
+          <img
+            src="https://github.com/atulya-karn/image/blob/main/A5.png?raw=true"
+            height="44"
+            alt="LOGO"
+            style="margin-top: -1px;
+                   border-radius: 25px;"
+          /> 
+           </a>
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin:index' %}">Admin Site </a>
-              </li>
 
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'password_change' %}"> Update Password </a>
-              </li>
+          {% if user.is_authenticated %}
+              <!-- Avatar -->
+                <a
+                  class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
+                    class="rounded-circle"
+                    height="45"
+                    alt="proLOg"
+                    loading="lazy"
+                    style="margin-right: 30px;"
+                  />
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <li>
+                    <a class="dropdown-item" href="#">My profile</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </li>
+                </ul>
+              
 
-              {% else %} 
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'register' %}"> Sign Up </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'login' %}"> Log In  </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'password_reset' %}"> Reset Password  </a>
-              </li>
-              {% endif %}
-            </ul>
+          {% else %} 
+              <div class="d-flex">
+                <a
+                  class="btn btn-link px-3 me-2"
+                  href="{% url 'login' %}"
+                  role="button"
+                  >Login</a>
+                
+                <a
+                  class="btn btn-primary me-3"
+                  href="{% url 'register' %}"
+                  role="button"
+                  >Sign up for free</a>
+                <a
+                  class="btn btn-dark px-3"
+                  href="https://github.com/mdbootstrap/mdb-ui-kit"
+                  role="button"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            {% endif %}
+            
           </div>
         </div>
       </nav>
 
     {% block content %} {% endblock content %}
 
-    <div class="container-fluid border-primary mt-2" style="background-color: azure;">
-        Collge Space @mcet limited
-    </div>
+    <footer class="bg-light text-center text-lg-start fixed-bottom">
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://www.mcetbhb.net">mcetbhb.net</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
       crossorigin="anonymous"
+    ></script>
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
     ></script>
   </body>
 </html>
