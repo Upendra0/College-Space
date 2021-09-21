@@ -4,4 +4,4 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
-    return render(request, 'resources/home.html')
+    return render(request=request, template_name='resources/home.html')
