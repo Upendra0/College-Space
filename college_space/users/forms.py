@@ -31,4 +31,4 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
     class Meta:
         model = models.User
-        fields = ['email', 'first_name', 'last_name', 'semester']
+        fields = ['email', 'first_name', 'last_name', 'department', 'semester']
