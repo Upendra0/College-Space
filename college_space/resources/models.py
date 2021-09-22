@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import  MinValueValidator, MaxValueValidator
+from django.core.validators import  MaxLengthValidator, MinLengthValidator, MinValueValidator, MaxValueValidator
 from django.contrib import admin
 
 department_type_choices = (
@@ -12,6 +12,7 @@ department_type_choices = (
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
+    sub_code= models.SmallIntegerField(validators=[MinLengthValidator(1), MaxLengthValidator(10)])
     department = models.CharField( max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
     credit = models.SmallIntegerField()
