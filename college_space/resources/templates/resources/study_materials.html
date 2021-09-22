@@ -3,7 +3,9 @@
 {% block title %}
 <title> College Space | Study Materials </title>
 {% endblock title %} 
+{% block content %}
 
+<h1>Subject:</h1>
 {% for subject in subjects %}
 <h1> {{ subject.name }} </h1>
 <p> {{ subject.credit }} </p>
