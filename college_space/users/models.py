@@ -3,13 +3,14 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # Create your models here.
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password, first_name, last_name, semester):
+    def create_user(self, email, password, first_name, last_name, department,semester):
         if not email:
             raise ValueError("Users must have an email address")
         user = self.model(
             email = self.normalize_email(email),
             first_name = first_name,
             last_name = last_name,
+            department = department,
             semester = semester,
         )
 
@@ -17,12 +18,13 @@ class MyUserManager(BaseUserManager):
         user.save()
         return user 
 
-    def create_superuser(self, email, password, first_name, last_name, semester):
+    def create_superuser(self, email, password, first_name, last_name, department,semester):
         user = self.create_user(
             email=email, 
             password=password,
             first_name=first_name, 
             last_name=last_name,
+            department=department,
             semester = semester,
         )
         user.is_admin = True
@@ -31,6 +33,12 @@ class MyUserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    department_type_choices = (
+    ('cse', 'Computer Science & engineering'),
+    ('ce', 'Civil engineering'),
+    ('ee', 'Electrical engineering'),
+    ('ece', 'Electronics and communication engineering'),
+    )
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
@@ -40,6 +48,7 @@ class User(AbstractBaseUser):
     )
     first_name = models.CharField(max_length=255, blank=False, null=False)
     last_name = models.CharField(max_length=255, blank=False, null=False)
+    department = models.CharField( max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(blank=False, null=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -47,7 +56,7 @@ class User(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'semester']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'department', 'semester']
 
     def __str__(self) -> str:
         return self.email

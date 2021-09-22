@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import fields
 from . import models 
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -9,7 +10,7 @@ class UserCreationForm(forms.ModelForm):
   
     class Meta:
         model = models.User
-        fields = ['email', 'first_name', 'last_name', 'semester']
+        fields = ['email', 'first_name', 'last_name', 'department', 'semester']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -17,6 +18,7 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user 
+
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -27,7 +29,6 @@ class UserCreationForm(forms.ModelForm):
 
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
-
     class Meta:
         model = models.User
         fields = ['email', 'first_name', 'last_name', 'semester']

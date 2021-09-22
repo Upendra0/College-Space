@@ -9,7 +9,7 @@ class UserAdmin(BaseUserAdmin):
     form = forms.UserChangeForm
     add_form = forms.UserCreationForm
 
-    list_display = ['email', 'first_name', 'last_name', 'semester']
+    list_display = ['email', 'first_name', 'last_name', 'department', 'semester']
     list_filter = ['email', 'semester', 'first_name', 'is_admin']
 
     fieldsets = [
@@ -25,6 +25,9 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
+class ContributorAdmin(admin.ModelAdmin):
+    list_display = ['user', 'college_id']
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Contributor)
+admin.site.register(Contributor, ContributorAdmin)
 admin.site.unregister(Group)
