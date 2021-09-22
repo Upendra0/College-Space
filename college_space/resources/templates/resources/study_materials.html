@@ -4,12 +4,6 @@
 <title> College Space | Study Materials </title>
 {% endblock title %} 
 
-{% block content %} 
-<h1> All study Materials are here  </h1>
-<h2> Department is {{ user.department }} and Semester is {{ user.semester }} </h2>
-<h3> Syllabus link is {{ syllabus_link }}</h3>
-<h2> This is all you have to read in this semester </h2>
-
 {% for subject in subjects %}
 <h1> {{ subject.name }} </h1>
 <p> {{ subject.credit }} </p>

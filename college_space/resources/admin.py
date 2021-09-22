@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Subject, Resource, Syllabus
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display= ['name', 'department', 'semester', 'credit']
+    list_display= ['name', 'sub_code', 'department', 'semester', 'credit']
     list_filter= ['department', 'semester', 'credit']
 
 class ResourceAdmin(admin.ModelAdmin):
