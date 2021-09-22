@@ -4,10 +4,34 @@
 <title> College Space | Study Materials </title>
 {% endblock title %} 
 {% block content %}
+    <div class = "container">
+        <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
+        Syllabus:
+        </div>
+        <h1>Subject:</h1>
+        <table class="table shadow-lg table-striped table-bordered table-hover table-responsive">
+        <thead>
+            <tr class="table-info">
+            <th scope="col">Subject Code</th>
+            <th scope="col">Subject Name</th>
+            <th scope="col">Credit</th>
+            <th scope="col">Link For Study</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjects %}
+            <tr>
+            <td scope="row">{{ subject.department }}</td>
+            <td>{{ subject.name }}</td>
+            <td>{{ subject.credit }}</td>
+            <td>@mdo</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        </table>
+    </div>
+<a></a>
 
-<h1>Subject:</h1>
-{% for subject in subjects %}
-<h1> {{ subject.name }} </h1>
-<p> {{ subject.credit }} </p>
-{% endfor %}
+
 {% endblock content %} 

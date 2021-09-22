@@ -6,7 +6,24 @@
 
 {% block content %}
 <div class="container">
-    <h1> Welcome {{ user.first_name }} {{ user.last_name }} </h1>
-    <h2>Semester: {{ user.semester }} Semester</h2>
+  <div class="row">
+    <div class="col">
+      <div class="card mt-3">
+        
+        <div class="card-body text-center">
+          <img class="avatar rounded-circle mb-5" src="https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" height="250" width="250" alt="Profile Pic">
+          <h4 class="card-title text-uppercase">{{ user.first_name }} {{ user.last_name }}</h4>
+          <h6 class="card-subtitle mb-2 text-muted"><b>Semester</b> : {{ user.semester }} Semester</h6>
+          <h6 class="card-subtitle mb-2"><b>Department</b> :<span class="text-uppercase"> {{ user.department }}</span></h6>
+
+          <p class="card-text">College : <span class="text-dark">Murshidabad College of Engineering and Technology</span></p>
+          
+          <a href="#" class="btn btn-info">Request for Contribution</a>
+          <a href="#" class="btn btn-outline-info">Message to admin</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock content %}
