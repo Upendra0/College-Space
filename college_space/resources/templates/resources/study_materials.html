@@ -6,7 +6,7 @@
 {% block content %}
     <div class = "container">
         <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-        Syllabus:
+        Syllabus: {{ syllabus_link }}
         </div>
         <h1>Subject:</h1>
         <table class="table shadow-lg table-striped table-bordered table-hover table-responsive">
@@ -21,7 +21,7 @@
         <tbody>
             {% for subject in subjects %}
             <tr>
-            <td scope="row">{{ subject.department }}</td>
+            <td scope="row">{{ subject.sub_code  }}</td>
             <td>{{ subject.name }}</td>
             <td>{{ subject.credit }}</td>
             <td>@mdo</td>
