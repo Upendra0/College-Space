@@ -6,26 +6,28 @@
 
 {% block content %}
     <div class = "container">
+        {% if syllabus_link %}
         <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
         <a href="{{ syllabus_link }}" target="_blank" class="btn btn-primary" role="button"> View Syllabus </a>
         </div>
+        {% endif %}
 
         <!-- Subject lists -->
         <div class="container-fluid">
-            <h3> This is all you have to read in this semester. </h3>
+            <h6> This is all you have to read in this semester. </h6>
             <div class="row">
             {% for subject in subjects %} 
-            <div class="col-12 col-md-6 border border-2">
+            <div class="col-12 col-md-6 border border-2 rounded" style="border-color: black;">
                 <div class="row">
-                    <h3> {{ subject.name }} </h3>
+                    <h6 class="text-center"> {{ subject.name }} </h6>
                     <p> Credit {{ subject.credit }} </p>
                 </div>
-                <div class="row border borde-2">
-                    <div class="col">
-                        <a href="#"> Study Resources </a>
+                <div class="row">
+                    <div class="col p-1">
+                        <a href="#" class="btn btn-primary" role="button">  Study Resources </a>
                     </div>
-                    <div class="col">
-                        <a href="#"> Notes </a>
+                    <div class="col p-1">
+                        <a href="#" class="btn btn-primary" role="button">  Notes </a>
                     </div>
                 </div>
             </div>

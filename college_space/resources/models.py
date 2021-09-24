@@ -82,7 +82,7 @@ class Syllabus(models.Model):
         syllabus = cls.objects.filter(
             department=department, semester=semester).first()
         if syllabus is None:
-            download_link = "Link will be uploaded soon"
+            download_link = None
         else:
             download_link = syllabus.download_link
         return download_link
