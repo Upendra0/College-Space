@@ -13,17 +13,9 @@ department_type_choices = (
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-<<<<<<< HEAD
     sub_code= models.CharField(max_length=12)
     department = models.CharField( max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
-=======
-    sub_code = models.CharField(max_length=10)
-    department = models.CharField(
-        max_length=255, choices=department_type_choices)
-    semester = models.SmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(8)])
->>>>>>> 20fc226659ea60493857c3417cabcfcb8262cf75
     credit = models.FloatField()
 
     def __str__(self) -> str:
