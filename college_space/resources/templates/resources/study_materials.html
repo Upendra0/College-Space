@@ -3,12 +3,18 @@
 {% block title %}
 <title> College Space | Study Materials </title>
 {% endblock title %} 
+
 {% block content %}
     <div class = "container">
+        {% if syllabus_link %}
         <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-        Syllabus:
+        <a href="{{ syllabus_link }}" target="_blank" class="btn btn-primary" role="button"> View Syllabus </a>
         </div>
-        <h1>Subject:</h1>
+        {% endif %}
+
+        <!-- Subject lists -->
+        <h6> This is all you have to read in this semester. </h6>
+        
         <table class="table shadow-lg table-striped table-bordered table-hover table-responsive">
         <thead>
             <tr class="table-info">
@@ -21,10 +27,10 @@
         <tbody>
             {% for subject in subjects %}
             <tr>
-            <td scope="row">{{ subject.department }}</td>
+            <td scope="row">{{ subject.sub_code  }}</td>
             <td>{{ subject.name }}</td>
             <td>{{ subject.credit }}</td>
-            <td>@mdo</td>
+            <td><a href="#" class="btn btn-primary" role="button">  Study Resources </a></td>
             </tr>
             {% endfor %}
             
