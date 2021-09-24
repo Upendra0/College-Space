@@ -12,7 +12,7 @@ department_type_choices = (
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-    sub_code= models.CharField(max_length=10)
+    sub_code= models.CharField(max_length=12)
     department = models.CharField( max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
     credit = models.FloatField()
