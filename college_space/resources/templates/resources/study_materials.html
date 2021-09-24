@@ -3,41 +3,32 @@
 {% block title %}
 <title> College Space | Study Materials </title>
 {% endblock title %} 
-
 {% block content %}
     <div class = "container">
-        {% if syllabus_link %}
-        <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-        <a href="{{ syllabus_link }}" target="_blank" class="btn btn-primary" role="button"> View Syllabus </a>
+        <div class="shadow-lg p-3 m-5 bg-white rounded">
+        Document that outlines all the essential information about your semester course (Syllabus) : <a href="{{ syllabus_link }}" >Click here</a>
         </div>
-        {% endif %}
 
-        <!-- Subject lists -->
-        <h6> This is all you have to read in this semester. </h6>
-        
-        <table class="table shadow-lg table-striped table-bordered table-hover table-responsive">
-        <thead>
-            <tr class="table-info">
-            <th scope="col">Subject Code</th>
-            <th scope="col">Subject Name</th>
-            <th scope="col">Credit</th>
-            <th scope="col">Link For Study</th>
-            </tr>
-        </thead>
-        <tbody>
+        <h3 class="text-center"><i>This is all you have to know this semester</i></h3>
+        <div class="row">
             {% for subject in subjects %}
-            <tr>
-            <td scope="row">{{ subject.sub_code  }}</td>
-            <td>{{ subject.name }}</td>
-            <td>{{ subject.credit }}</td>
-            <td><a href="#" class="btn btn-primary" role="button">  Study Resources </a></td>
-            </tr>
+                <div class=" col-md-5 card border mx-auto my-3 shadow-lg" >
+                    <div class="card-header text-center p-3">
+                    <h3> {{ subject.name }} </h3>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-subtitle text-muted">Subject Code : {{ subject.sub_code  }}</p>
+                            <p class="text-muted">Credit Point : {{ subject.credit }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="btn btn-info">video tutorial</a>
+                            <a href="#" class="btn btn-success">Notes</a>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-            
-        </tbody>
-        </table>
+        </div>
     </div>
-<a></a>
-
-
 {% endblock content %} 
