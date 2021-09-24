@@ -3,12 +3,36 @@
 {% block title %}
 <title> College Space | Study Materials </title>
 {% endblock title %} 
+
 {% block content %}
     <div class = "container">
         <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-        Syllabus: {{ syllabus_link }}
+        <a href="{{ syllabus_link }}" target="_blank" class="btn btn-primary" role="button"> View Syllabus </a>
         </div>
-        <h1>Subject:</h1>
+
+        <!-- Subject lists -->
+        <div class="container-fluid">
+            <h3> This is all you have to read in this semester. </h3>
+            <div class="row">
+            {% for subject in subjects %} 
+            <div class="col-12 col-md-6 border border-2">
+                <div class="row">
+                    <h3> {{ subject.name }} </h3>
+                    <p> Credit {{ subject.credit }} </p>
+                </div>
+                <div class="row border borde-2">
+                    <div class="col">
+                        <a href="#"> Study Resources </a>
+                    </div>
+                    <div class="col">
+                        <a href="#"> Notes </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        
         <table class="table shadow-lg table-striped table-bordered table-hover table-responsive">
         <thead>
             <tr class="table-info">
