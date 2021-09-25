@@ -5,8 +5,18 @@
 {% endblock title %}
 
 {% block content %} 
-<h4> Show all Notes list here {{ subject }} </h4>
-<div class="container">
+
+<div class="container p-2 mt-3">
+    <button  onclick="location.href='{% url 'subjects' %}'" type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark">🔙 Back</button>
+    <div class="container mt-4">
+        <h4 class="text-center"> Show all Notes list here {{ subject.name }} </h4>
+    </div>
+</div>
+
+
+{% comment %} <div class="container">
+
+
     {% for user,notes in notes.items %} 
     <h3> Contributed by {{ user }} </h3>
     <p> Notes information here </p>
@@ -15,5 +25,5 @@
     <a href=" {{ note.url }}">Download Link </a>
     {% endfor %}
     {% endfor %} 
-</div>
+</div> {% endcomment %}
 {% endblock content %} 
