@@ -29,12 +29,15 @@
                             <p class="text-muted">Credit Point : {{ subject.credit }}</p>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <form action="{% url 'study_materials' %}">
-                                <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-primary"> Study Materials </button>
+                            <form action="{% url 'videos' %}">
+                                <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-primary"> Video Tutorials </button>
                             </form>
                             <form action="{% url 'notes' %}">
                                 <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-info"> Notes </button>
-                            </form>                          
+                            </form>   
+                            <form action="{% url 'reading_tutorials' %}">
+                                <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-info"> Reading Tutorials </button>
+                            </form>                           
                         </div>
                     </div>
                 </div>

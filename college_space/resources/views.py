@@ -16,13 +16,24 @@ def subjects(request):
     return render(request=request, template_name='resources/subjects.html', context=context)
 
 @login_required
-def study_materials(request):
+def reading_tutorials(request):
     sub_code = request.GET.get('subject_code')
     if sub_code is None:
         return redirect(to='subjects')
-    resources = Resource.get_resources_list(sub_code)
-    context = {'sub_code': sub_code, 'resources':resources}
-    return render(request=request, template_name='resources/study_materials.html', context=context)
+    books = Resource.get_books_list(sub_code)
+    web_tutorials = Resource.get_web_list(sub_code)
+    context = {'sub_code': sub_code, 'books':books, 'web_tutorials':web_tutorials}
+    return render(request=request, template_name='resources/reading_tutorials.html', context=context)
+
+@login_required
+def video_tutorials(request):
+    sub_code = request.GET.get('subject_code')
+    if sub_code is None:
+        return redirect(to='subjects')
+    videos = Resource.get_vidoes_list(sub_code)
+    context = {'sub_code': sub_code, 'videos': videos}
+    return render(request=request, template_name='resources/videos.html', context=context)
+
 
 @login_required
 def notes(request):

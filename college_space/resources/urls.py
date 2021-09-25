@@ -16,6 +16,7 @@ from . import views
 urlpatterns = [
     path('', view=views.home, name='home'),
     path('subjects', view=views.subjects, name='subjects'),
-    path('study_materials', view=views.study_materials, name='study_materials'),
+    path('videos', view=views.video_tutorials, name='videos'),
     path('notes', view=views.notes, name='notes'),
+    path('reading_tutorials', view=views.reading_tutorials, name='reading_tutorials'),
 ]

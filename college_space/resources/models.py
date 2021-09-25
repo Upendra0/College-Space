@@ -25,11 +25,14 @@ class Subject(models.Model):
 
     @classmethod
     def get_subjects_list(cls, department=department, semester=semester):
-        subject_lists = Subject.objects.filter(department=department, semester=semester)
+        subject_lists = Subject.objects.filter(
+            department=department, semester=semester)
         subjects = []
         for subject in subject_lists:
-            subjects.append({'sub_code': subject.sub_code,'name': subject.name, 'credit': subject.credit})
+            subjects.append({'sub_code': subject.sub_code,
+                            'name': subject.name, 'credit': subject.credit})
         return subjects
+
 
 class Resource(models.Model):
     resource_type_choices = (
@@ -60,19 +63,34 @@ class Resource(models.Model):
         return self.subject.department
 
     @classmethod
-    def get_resources_list(cls, sub_code):
-        resources_list = cls.objects.filter(subject__sub_code=sub_code)
-        resources = {'book':[], 'web':[], 'video':[]}
-        for resource in resources_list:
-            tmp_dict={
-            'name': resource.name, 'author': resource.author, 
-            'link': resource.link,'description': resource.description, 
-            'rating': resource.rating,
-             }
-            resources[resource.resource_type].append(tmp_dict)
-        return resources
+    def get_vidoes_list(cls, sub_code):
+        videos_list = cls.objects.filter(
+            resource_type='video', subject__sub_code=sub_code)
+        videos = []
+        for video in videos_list:
+            videos.append({'name': video.name, 'author': video.author,
+                          'link': video.link, 'rating': video.rating})
+        return videos
 
+    @classmethod
+    def get_books_list(cls, sub_code):
+        books_list = cls.objects.filter(
+            resource_type='book', subject__sub_code=sub_code)
+        books = []
+        for book in books_list:
+            books.append({'name': book.name, 'author': book.author,
+                          'link': book.link, 'rating': book.rating})
+        return books
 
+    @classmethod
+    def get_web_list(cls, sub_code):
+        web_list = cls.objects.filter(
+            resource_type='web', subject__sub_code=sub_code
+        )
+        web_tutorials = []
+        for web_tutorial in web_tutorials:
+            web_tutorials.append({'name':web_tutorial.name, 'author': web_tutorial.author,
+            'link': web_tutorial.link, 'rating': web_tutorial.rating})
 
 
 class Syllabus(models.Model):
@@ -100,15 +118,19 @@ class Syllabus(models.Model):
 
 
 def notes_directory_path(instance, filename):
-    user = instance.uploaded_by.user.first_name +'_' + instance.uploaded_by.user.email
-    new_file_name= instance.subject.name + '( ' + instance.topic + ' )' + '.pdf'
-    return 'Notes/'+ user + '/' + new_file_name
+    user = instance.uploaded_by.user.first_name + \
+        '_' + instance.uploaded_by.user.email
+    new_file_name = instance.subject.name + \
+        '( ' + instance.topic + ' )' + '.pdf'
+    return 'Notes/' + user + '/' + new_file_name
+
 
 class Note(models.Model):
-    subject= models.ForeignKey(to=Subject, on_delete=models.CASCADE)
-    topic= models.CharField(max_length=50)
-    file= models.FileField(upload_to=notes_directory_path, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
-    uploaded_by= models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
+    topic = models.CharField(max_length=50)
+    file = models.FileField(upload_to=notes_directory_path, validators=[
+                            FileExtensionValidator(allowed_extensions=['pdf'])])
+    uploaded_by = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.subject.name + '( ' + self.topic + ' )'
@@ -125,5 +147,3 @@ class Note(models.Model):
             else:
                 notes[user] = [temp_dict]
         return notes
-
-

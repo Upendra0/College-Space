@@ -1,0 +1,26 @@
+{% extends "resources/base.html" %}  
+
+{% block title %} 
+{% endblock title %} 
+
+{% block content %} 
+<h2> Create Books template below </h2>
+<div class="container">
+    {% for book in books %}
+    <h2> Name {{ book.name }} </h2> 
+    <h6> Author {{ book.author }} </h6>
+    <a href="{{ book.link }} "> Book Link </a>
+    <h6> Rating {{ book.rating }}</h6>
+    {% endfor %} 
+</div>
+
+<h2> Create web tutorials template below </h2>
+<div class="container">
+    {% for web_tutorial in web_tutorials %}
+    <h2> Name {{ web_tutorial.name }} </h2> 
+    <h6> Author {{ web_tutorial.author }} </h6>
+    <a href="{{ web_tutorial.link }} "> web_tutorial Link </a>
+    <h6> Rating {{ web_tutorial.rating }}</h6>
+    {% endfor %} 
+</div>
+{% endblock content %} 
