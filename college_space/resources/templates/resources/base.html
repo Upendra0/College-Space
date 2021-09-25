@@ -29,12 +29,17 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
       rel="stylesheet"
     />
+    {% comment %} google font {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap" rel="stylesheet">
 
     <!-- Custom style css -->
     <link
      rel="stylesheet" 
      href="{% static 'resources/style.css' %}"
     />
+    <link rel="icon" href="https://github.com/atulya-karn/image/blob/main/CollegeIcon.png?raw=true" type="image/x-icon">
 
     {% block title %} 
     {% endblock title %}
@@ -112,7 +117,7 @@
         </div>
       </nav>
 
-    <div class="mb-7">
+    <div class="mb-7 ">
     {% block content %} 
     {% endblock content %}
     </div>
