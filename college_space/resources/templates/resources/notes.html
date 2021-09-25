@@ -6,4 +6,14 @@
 
 {% block content %} 
 <h4> Show all Notes list here {{ subject }} </h4>
+<div class="container">
+    {% for user,notes in notes.items %} 
+    <h3> Contributed by {{ user }} {{ notes | length }} </h3>
+    <p> Notes information here </p>
+    {% for note in notes %} 
+    <h5> {{ note.topic }} </h5>
+    <a href=" {{ note.url }}"> Link </a>
+    {% endfor %}
+    {% endfor %} 
+</div>
 {% endblock content %} 

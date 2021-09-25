@@ -13,7 +13,7 @@ department_type_choices = (
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-    sub_code = models.CharField(max_length=12)
+    sub_code = models.CharField(max_length=12, unique=True)
     department = models.CharField(
         max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(
@@ -30,7 +30,6 @@ class Subject(models.Model):
         for subject in subject_lists:
             subjects.append({'sub_code': subject.sub_code,'name': subject.name, 'credit': subject.credit})
         return subjects
-
 
 class Resource(models.Model):
     resource_type_choices = (
@@ -61,8 +60,8 @@ class Resource(models.Model):
         return self.subject.department
 
     @classmethod
-    def get_resources_list(cls, subject):
-        resources_list = cls.objects.filter(subject=subject)
+    def get_resources_list(cls, sub_code):
+        resources_list = cls.objects.filter(subject__sub_code=sub_code)
         resources = {'book':[], 'web':[], 'video':[]}
         for resource in resources_list:
             tmp_dict={
@@ -115,8 +114,16 @@ class Note(models.Model):
         return self.subject.name + '( ' + self.topic + ' )'
 
     @classmethod
-    def get_all_notes(cls, subject):
-        notes_list = cls.objects.filter(subject=subject)
+    def get_notes_list(cls, sub_code):
+        notes_list = cls.objects.filter(subject__sub_code=sub_code)
         notes = {}
         for note in notes_list:
-            pass
+            user = note.uploaded_by.user.email
+            temp_dict = {'topic': note.topic, 'url': note.file.url}
+            if user in notes:
+                notes[user].append(temp_dict)
+            else:
+                notes[user] = [temp_dict]
+        return notes
+
+

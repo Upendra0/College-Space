@@ -30,10 +30,10 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <form action="{% url 'study_materials' %}">
-                                <button name="subject" type="submit" value="{{ subject.name }}" class="btn btn-primary"> Study Materials </button>
+                                <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-primary"> Study Materials </button>
                             </form>
                             <form action="{% url 'notes' %}">
-                                <button name="subject" type="submit" value="{{ subject.name }}" class="btn btn-info"> Notes </button>
+                                <button name="subject_code" type="submit" value="{{ subject.sub_code }}" class="btn btn-info"> Notes </button>
                             </form>                          
                         </div>
                     </div>

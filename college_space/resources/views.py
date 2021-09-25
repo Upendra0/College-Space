@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Syllabus, Subject, Resource
+from .models import Syllabus, Subject, Resource, Note
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -17,17 +17,18 @@ def subjects(request):
 
 @login_required
 def study_materials(request):
-    subject = request.GET.get('subject')
-    if subject is None:
+    sub_code = request.GET.get('subject_code')
+    if sub_code is None:
         return redirect(to='subjects')
-
-    context = {'subject':subject}
+    resources = Resource.get_resources_list(sub_code)
+    context = {'sub_code': sub_code, 'resources':resources}
     return render(request=request, template_name='resources/study_materials.html', context=context)
 
 @login_required
 def notes(request):
-    subject = request.GET.get('subject')
-    if subject is None:
+    sub_code = request.GET.get('subject_code')
+    if sub_code is None:
         return redirect(to='subjects')
-    context = {'subject':subject}
+    all_notes = Note.get_notes_list(sub_code)
+    context = {'sub_code':sub_code, 'notes':all_notes}
     return render(request, template_name='resources/notes.html', context=context)
