@@ -4,7 +4,14 @@
 {% endblock title %} 
 
 {% block content %} 
-<h2> Create video template below </h2>
+<div class="container p-2 mt-3">
+    <button  onclick="location.href='{% url 'subjects' %}'" type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark">🔙 Back</button>
+    <div class="container mt-4">
+        <h4 class="text-center"> SEE ALL VIDEO LECTURE HERE {{ subject.name }} </h4>
+    </div>
+</div>
+
+{% comment %} <h2> Create video template below </h2>
 <div class="container">
     {% for video in vidoes %}
     <h2> Name {{ video.name }} </h2> 
@@ -12,5 +19,5 @@
     <a href="{{ video.link }} "> Video Link </a>
     <h6> Rating {{ video.rating }}</h6>
     {% endfor %} 
-</div>
+</div> {% endcomment %}
 {% endblock content %} 

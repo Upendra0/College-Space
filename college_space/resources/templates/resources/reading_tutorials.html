@@ -4,7 +4,15 @@
 {% endblock title %} 
 
 {% block content %} 
-<h2> Create Books template below </h2>
+
+<div class="container p-2 mt-3">
+    <button  onclick="location.href='{% url 'subjects' %}'" type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark">🔙 Back</button>
+    <div class="container mt-4">
+        <h4 class="text-center"> CREATE BOOKS TEMPLATE BELOW</h4>
+    </div>
+</div>
+
+{% comment %} <h2> Create Books template below </h2>
 <div class="container">
     {% for book in books %}
     <h2> Name {{ book.name }} </h2> 
@@ -22,5 +30,5 @@
     <a href="{{ web_tutorial.link }} "> web_tutorial Link </a>
     <h6> Rating {{ web_tutorial.rating }}</h6>
     {% endfor %} 
-</div>
+</div> {% endcomment %}
 {% endblock content %} 
