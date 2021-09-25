@@ -39,6 +39,7 @@ class Resource(models.Model):
         ('web', 'Web Tutorial'),
     )
 
+    name = models.CharField(max_length=255)
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
     resource_type = models.CharField(
         max_length=10, choices=resource_type_choices)
@@ -60,8 +61,19 @@ class Resource(models.Model):
         return self.subject.department
 
     @classmethod
-    def get_resources_list(cls, subject, resource_type):
-        pass
+    def get_resources_list(cls, subject):
+        resources_list = cls.objects.filter(subject=subject)
+        resources = {'book':[], 'web':[], 'video':[]}
+        for resource in resources_list:
+            tmp_dict={
+            'name': resource.name, 'author': resource.author, 
+            'link': resource.link,'description': resource.description, 
+            'rating': resource.rating,
+             }
+            resources[resource.resource_type].append(tmp_dict)
+        return resources
+
+
 
 
 class Syllabus(models.Model):
@@ -101,3 +113,10 @@ class Note(models.Model):
 
     def __str__(self) -> str:
         return self.subject.name + '( ' + self.topic + ' )'
+
+    @classmethod
+    def get_all_notes(cls, subject):
+        notes_list = cls.objects.filter(subject=subject)
+        notes = {}
+        for note in notes_list:
+            pass

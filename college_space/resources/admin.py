@@ -6,8 +6,8 @@ class SubjectAdmin(admin.ModelAdmin):
     list_filter= ['department', 'semester', 'credit']
 
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = ['subject', 'resource_type', 'get_semester', 'get_department','author', 'link']
-    list_filter= ['author']
+    list_display = ['name', 'subject', 'resource_type', 'get_semester', 'get_department','author', 'link']
+    list_filter= ['subject']
 
 class SyllabusAdmin(admin.ModelAdmin):
     list_display = ['department', 'semester', 'download_link']
