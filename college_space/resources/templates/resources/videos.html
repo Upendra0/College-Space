@@ -11,7 +11,7 @@
     </div>
 </div>
 
-{% comment %} <h2> Create video template below </h2>
+<h2> Create video template below </h2>
 <div class="container">
     {% for video in vidoes %}
     <h2> Name {{ video.name }} </h2> 
@@ -19,5 +19,5 @@
     <a href="{{ video.link }} "> Video Link </a>
     <h6> Rating {{ video.rating }}</h6>
     {% endfor %} 
-</div> {% endcomment %}
+</div> 
 {% endblock content %} 

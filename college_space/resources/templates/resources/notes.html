@@ -14,9 +14,7 @@
 </div>
 
 
-{% comment %} <div class="container">
-
-
+  <div class="container">
     {% for user,notes in notes.items %} 
     <h3> Contributed by {{ user }} </h3>
     <p> Notes information here </p>
@@ -25,5 +23,5 @@
     <a href=" {{ note.url }}">Download Link </a>
     {% endfor %}
     {% endfor %} 
-</div> {% endcomment %}
+</div>
 {% endblock content %} 
