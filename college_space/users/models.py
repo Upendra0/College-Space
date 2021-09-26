@@ -1,4 +1,4 @@
-from django.core import validators
+from django.core.validators import MinValueValidator, MaxValueValidator, validate_image_file_extension
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 import os
@@ -51,7 +51,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=255, blank=False, null=False)
     last_name = models.CharField(max_length=255, blank=False, null=False)
     department = models.CharField( max_length=255, choices=department_type_choices)
-    semester = models.SmallIntegerField(blank=False, null=False)
+    semester = models.SmallIntegerField(blank=False, null=False, validators=[MaxValueValidator(8), MinValueValidator(1)])
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -92,7 +92,7 @@ class Contributor(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
     college_id = models.ImageField(
         upload_to= ids_directory_path,
-        validators=[validators.validate_image_file_extension],
+        validators=[validate_image_file_extension],
         )
 
     def __str__(self) -> str:
