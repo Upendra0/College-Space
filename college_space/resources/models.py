@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator
 from django.contrib import admin
-from users.models import Contributor
+from contribute.models import Contributor
 
 department_type_choices = (
     ('cse', 'Computer Science & engineering'),

@@ -11,10 +11,3 @@ class Migration(migrations.Migration):
         ('users', '0004_alter_contributor_college_id'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='contributor',
-            name='college_id',
-            field=models.ImageField(upload_to=users.models.ids_directory_path, validators=[django.core.validators.validate_image_file_extension]),
-        ),
-    ]

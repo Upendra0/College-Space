@@ -9,11 +9,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('users', '0003_user_department'),
     ]
-
-    operations = [
-        migrations.AlterField(
-            model_name='contributor',
-            name='college_id',
-            field=models.ImageField(upload_to=users.models.ids_directory_path),
-        ),
-    ]

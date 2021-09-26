@@ -1,4 +1,4 @@
-from .models import User, Contributor
+from .models import User
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from . import forms 
@@ -25,9 +25,5 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-class ContributorAdmin(admin.ModelAdmin):
-    list_display = ['user', 'college_id']
-
 admin.site.register(User, UserAdmin)
-admin.site.register(Contributor, ContributorAdmin)
 admin.site.unregister(Group)
