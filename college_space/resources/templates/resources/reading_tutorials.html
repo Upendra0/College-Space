@@ -5,30 +5,60 @@
 
 {% block content %} 
 
+
 <div class="container p-2 mt-3">
     <button  onclick="location.href='{% url 'subjects' %}'" type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark">🔙 Back</button>
+    {% comment %} Books container start {% endcomment %}
     <div class="container mt-4">
-        <h4 class="text-center"> CREATE BOOKS TEMPLATE BELOW</h4>
+        <h4 class="text-center"> BOOKS </h4>
+        <table class="table table-striped table-hover table-bordered mt-1 text-center">
+            <thead  class="">
+                <tr>
+                <th scope="col" class="col-5">Name</th>
+                <th scope="col" class="col-4" >Author</th>
+                <th scope="col" class="col-1">Rating</th>
+                <th scope="col"  class="col-2" >Download link</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                <td>{{ book.name }} </td>
+                <td>{{ book.author }}</td>
+                <td><span style="font-size:1.5em;">{{ book.rating }}</span> ⭐ </td>
+                <td><a href=" {{ book.link }}" class="btn btn-info">Download </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-</div>
+    {% comment %} End books container {% endcomment %}
 
-<h2> Create Books template below </h2>
-<div class="container">
-    {% for book in books %}
-    <h2> Name {{ book.name }} </h2> 
-    <h6> Author {{ book.author }} </h6>
-    <a href="{{ book.link }} "> Book Link </a>
-    <h6> Rating {{ book.rating }}</h6>
-    {% endfor %} 
-</div>
 
-<h2> Create web tutorials template below </h2>
-<div class="container">
-    {% for web_tutorial in web_tutorials %}
-    <h2> Name {{ web_tutorial.name }} </h2> 
-    <h6> Author {{ web_tutorial.author }} </h6>
-    <a href="{{ web_tutorial.link }} "> web_tutorial Link </a>
-    <h6> Rating {{ web_tutorial.rating }}</h6>
-    {% endfor %} 
-</div> 
+    {% comment %} Start web tutorials {% endcomment %}
+    <div class="container mt-5">
+        <h4 class="text-center"> WEB TUTORIALS </h4>
+        <table class="table table-striped table-hover table-bordered mt-1 text-center">
+            <thead  class="">
+                <tr>
+                <th scope="col" class="col-5">Name</th>
+                <th scope="col" class="col-4" >Author</th>
+                <th scope="col" class="col-1">Rating</th>
+                <th scope="col"  class="col-2" >Download link</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for web_tutorial in web_tutorials %}
+                <tr>
+                <td>{{ web_tutorial.name }} </td>
+                <td>{{ web_tutorial.author }}</td>
+                <td><span style="font-size:1.5em;">{{ web_tutorial.rating }}</span> ⭐ </td>
+                <td><a href=" {{ web_tutorial.link }}" class="btn btn-info">Download </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% comment %} End web tutorials {% endcomment %}
+</div>
 {% endblock content %} 

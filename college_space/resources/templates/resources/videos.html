@@ -4,8 +4,13 @@
 {% endblock title %} 
 
 {% block content %} 
+
 <div class="container p-2 mt-3">
+
+    {% comment %} Back button {% endcomment %}
     <button  onclick="location.href='{% url 'subjects' %}'" type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark">🔙 Back</button>
+    
+    {% comment %} start video container {% endcomment %}
     <div class="container mt-4">
         <h4 class="text-center"> SEE ALL VIDEO LECTURE HERE {{ subject.name }} </h4>
     </div>
@@ -20,4 +25,5 @@
     <h6> Rating {{ video.rating }}</h6>
     {% endfor %} 
 </div> 
+
 {% endblock content %} 
