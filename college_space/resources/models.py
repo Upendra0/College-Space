@@ -15,7 +15,7 @@ department_type_choices = (
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-    sub_code = models.CharField(max_length=12, unique=True)
+    sub_code = models.CharField(max_length=12)
     department = models.CharField(
         max_length=255, choices=department_type_choices)
     semester = models.SmallIntegerField(
@@ -24,6 +24,9 @@ class Subject(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['sub_code', 'department'], name='unique_sub_code_per_department')]
 
     @classmethod
     def get_subjects_list(cls, department=department, semester=semester):
