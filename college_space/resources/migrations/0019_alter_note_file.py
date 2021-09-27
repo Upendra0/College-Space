@@ -11,10 +11,3 @@ class Migration(migrations.Migration):
         ('resources', '0018_alter_note_file'),
     ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='note',
-            name='file',
-            field=models.FileField(upload_to=resources.models.notes_directory_path, validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), resources.models.validate_file]),
-        ),
-    ]

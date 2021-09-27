@@ -50,9 +50,7 @@ class Resource(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
     resource_type = models.CharField(
         max_length=10, choices=resource_type_choices)
-    author = models.CharField(max_length=500)
     link = models.CharField(max_length=500)
-    description = models.TextField()
     rating = models.SmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)])
 
@@ -121,7 +119,7 @@ class Syllabus(models.Model):
             download_link = syllabus.download_link
         return download_link
 
-def validate_file(file):
+def validate_file_size(file):
     file_size = file.file.size
     limit_mb = 15
     if file_size > limit_mb * 1024 * 1024:
@@ -140,7 +138,7 @@ class Note(models.Model):
     topic = models.CharField(max_length=50)
     file = models.FileField(
         upload_to=notes_directory_path,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), validate_file],
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), validate_file_size],
         )
     uploaded_by = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
 
