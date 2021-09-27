@@ -1,0 +1,67 @@
+1. Polymorphism means many forms i.e to do same action in many ways.
+   i> Compile type Polymorphism
+      function overloading/operator overloading
+
+    ii> Run time Polymorphism
+        function overriding is achieved by base class pointer and virtual functions.
+
+2. Function overloading
+   ->When 2 or more than 2 function has same name but different arguments( different no. or different types) then
+   It is called function overloading.
+   Complier calls the appropriate function depending on matching of arguments at compile time.
+   If 2 function declaration has same match then there is ambguity error.
+   e.g add(a,b) or add(array)
+
+   -> Function that can not be overloaded 
+   i> has the same name but different return type 
+   ii> function can be overloaded depending wheather it is const or not but it can not be overloaded depending
+       on wheather it's parameters are const or not.
+   iii> 2 function has same name and arguments but differ in default value of arguments can not be overloaded.
+
+3. Operator overloading
+   -> Same operator can be assigned different actions depending on types of operands.
+   -> can'nt change the no. of arguments.
+   -> syntax
+    return_type  operator + (type 1, type 2);
+
+    -> operator that can't be overloaded
+      .
+      ::
+      ?:
+      sizeof
+
+4. Method overriding
+   When multiple classes are derived from a single base class and for some action all the sub class has different behaviour, then we 
+   need Method overriding.
+   -> when a derived class define a member function which is already in base class with same signature(same args and same return) then 
+   i> if base class function is not virtual then out of 2 available function choice is made at Compile time depending on type of object
+   or pointer or reference.
+   ii> if base class function is virtual, then choice is made at run time depending on content of pointer or reference irrespective of 
+   type of pointer/reference.
+   iii> base class pointer can contain & of derived class object.
+   iv> scope of a member function is defined based on type of pointer/reference not on content of pointer/reference.
+
+   iii> syntax to declare virtual function
+   virtual return_type func_name();
+
+   iv> if this function is not redefined then base class function will always be called.
+
+   v> if function is called through object.func_name, then always derived class function will be called.
+
+   vi> static method can not be virtual.
+   e.g RBI base class has virtual function getInterestRate()
+   SBI, BOI, BOB are derived class also has function getInterestRate().
+   Now from anywhere having a RBI *ptr = & of any sunsidiary band and we call ptr->getInterestRate() it will return interest rate for 
+   that Bank.
+
+5. Pure virtual function 
+   virtual function is declared but not defined in the base class. It should be defined in it's derived class.
+   virtual return_type func_name (args)=0;
+
+   -> A class is abstract if it contains a pure virtual function and object of a abstract class can not be created.
+   -> if a class inherited from abstract class it should define virtual function else it is also abstract.
+   -> we can have pointers or constructor in abstract class.
+
+6. Virtual destructor is possible but constructor is not.
+   so, delete ptr; and ptr is holding adress of derived class so it will call adress of derived class although ptr is of type base*.
+

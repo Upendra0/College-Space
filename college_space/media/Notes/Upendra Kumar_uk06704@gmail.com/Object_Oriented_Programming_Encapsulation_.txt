@@ -1,0 +1,9 @@
+1. Encapsulation is putting the data and function which can operates on data in a single unit,
+which is class.
+Purpose of Encapsulation is to hide the data from outside class to protect it from accidental change or due to security concerns.
+
+2. Can be achieved by using access specifiers.
+Variables as private
+function to operate on Variables, getter and setter are made to public.
+
+3. Provide security to data

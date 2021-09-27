@@ -1,0 +1,66 @@
+1. Class is a type while objects are identifier. So, they get memory allocation.
+
+2. Access Modifiers.
+   It define the accessibility scope for members of class.
+
+   i> Private
+   This is defalut access Modifier.
+   Members can be accesed only by member functions inside class or by freind functions.
+
+   ii> Public
+   Members can be accesed from anywhere in that module, from a function or in another class.
+
+   iii> Protected
+   Members can be accesed inside the class or classes derived from this class.
+
+3. Define a class
+   Class ClassName
+   {
+       public:
+       members declarations..
+
+       private:
+       member declarations..
+
+       protected:
+       member declarations..
+   };
+
+4. Accessing members of class 
+   ClassName::member_name
+   object_name.member_name
+   this->member_name
+
+5. Constructor
+   It is a special member function of a class.
+   It has same name as ClassName.
+   It does not return any thing.
+   Automatically get called for each object.
+   Complier Automatically creates a Constructor for each class by defalut if user has 
+   not created it.
+
+6. Copy Constructor
+   It is used to create a object from another object.
+   By defalut Complier provide a copy Constructor, which shallow copy a object.
+   If an object member contains pointers or reference shallow copy will create the copy
+   of that object and new object will also have same memory adress as orignal was.
+   -> To avoid this issue, we create owr own copy Constructor, which creates a deep copy.
+   -> ClassName(const ClassName &obj)
+   {
+      ...
+   }
+   -> assignment operator creates a shallow copy.
+
+7. Constructor can be over loaded.
+
+8. Destructor
+   A class has only one Destructor.
+   By defalut Complier provides a Destructor, which realease all memory except in heap.
+   When ever there is dynamic memory allocation, user should define Destructor.
+   ~ClassName()
+   {
+
+   }
+   Does'nt return anything , does'nt receive anything.
+   Automatically get called when object get's out of scope (function end or program end or 
+   delete obj is called).

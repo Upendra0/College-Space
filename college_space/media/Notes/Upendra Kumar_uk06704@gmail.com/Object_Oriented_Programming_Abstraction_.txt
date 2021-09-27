@@ -1,0 +1,13 @@
+1. Abstraction means to show the essential features or data only while hiding the internal details.
+   Purpose of abstraction is to provide simple interface of a complex systems.
+
+2.Code reuability and maintainbility is easier.
+  Can change the internal details without affecting ui.
+  Stop the chance of accidental damange of data.
+
+3.How?
+  i> By access modifiers
+  internal details can be coded in private mode and ui can be coded in public mode and this
+  ui can access internal function as they both are in same class.
+
+  ii> By header file.

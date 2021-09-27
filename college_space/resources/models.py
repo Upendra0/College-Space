@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator
 from django.contrib import admin
 from contribute.models import Contributor
+import os
+from django.core.exceptions import ValidationError
 
 department_type_choices = (
     ('cse', 'Computer Science & engineering'),
@@ -116,20 +118,27 @@ class Syllabus(models.Model):
             download_link = syllabus.download_link
         return download_link
 
+def validate_file(file):
+    file_size = file.file.size
+    limit_mb = 15
+    if file_size > limit_mb * 1024 * 1024:
+        raise ValidationError("Max size of file is %s MB" % limit_mb)
 
 def notes_directory_path(instance, filename):
     user = instance.uploaded_by.user.first_name + \
         '_' + instance.uploaded_by.user.email
-    new_file_name = instance.subject.name + \
-        '( ' + instance.topic + ' )' + '.pdf'
+    f_name, extension = os.path.splitext(filename)
+    new_file_name = instance.subject.name + '( ' + instance.topic + ' )' + extension
     return 'Notes/' + user + '/' + new_file_name
 
 
 class Note(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
     topic = models.CharField(max_length=50)
-    file = models.FileField(upload_to=notes_directory_path, validators=[
-                            FileExtensionValidator(allowed_extensions=['pdf'])])
+    file = models.FileField(
+        upload_to=notes_directory_path,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), validate_file],
+        )
     uploaded_by = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
