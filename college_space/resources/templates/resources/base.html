@@ -118,7 +118,23 @@
         </div>
       </nav>
 
+
     <div class="mb-7 ">
+      {% if breadcrumbs %} 
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            {% for name,url in breadcrumbs.items %} 
+            {% if forloop.last  %}
+            <li class="breadcrumb-item active"> {{ name }} </li>
+            {% else %} 
+            <li class="breadcrumb-item"><a href=" {{ url }} ">{{ name }}</a></li>
+            {% endif %} 
+            {% endfor %} 
+          </ol>
+        </nav>
+      </div>
+      {% endif %} 
     {% block content %} 
     {% endblock content %}
     </div>

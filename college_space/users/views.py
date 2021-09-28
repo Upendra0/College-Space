@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from django.urls import reverse
 
 # Create your views here.
 
@@ -23,4 +24,5 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request=request, template_name='users/profile.html')
+    breadcrumbs = {'Home':reverse('home'),  'Profile':'None'}
+    return render(request=request, template_name='users/profile.html',context={'breadcrumbs':breadcrumbs})
