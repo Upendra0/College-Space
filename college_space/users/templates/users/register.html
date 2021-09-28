@@ -1,21 +1,66 @@
-{% extends "resources/base.html" %}
-{% load crispy_forms_tags %}
+{% extends "resources/base.html" %} 
 
-{% block title %} 
-<title> College Space | Register </title>
-{% endblock title %} 
+{% block title%}
+<title>College Space | Register</title>
+{% endblock title %}
 
 {% block content %}
 <div class="container mt-3">
-  <div class="row justify-content-center">
-    <div class="col-md-5 align-self-center">
-      <form method="POST">
-        {% csrf_token %} {{ form | crispy }}
-        <div class="mt-3">
-          <button type="submit" class="btn btn-primary"> Sign Up </button>
-        </div>
-      </form>
+  <form method="POST">
+    {% csrf_token %} {{ form.non_field_errors }}
+    <div class="row">
+      <div class="col">
+        {{ form.first_name.errors }}
+        <label for="name_input"> First Name </label>
+        {{ form.first_name }}
+      </div>
+      <div class="col">
+        {{ form.last_name.errors }}
+        <label for="name_input"> Last Name </label>
+        {{ form.last_name }}
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col">
+        {{ form.email.errors }}
+        <label for="email_input"> Email* </label>
+        {{ form.email }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {{ form.password1.errors }}
+        <label for="password1_input"> Password </label>
+        {{ form.password1}}
+      </div>
+      <div class="col">
+        {{ form.password2.errors }}
+        <label for="password2_input"> Confirm Password </label>
+        {{ form.password2 }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {{ form.department.errors }}
+        <label for="department_input"> Department </label>
+        {{ form.department }}
+      </div>
+      <div class="col">
+        {{ form.semester.errors }}
+        <label for="semester_input"> Semester </label>
+        {{ form.semester }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {{ form.profile_pic.errors }}
+        <label for="profile_pic_input"> Profile Picture </label>
+        {{ form.profile_pic }}
+      </div>
+    </div>
+    <div class="mt-3">
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+  </form>
 </div>
 {% endblock content %}

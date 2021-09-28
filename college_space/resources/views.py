@@ -5,7 +5,9 @@ from django.urls import reverse
 
 # Create your views here.
 def home(request):
-    return render(request=request, template_name='resources/home.html')
+    if request.user.is_authenticated:
+        return render(request=request, template_name='resources/home.html')
+    return redirect(to='login')
 
 @login_required
 def subjects(request):
