@@ -8,17 +8,17 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 class UserCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs.update({'class': 'form_input', 'id': 'email_input'})
-        self.fields['first_name'].widget.attrs.update({'class': 'form_input', 'id': 'name_input'})
-        self.fields['last_name'].widget.attrs.update({'class': 'form_input', 'id': 'name_input'})
-        self.fields['department'].widget.attrs.update({'class': 'form_input', 'id': 'department_input'})
-        self.fields['semester'].widget.attrs.update({'class': 'form_input', 'id': 'semester_input', 'min':1, 'max':8})
-        self.fields['profile_pic'].widget.attrs.update({'class': 'form_input', 'id': 'profile_pic_input'})
+        self.fields['email'].widget.attrs.update({'class': 'form_input form-control', 'id': 'email_input','placeholder':'Enter email'})
+        self.fields['first_name'].widget.attrs.update({'class': 'form_input form-control', 'id': 'name_input','placeholder':'First Name'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form_input form-control', 'id': 'name_input','placeholder':'Last Name'})
+        self.fields['department'].widget.attrs.update({'class': 'form_input form-control', 'id': 'department_input'})
+        self.fields['semester'].widget.attrs.update({'class': 'form_input form-control', 'id': 'semester_input', 'min':1, 'max':8 ,'placeholder':'Semester'})
+        self.fields['profile_pic'].widget.attrs.update({'class': 'form_input form-control', 'id': 'profile_pic_input'})
 
     password1 = forms.CharField(label="Password",
-                                widget=forms.PasswordInput(attrs={'class':'form_input', 'id':'password1_input'}), required=True)
+                                widget=forms.PasswordInput(attrs={'class':'form_input form-control', 'id':'password1_input','placeholder':'Password'}), required=True)
     password2 = forms.CharField(
-        label="Confirm Password", widget=forms.PasswordInput(attrs={'class':'form_input', 'id':'password2_input'}), required=True)
+        label="Confirm Password", widget=forms.PasswordInput(attrs={'class':'form_input form-control', 'id':'password2_input','placeholder':'Confirm Password'}), required=True)
 
     class Meta:
         model = models.User
