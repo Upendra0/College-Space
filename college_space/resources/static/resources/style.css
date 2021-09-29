@@ -46,3 +46,10 @@ body{
     color: red;
 }
 
+.change-pass label{
+    color: #fff;
+    padding-bottom: 7px;
+}
+.change-pass input{
+    margin-bottom: 20px;
+}
