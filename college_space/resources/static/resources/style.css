@@ -27,7 +27,20 @@ body{
     margin-bottom: 1rem;
     padding: 6px;
 }
-
+.login-container{
+    background-color: #2b2b2b;
+    border-radius: 10px;
+}
+.login-formo label{
+    color: #fff;
+    font-family:sans-serif;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.login-inpu{
+    margin-top: 7px;
+    margin-bottom: 20px;
+}
 .errorlist > li
 {
     color: red;

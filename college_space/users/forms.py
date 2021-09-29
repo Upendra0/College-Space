@@ -53,8 +53,8 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
     username = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control', 'placeholder': '', 'id': 'email_input'}))
+        attrs={'class': 'form-control login-inpu', 'placeholder': '', 'id': 'email_input'}))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control','placeholder': '', 'id': 'password_input',
+        attrs={'class': 'form-control login-inpu','placeholder': '', 'id': 'password_input',
         }
 ))

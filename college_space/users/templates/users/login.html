@@ -6,10 +6,11 @@
 {% endblock title %} 
 
 {% block content %}
-<div class="container mt-3">
+<div class="container mt-5 ">
   <div class="row justify-content-center">
-    <div class="col-md-5 align-self-center">
-      <form method="POST">
+    <div class="col-md-5 p-5 align-self-center login-container">
+      <form method="POST" class="login-formo">
+      <h1 class="text-info py-3">Log In</h1>
         {% csrf_token %} {{ form | crispy }}
         <div class="mt-4">
           <a class=" float-start p-2" href="{% url 'password_reset'  %}">Forgot Password?</a>
