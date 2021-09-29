@@ -27,3 +27,8 @@ body{
     margin-bottom: 1rem;
     padding: 6px;
 }
+
+.errorlist > li
+{
+    color: red;
+}
