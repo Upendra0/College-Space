@@ -1,8 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import fields, widgets
 from . import models
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserCreationForm(forms.ModelForm):
@@ -46,4 +46,15 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = models.User
-        fields = ['email', 'first_name', 'last_name', 'department', 'semester']
+        fields = ['email', 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+
+    username = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'id': 'email_input'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control','placeholder': '', 'id': 'password_input',
+        }
+))

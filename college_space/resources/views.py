@@ -7,8 +7,7 @@ from django.urls import reverse
 def home(request):
     template_name = 'resources/home.html'
     if request.user.is_authenticated:
-        template_name = 'resources/dashboard.html'
-        
+        template_name = 'resources/dashboard.html'        
     return render(request=request, template_name= template_name)
 
 @login_required
