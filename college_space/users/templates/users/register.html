@@ -14,7 +14,7 @@
       </div>
       <div class="col-md-4 bg-nf py-4 register-form-container ">
         <form method="POST" class="form-group px-4 register-form" autocompletes="off" enctype="multipart/form-data">
-          <h2 class="text-center ">Create your account</h2>
+          <h2 class="text-center text-info ">Create your account</h2>
           {% csrf_token %} {{ form.non_field_errors }}
             {{ form.first_name.errors }}
               <label for="name_input"> First Name </label>
@@ -49,7 +49,7 @@
             {{ form.profile_pic }}
 
             <div>
-              <a class=" float-start p-2 text-info">Log in instead</a>
+              <a class=" float-start p-2 text-info" href="{% url 'login'  %}">Log in instead</a>
               <button type="submit" class="btn btn-primary mt-1 float-end">Create Account</button>
             </div>
 

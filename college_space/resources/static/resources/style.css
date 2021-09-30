@@ -53,3 +53,12 @@ body{
 .change-pass input{
     margin-bottom: 20px;
 }
+
+.pass-reset label{
+    color: #fff;
+    padding-bottom: 7px;
+}
+.pass-reset input{
+    margin-bottom: 20px;
+}
+
