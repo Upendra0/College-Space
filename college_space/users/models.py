@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.exceptions import ValidationError
 import os
+from django.contrib.auth.password_validation import validate_password
 
 # Create your models here.
 

@@ -2,10 +2,10 @@ from django import forms
 from django.core.exceptions import ValidationError
 from . import models
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
-class UserCreationForm(forms.ModelForm):
+class UserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'class': 'form_input form-control', 'id': 'email_input','placeholder':'Enter email'})

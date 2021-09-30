@@ -5,6 +5,7 @@ from contribute.models import Contributor
 import os
 from django.core.exceptions import ValidationError
 
+
 department_type_choices = (
     ('cse', 'Computer Science & engineering'),
     ('ce', 'Civil engineering'),
