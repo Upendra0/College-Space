@@ -144,35 +144,27 @@
 
 <div class="p-2"> </div>
 {% else %}
-<div
-  class="p-5 text-center bg-image"
-  style="
-    background-image: url('https://github.com/atulya-karn/image/blob/main/Edfront.jpg?raw=true');
-    height: 70vh;
-  "
->
-  <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
-    <div class="d-flex justify-content-center align-items-center h-100">
-      <div class="text-white">
-        <h1 class="mb-3">College Space</h1>
-        <p class="mb-3 p-3"><span class="text-info">College Space</span> exist to help engineering students achieve their academic and personal goals.</br> By utilizing these handpicked study-materials, you can optimize your educational experience.</p>
-        <a
-          class="btn btn-outline-light btn-lg"
-          href="{% url 'register' %}"
-          role="button"
-          >SIGN UP FOR FREE</a
-        >
+
+  <div class="container mt-5 text-white">
+    <div class="row p-5">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 home-container">
+        {% comment %} <p style="font-family: 'Inconsolata', monospace; color:white; font-size:24px;">Balancing life as a student means that time management and study resources are of utmost importance. When you have to hit deadlines, study for tests, maintain good grades, read for classes, and write papers, there are a lot of moving pieces throughout your educational journey, so it helps to instill good habits and practice tools to alleviate the burdensome load of student life.</p>
+        <p style="font-family: 'Inconsolata', monospace; color:white; font-size:24px;">When you can adapt these skills and develop a routine, studying becomes easier and more efficient. In order to make your degree worth every last drop, solid studying skills will promote better learning and help to alleviate stress. Despite the amount you have to learn, there are many resources available to help prepare you for success.</p>
+        {% endcomment %}
+        <h1>Your learning journey starts here.</h1>
+        <h5>Signup to start your learning process on College Space</h5>
+        <a class="btn mt-3 login-btn"href="{% url 'login' %}">Login</a>
+        <a class="btn mt-3 ms-3 signup-btn"href="{% url 'register' %}">Sign up</a>
       </div>
+      <div class="col-md-5 home-bg-container pt-5">
+    
+      </div>
+      <div class="col-md-1"></div>
+      
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="container p-4 m-3">
-    <p style="font-family: 'Inconsolata', monospace; color:white; font-size:24px;">Balancing life as a student means that time management and study resources are of utmost importance. When you have to hit deadlines, study for tests, maintain good grades, read for classes, and write papers, there are a lot of moving pieces throughout your educational journey, so it helps to instill good habits and practice tools to alleviate the burdensome load of student life.</p>
-    <p style="font-family: 'Inconsolata', monospace; color:white; font-size:24px;">When you can adapt these skills and develop a routine, studying becomes easier and more efficient. In order to make your degree worth every last drop, solid studying skills will promote better learning and help to alleviate stress. Despite the amount you have to learn, there are many resources available to help prepare you for success.</p>
-  </div>
-
-</div>
+    
 {% endif %} 
 {% endblock content %}
