@@ -45,6 +45,7 @@
     {% block title %} 
     {% endblock title %}
   </head>
+  
   <body>
     <nav class="navbar navbar-light bg-nf">
         <div class="container-fluid">
@@ -65,38 +66,51 @@
 
 
           {% if user.is_authenticated %}
-              <!-- Avatar -->
-                <a
-                  class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                  id="navbarDropdownMenuLink"
-                  role="button"
-                  data-mdb-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <img
+
+              <a class="openbtn" >
+              <img
+                    onclick="openNav()"
                     src="{{ user.profile_pic.url }} "
                     class="rounded-circle border border-primary"
                     height="45"
                     width="45"
                     alt="proLOg"
                     loading="lazy"
-                    style="margin-right: 30px;"
+                    onMouseOver="this.style.hover='pointer'"
                   />
-                </a>
-                <ul
-                  class="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="navbarDropdownMenuLink"
-                >
-                  <li>
-                    <a class="dropdown-item" href=" {% url 'profile' %}">My profile</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                  </li>
-                </ul>
+              </a>
+              <div id="mySidepanel" class="sidepanel">
+                <div class="container ">
+                  <div class="row">
+                    <div class="col-2 pt-2">
+                      <img
+                      onclick="openNav()"
+                      src="{{ user.profile_pic.url }} "
+                      class="rounded-circle border border-primary"
+                      height="45"
+                      width="45"
+                      alt="proLOg"
+                      loading="lazy"
+                      onMouseOver="this.style.hover='pointer'"
+                      />
+                    </div>
+                    <div class="col-9 ">
+                      <p class="px-2" ><span style="font-size:1.4rem">{{ user.first_name }} {{ user.last_name }}</span>
+                      <span class="text-muted">{{user.email}}</span>
+                      </p>
+                      
+                    </div>
+                  </div>
+                </div>
+                
+                <hr class='mt-0'>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a class="sidebar-listing" href="{% url 'home' %}">Home</a>
+                <a class="sidebar-listing" href="{% url 'profile' %}">Profile</a>
+                <a class="sidebar-listing" href="{% url 'logout' %}">Logout</a>
+                <a class="sidebar-listing" href="{% url 'password_change' %}">Update Password</a>
+                <a class="sidebar-listing" href="#">Contact Us</a>
+              </div>
               
 
           {% else %} 
@@ -149,6 +163,11 @@
       </div>
       <!-- Copyright -->
     </footer>
+
+
+    <script type="text/javascript" src="{% static 'js/app.js' %}">
+    
+    </script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
