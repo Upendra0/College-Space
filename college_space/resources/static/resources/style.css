@@ -139,6 +139,7 @@ body{
   
 
   .sidebar-listing:hover{
+      padding-left: 20px;
       background-color: #39c0ed;
       color: #fff;
 
