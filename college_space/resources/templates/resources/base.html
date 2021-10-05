@@ -109,7 +109,11 @@
                 <a class="sidebar-listing" href="{% url 'profile' %}">Profile</a>
                 <a class="sidebar-listing" href="{% url 'logout' %}">Logout</a>
                 <a class="sidebar-listing" href="{% url 'password_change' %}">Update Password</a>
-                <a class="sidebar-listing" href="#">Contact Us</a>
+                {% if user.is_staff %}
+                  <a class="sidebar-listing" href="/admin">Admin Page</a>
+                {% else %}
+                  <a class="sidebar-listing" href="#">Contact Us</a>
+                {% endif %}
               </div>
               
 
