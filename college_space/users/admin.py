@@ -1,7 +1,8 @@
 from .models import User
 from django.contrib import admin
-from .forms import UserChangeForm, UserCreationForm
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .forms import UserChangeForm, UserCreationForm, GroupAdminForm
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin, GroupAdmin as origGroupAdmin
+from django.contrib.auth.models import Group
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
@@ -24,5 +25,17 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
+class GroupAdmin(origGroupAdmin):
+    """
+    Customized GroupAdmin class that uses the customized form to allow
+    management of users within a group.
+    """
+    form = GroupAdminForm
+
 # Register User model to admin site.
 admin.site.register(User, UserAdmin)
+
+
+# Register the modified GroupAdmin with the admin site
+admin.site.unregister(Group)
+admin.site.register(Group, GroupAdmin)

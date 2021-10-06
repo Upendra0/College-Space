@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 import os
-from django.contrib.auth.password_validation import validate_password
 from .managers import MyUserManager
 
 def validate_image_size(file):
