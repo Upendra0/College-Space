@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator
 from django.contrib import admin
-from contribute.models import Contributor
+from users.models import User
 import os
 from django.core.exceptions import ValidationError
 
@@ -141,7 +141,7 @@ class Note(models.Model):
         upload_to=notes_directory_path,
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), validate_file_size],
         )
-    uploaded_by = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
+    uploaded_by = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.subject.name + '( ' + self.topic + ' )'
