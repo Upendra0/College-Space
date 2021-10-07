@@ -1,124 +1,102 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinValueValidator, MaxValueValidator
-from django.contrib import admin
-from users.models import User
 import os
 from django.core.exceptions import ValidationError
 
+class Department(models.Model):
+    name = models.CharField(max_length=50, primary_key=True)
+    class Meta:
+        db_table = 'department'
 
-department_type_choices = (
-    ('cse', 'Computer Science & engineering'),
-    ('ce', 'Civil engineering'),
-    ('ee', 'Electrical engineering'),
-    ('ece', 'Electronics and communication engineering'),
-)
+    def __str__(self) -> str:
+        return self.name
 
 
 class Subject(models.Model):
+    code = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=50)
-    sub_code = models.CharField(max_length=12)
-    department = models.CharField(
-        max_length=255, choices=department_type_choices)
-    semester = models.SmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(8)])
-    credit = models.FloatField(MinValueValidator(1))
+    credit = models.FloatField(validators=[MinValueValidator(0)])
 
     def __str__(self) -> str:
         return self.name
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=['sub_code', 'department'], name='unique_sub_code_per_department')]
+        db_table = 'subject'
 
-    @classmethod
-    def get_subjects_list(cls, department=department, semester=semester):
-        subject_lists = Subject.objects.filter(
-            department=department, semester=semester)
-        subjects = []
-        for subject in subject_lists:
-            subjects.append({'sub_code': subject.sub_code,
-                            'name': subject.name, 'credit': subject.credit})
-        return subjects
-
-
-class Resource(models.Model):
-    resource_type_choices = (
-        ('book', 'Book'),
-        ('video', 'Video Tutorial'),
-        ('web', 'Web Tutorial'),
-    )
-
-    name = models.CharField(max_length=255)
-    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
-    resource_type = models.CharField(
-        max_length=10, choices=resource_type_choices)
-    link = models.CharField(max_length=500)
-    rating = models.SmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)])
-
-    def __str__(self) -> str:
-        return self.subject.name + ' (' + self.resource_type + ')'
-
-    @admin.display(description="Semester ")
-    def get_semester(self):
-        return self.subject.semester
-
-    @admin.display(description="Department")
-    def get_department(self):
-        return self.subject.department
-
-    @classmethod
-    def get_vidoes_list(cls, sub_code):
-        videos_list = cls.objects.filter(
-            resource_type='video', subject__sub_code=sub_code)
-        videos = []
-        for video in videos_list:
-            videos.append({'name': video.name, 'author': video.author,
-                          'link': video.link, 'rating': video.rating})
-        return videos
-
-    @classmethod
-    def get_books_list(cls, sub_code):
-        books_list = cls.objects.filter(
-            resource_type='book', subject__sub_code=sub_code)
-        books = []
-        for book in books_list:
-            books.append({'name': book.name, 'author': book.author,
-                          'link': book.link, 'rating': book.rating})
-        return books
-
-    @classmethod
-    def get_web_list(cls, sub_code):
-        web_list = cls.objects.filter(
-            resource_type='web', subject__sub_code=sub_code
-        )
-        web_tutorials = []
-        for web_tutorial in web_tutorials:
-            web_tutorials.append({'name':web_tutorial.name, 'author': web_tutorial.author,
-            'link': web_tutorial.link, 'rating': web_tutorial.rating})
-
-
-class Syllabus(models.Model):
-    department = models.CharField(
-        max_length=255, choices=department_type_choices)
-    semester = models.SmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(8)])
-    download_link = models.CharField(max_length=255)
+class Taught(models.Model):
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+    department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
+    semester = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
 
     class Meta:
-        verbose_name = 'syllabuse'
+        db_table = 'taught'
 
     def __str__(self) -> str:
-        return self.department + '(sem-' + str(self.semester) + ')'
+        return self.subject.name + self.department.name
 
-    @classmethod
-    def get_syllabus_link(cls, department, semester):
-        syllabus = cls.objects.filter(
-            department=department, semester=semester).first()
-        if syllabus is None:
-            download_link = None
-        else:
-            download_link = syllabus.download_link
-        return download_link
+class Book(models.Model):
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+    name = models.CharField(max_length=50)
+    author = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500)
+    contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'book'
+
+    def __str__(self) -> str:
+        return self.name
+
+class WebTutorial(models.Model):
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+    name = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500)
+    contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'web_tutorial'
+
+    def __str__(self) -> str:
+        return self.name
+
+class Video(models.Model):
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+    name = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500)
+    contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'video'
+
+    def __str__(self) -> str:
+        return self.name
+
+class Syllabus(models.Model):
+    department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
+    semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
+    view_link = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'syllabus'
+
+    def __str__(self) -> str:
+        return self.department.name + '(sem-' + str(self.semester) + ')'
+
+
+class Topic(models.Model):
+    name = models.CharField(max_length=50)
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+
+    class Meta:
+        db_table = 'topic'
+
+    def __str__(self) -> str:
+        return self.name
+
+
 
 def validate_file_size(file):
     file_size = file.file.size
@@ -126,35 +104,49 @@ def validate_file_size(file):
     if file_size > limit_mb * 1024 * 1024:
         raise ValidationError("Max size of file is %s MB" % limit_mb)
 
+
 def notes_directory_path(instance, filename):
-    user = instance.uploaded_by.user.first_name + \
-        '_' + instance.uploaded_by.user.email
+    user = instance.contributor.email
     f_name, extension = os.path.splitext(filename)
-    new_file_name = instance.subject.name + '( ' + instance.topic + ' )' + extension
+    new_file_name =  instance.topic.name + extension
     return 'Notes/' + user + '/' + new_file_name
 
 
 class Note(models.Model):
-    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
-    topic = models.CharField(max_length=50)
+    topic = models.ForeignKey(to=Topic, on_delete=models.CASCADE, db_column='topic_id')
     file = models.FileField(
         upload_to=notes_directory_path,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']), validate_file_size],
-        )
-    uploaded_by = models.ForeignKey(to=User, on_delete=models.CASCADE)
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']),
+         validate_file_size],
+         db_column='view_link')
+    contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.subject.name + '( ' + self.topic + ' )'
+        return self.topic.name
 
-    @classmethod
-    def get_notes_list(cls, sub_code):
-        notes_list = cls.objects.filter(subject__sub_code=sub_code)
-        notes = {}
-        for note in notes_list:
-            user = note.uploaded_by.user.email
-            temp_dict = {'topic': note.topic, 'url': note.file.url}
-            if user in notes:
-                notes[user].append(temp_dict)
-            else:
-                notes[user] = [temp_dict]
-        return notes
+def question_directory_path(instance, filename):
+    user = instance.contributor.email
+    f_name, extension = os.path.splitext(filename)
+    new_file_name =  instance.subject.name + extension
+    return 'Question_Papers/' + user + '/' + new_file_name
+
+class QuestionPaper(models.Model):
+    subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
+    year = models.IntegerField(validators=[MinValueValidator(2015)])
+    file = models.FileField(
+        upload_to=question_directory_path,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']),
+         validate_file_size],
+         db_column='view_link')
+    contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'question_paper'
+
+    def __str__(self) -> str:
+        return self.subject.name
+
+
+

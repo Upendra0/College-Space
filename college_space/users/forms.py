@@ -12,8 +12,6 @@ class UserCreationForm(UserCreationForm):
         self.fields['email'].widget.attrs.update({'class': 'form_input form-control', 'id': 'email_input','placeholder':'Enter email'})
         self.fields['first_name'].widget.attrs.update({'class': 'form_input form-control', 'id': 'name_input','placeholder':'First Name'})
         self.fields['last_name'].widget.attrs.update({'class': 'form_input form-control', 'id': 'name_input','placeholder':'Last Name'})
-        self.fields['department'].widget.attrs.update({'class': 'form_input form-control', 'id': 'department_input'})
-        self.fields['semester'].widget.attrs.update({'class': 'form_input form-control', 'id': 'semester_input', 'min':1, 'max':8 ,'placeholder':'Semester'})
         self.fields['profile_pic'].widget.attrs.update({'class': 'form_input form-control', 'id': 'profile_pic_input'})
 
     password1 = forms.CharField(label="Password",
@@ -23,8 +21,7 @@ class UserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name',
-                  'department', 'semester', 'profile_pic']
+        fields = ['email', 'first_name', 'last_name', 'profile_pic']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -47,7 +44,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
+        fields = [ 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):

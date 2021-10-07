@@ -6,36 +6,31 @@ from django.contrib.auth.models import Group
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
-    form = UserChangeForm
-    add_form = UserCreationForm
-
     list_display = ['email', 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
-    list_filter = ['semester', 'department', 'is_staff', 'is_superuser']
+    list_filter = ['department', 'is_staff', 'is_superuser']
 
     fieldsets = [
-        (None, {'fields':('email', 'password')}),
-        ('Personal Info', {'fields':('first_name', 'last_name', 'department', 'semester', 'profile_pic')}),
+        (None, {'fields':('password',)}),
+        ('Personal Info', {'fields':('first_name', 'last_name','department', 'semester', 'profile_pic')}),
         ('Permissions', {'fields':('is_staff', 'is_superuser', 'groups', 'user_permissions')})
     ]
 
     add_fieldsets = (
-        (None, {'fields':('email', 'password1', 'password2', 'first_name', 'last_name','department', 'semester', 'profile_pic', 'is_staff', 'is_superuser')}),
+        (None, {'fields':('email', 'password1', 'password2', 'first_name', 'last_name', 'department', 'semester', 'profile_pic', 'is_staff', 'is_superuser')}),
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
 
-class GroupAdmin(origGroupAdmin):
-    """
-    Customized GroupAdmin class that uses the customized form to allow
-    management of users within a group.
-    """
+#New Group admin.
+class GroupAdmin(admin.ModelAdmin):
+    # Use our custom form.
     form = GroupAdminForm
+    # Filter permissions horizontal as well.
+    filter_horizontal = ['permissions']
 
-# Register User model to admin site.
-admin.site.register(User, UserAdmin)
-
-
-# Register the modified GroupAdmin with the admin site
+# Un Register old group and Register the customised group in admin.
 admin.site.unregister(Group)
 admin.site.register(Group, GroupAdmin)
+
+admin.site.register(User, UserAdmin)

@@ -1,8 +1,8 @@
+import os
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
-import os
 from .managers import MyUserManager
 
 def validate_image_size(file):
@@ -17,24 +17,17 @@ def profile_directory_path(instance, filename):
     user = instance.first_name + '( ' + instance.email + ' )' + extension
     return 'profile_pics/' + user
 
-# Create your models here.
 class User(AbstractBaseUser, PermissionsMixin):
-    department_type_choices = (
-        ('cse', 'Computer Science & engineering'),
-        ('ce', 'Civil engineering'),
-        ('ee', 'Electrical engineering'),
-        ('ece', 'Electronics and communication engineering'),
-        )
-
-    email = models.EmailField( verbose_name="email address", max_length=255, unique=True)
+    email = models.EmailField(max_length=255, primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    department = models.CharField(max_length=255, choices=department_type_choices)
-    semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
+    department = models.ForeignKey(to='resources.department', db_column='dept_name', on_delete=models.SET_NULL, null=True, blank=True)
+    semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)], null=True, blank=True)
     profile_pic = models.ImageField(default='profile_pics/default.jpeg',
                                     upload_to=profile_directory_path,
                                     validators=[validate_image_size]
                                     )
+    date_joined = models.DateField(auto_now_add=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -42,7 +35,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'department', 'semester']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    class Meta:
+        db_table = 'user'
 
     def __str__(self) -> str:
         return self.email
