@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.admin.filters import ListFilter
 from . import models
+from .actions import make_resource_verified
 
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ['name']
@@ -34,30 +34,35 @@ class NoteAdmin(admin.ModelAdmin):
     list_display = ['topic', 'file', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'contributor']
     search_fields = ['topic__name', 'contributor__email']
+    actions =[make_resource_verified]
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ['subject', 'name', 'view_link', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'contributor']
     ordering = ['name']
     search_fields = ['name', 'subject__name', 'contributor__email']
+    actions = [make_resource_verified]
 
 class WebTutorialAdmin(admin.ModelAdmin):
     list_display = ['subject', 'name', 'view_link', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'contributor']
     ordering = ['name']
     search_fields = ['name', 'subject__name','contributor__email']
+    actions = [make_resource_verified]
 
 class VideoAdmin(admin.ModelAdmin):
     list_display = ['subject', 'name', 'view_link', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'contributor']
     ordering = ['name']
     search_fields = ['name', 'subject__name', 'contributor__email']
+    actions = [make_resource_verified]
 
 class QuestionPaperAdmin(admin.ModelAdmin):
     list_display = ['subject', 'year', 'file', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'year', 'contributor']
     ordering = ['subject']
     search_fields = ['subject__name', 'year', 'contributor__email']
+    actions = [make_resource_verified]
 
 
 admin.site.register(models.Department, DepartmentAdmin)
