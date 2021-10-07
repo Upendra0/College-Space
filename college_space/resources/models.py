@@ -116,7 +116,7 @@ class Note(models.Model):
     topic = models.ForeignKey(to=Topic, on_delete=models.CASCADE, db_column='topic_id')
     file = models.FileField(
         upload_to=notes_directory_path,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf']),
          validate_file_size],
          db_column='view_link')
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
@@ -136,7 +136,7 @@ class QuestionPaper(models.Model):
     year = models.IntegerField(validators=[MinValueValidator(2015)])
     file = models.FileField(
         upload_to=question_directory_path,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpeg', 'jpg', 'png', 'txt']),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf']),
          validate_file_size],
          db_column='view_link')
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
