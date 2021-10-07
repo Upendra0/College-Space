@@ -1,6 +1,6 @@
 from .models import User
 from django.contrib import admin
-from .forms import UserChangeForm, UserCreationForm, GroupAdminForm
+from .forms import GroupAdminForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin, GroupAdmin as origGroupAdmin
 from django.contrib.auth.models import Group
 
@@ -18,8 +18,8 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {'fields':('email', 'password1', 'password2', 'first_name', 'last_name', 'department', 'semester', 'profile_pic', 'is_staff', 'is_superuser')}),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('date_joined',)
     filter_horizontal = ()
 
 #New Group admin.
