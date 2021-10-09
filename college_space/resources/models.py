@@ -104,7 +104,11 @@ class Syllabus(models.Model):
 
     class Meta:
         db_table = 'syllabus'
-
+    
+    @classmethod
+    def get_view_link(cls, dept_name, semester):
+        return cls.objects.filter(department__name=dept_name, semester=semester).values('view_link')
+        
     def __str__(self) -> str:
         return self.department.name + '(sem-' + str(self.semester) + ')'
 
