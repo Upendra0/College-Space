@@ -17,11 +17,11 @@ class Subject(models.Model):
     name = models.CharField(max_length=50)
     credit = models.FloatField(validators=[MinValueValidator(0)])
 
-    def __str__(self) -> str:
-        return self.name
-
     class Meta:
         db_table = 'subject'
+
+    def __str__(self) -> str:
+        return self.name
 
 class Taught(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
@@ -30,6 +30,13 @@ class Taught(models.Model):
 
     class Meta:
         db_table = 'taught'
+        unique_together = [['subject', 'department']]
+
+    @classmethod
+    def get_subjects(cls, dept_name, semester):
+        # Returns the set of subjects taught in particular department in particular semester.
+        return cls.objects.filter(department__name=dept_name, semester=semester).values('subject__code', 'subject__name', 'subject__credit')
+        
 
     def __str__(self) -> str:
         return self.subject.name + self.department.name
@@ -48,6 +55,10 @@ class Book(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @classmethod
+    def get_books(cls, sub_code):
+        return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'author', 'view_link')
+
 class WebTutorial(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     name = models.CharField(max_length=50)
@@ -57,6 +68,10 @@ class WebTutorial(models.Model):
 
     class Meta:
         db_table = 'web_tutorial'
+
+    @classmethod
+    def get_web_tutorials(cls, sub_code):
+        return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'view_link')
 
     def __str__(self) -> str:
         return self.name
@@ -70,6 +85,10 @@ class Video(models.Model):
 
     class Meta:
         db_table = 'video'
+
+    @classmethod
+    def get_books(cls, sub_code):
+        return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'view_link')
 
     def __str__(self) -> str:
         return self.name
@@ -147,6 +166,12 @@ class QuestionPaper(models.Model):
 
     def __str__(self) -> str:
         return self.subject.name
+
+    @classmethod
+    def get_question_papers(cls, sub_code):
+        query_set = cls.objects.filter(sub_code=sub_code, is_approved=True).values('year', 'file').order_by('-year')
+        return query_set
+
 
 
 
