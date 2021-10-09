@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Taught,Book
+from .forms import DepartmentSemesterForm
 
 # Create your views here.
 def home(request):
@@ -13,8 +14,21 @@ def home(request):
 @login_required
 def subjects(request):
     breadcrumbs = {'Home':reverse('home'), 'Subject':'None'}
-    subjects = Taught.get_subjects(dept_name="Computer Science & Engineering", semester=7)
-    context= {'subjects': subjects, 'breadcrumbs':breadcrumbs}
+    dept_name = None
+    semester = None
+    if request.method=='GET':
+        if request.user.department is None or request.user.semester is None:
+            next_url = 'subjects'
+            return redirect(to='get_department_semester', next_url=next_url) 
+        else:
+            dept_name = request.user.department.name
+            semester = request.user.semester
+    else:
+        dept_name = request.POST.get('dept_name')
+        semester = request.POST.get('semester')
+    form = DepartmentSemesterForm(data={'dept_name':dept_name, 'semester':semester})
+    subjects = Taught.get_subjects(dept_name= dept_name, semester=semester)
+    context= {'subjects': subjects, 'breadcrumbs':breadcrumbs, 'form':form}
     return render(request=request, template_name='resources/subjects.html', context=context)
 
 @login_required
@@ -42,3 +56,11 @@ def question_papers(request):
     breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Question Papers':'None'}
     context = { 'breadcrumbs':breadcrumbs}
     return render(request, template_name='resources/question_papers.html', context=context)
+
+@login_required
+def get_department_semester(request, next_url):
+    next_url = reverse(next_url)
+    print(next_url)
+    form = DepartmentSemesterForm()
+    context = {'form':form, 'next_url': next_url}
+    return render(request=request, template_name='resources/department_semester_form.html', context=context)

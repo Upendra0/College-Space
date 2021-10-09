@@ -6,6 +6,13 @@
 
 {% block content %}
     <div class = "container">
+        <div class="container">
+            <form method="post">
+                {% csrf_token %} 
+                {{ form }}
+                <button type="submit"> Update </button>
+            </form>
+        </div>
         {% if subjects %}
         <div class="row">
             {% for subject in subjects %}

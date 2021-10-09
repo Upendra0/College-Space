@@ -8,6 +8,10 @@ class Department(models.Model):
     class Meta:
         db_table = 'department'
 
+    @classmethod
+    def all_department(cls):
+        return cls.objects.all().values('name')
+
     def __str__(self) -> str:
         return self.name
 

@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import User
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
 
@@ -40,7 +39,6 @@ class UserCreationForm(UserCreationForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
@@ -86,3 +84,5 @@ class GroupAdminForm(forms.ModelForm):
     def save_m2m(self):
         self.instance.user_set.clear()
         self.instance.user_set.add(*self.cleaned_data['users'])
+
+    

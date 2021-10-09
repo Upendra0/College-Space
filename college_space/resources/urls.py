@@ -19,4 +19,5 @@ urlpatterns = [
     path('videos', view=views.video_tutorials, name='videos'),
     path('notes', view=views.notes, name='notes'),
     path('reading_tutorials', view=views.reading_tutorials, name='reading_tutorials'),
+    path('get_department_semester/<next_url>', view=views.get_department_semester, name='get_department_semester'),
 ]
