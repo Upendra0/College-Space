@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Taught,Book, Syllabus
+from .models import Note, Taught,Book, Syllabus, WebTutorial, Video, QuestionPaper
 from .forms import DepartmentSemesterForm
 
 # Create your views here.
@@ -53,38 +53,41 @@ def syllabus(request):
 
 @login_required
 def reading_tutorials(request):
-    if request.method == 'POST':
-        breadcrumbs = {'Home':reverse('home'), 'Subject': reverse('subjects'), 'Reading Tutorials': 'None'}
-        books = Book.get_books(sub_code="upyadav12")
-        context = {'books':books, 'breadcrumbs':breadcrumbs}
-        return render(request=request, template_name='resources/reading_tutorials.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject': reverse('subjects'), 'Reading Tutorials': 'None'}
+    sub_code = request.GET.get('subject_code', '??')
+    books = Book.get_books(sub_code=sub_code)
+    web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
+    context = {'books':books, 'web_tutorials': web_tutorials, 'breadcrumbs':breadcrumbs}
+    return render(request=request, template_name='resources/reading_tutorials.html', context=context)
 
 @login_required
 def video_tutorials(request):
-    if request.method == 'POST':
-        breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Video tutorials':'None'}
-        context = { 'breadcrumbs':breadcrumbs}
-        return render(request=request, template_name='resources/videos.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Video tutorials':'None'}
+    sub_code = request.GET.get('subject_code', '??')
+    video_tutorials = Video.get_videos(sub_code=sub_code)
+    context = {'videos': video_tutorials, 'breadcrumbs':breadcrumbs}
+    return render(request=request, template_name='resources/videos.html', context=context)
 
 
 @login_required
 def notes(request):
-    if request.method == 'POST':
-        breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Notes':'None'}
-        context = { 'breadcrumbs':breadcrumbs}
-        return render(request, template_name='resources/notes.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Notes':'None'}
+    sub_code = request.GET.get('subject_code')
+    notes = Note.get_all_notes(sub_code=sub_code)
+    context = {'notes':notes, 'breadcrumbs':breadcrumbs}
+    return render(request, template_name='resources/notes.html', context=context)
 
 @login_required
 def question_papers(request):
-    if request.method == 'POST':
-        breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Question Papers':'None'}
-        context = { 'breadcrumbs':breadcrumbs}
-        return render(request, template_name='resources/question_papers.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), 'Question Papers':'None'}
+    sub_code = request.GET.get('subject_code', '??')
+    question_papers = QuestionPaper.get_question_papers(sub_code=sub_code)
+    context = {'question_papers':question_papers, 'breadcrumbs':breadcrumbs}
+    return render(request, template_name='resources/question_papers.html', context=context)
 
 @login_required
 def get_department_semester(request, next_url):
     next_url = reverse(next_url)
-    print(next_url)
     form = DepartmentSemesterForm()
     context = {'form':form, 'next_url': next_url}
     return render(request=request, template_name='resources/department_semester_form.html', context=context)

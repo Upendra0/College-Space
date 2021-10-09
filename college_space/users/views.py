@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from . import forms
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login
 from django.urls import reverse
+from django.contrib import messages
 
 # Create your views here.
 
@@ -14,6 +15,8 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            succes_massage = "Your accout was created succesfully"
+            messages.success(request, succes_massage)
             return redirect(to='home')
         else:
             return render(request=request, template_name='users/register.html', context={'form':form})

@@ -91,7 +91,7 @@ class Video(models.Model):
         db_table = 'video'
 
     @classmethod
-    def get_books(cls, sub_code):
+    def get_videos(cls, sub_code):
         return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'view_link')
 
     def __str__(self) -> str:
@@ -108,7 +108,7 @@ class Syllabus(models.Model):
     @classmethod
     def get_view_link(cls, dept_name, semester):
         return cls.objects.filter(department__name=dept_name, semester=semester).values('view_link')
-        
+
     def __str__(self) -> str:
         return self.department.name + '(sem-' + str(self.semester) + ')'
 
@@ -149,6 +149,13 @@ class Note(models.Model):
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
+    class Meta:
+        db_table = 'note'
+
+    @classmethod
+    def get_all_notes(cls, sub_code):
+        return cls.objects.filter(topic__subject__code=sub_code, is_approved=True).values('topic__name', 'file', 'contributor')
+
     def __str__(self) -> str:
         return self.topic.name
 
@@ -171,13 +178,14 @@ class QuestionPaper(models.Model):
 
     class Meta:
         db_table = 'question_paper'
+        unique_together = ['subject', 'year']
 
     def __str__(self) -> str:
         return self.subject.name
 
     @classmethod
     def get_question_papers(cls, sub_code):
-        query_set = cls.objects.filter(sub_code=sub_code, is_approved=True).values('year', 'file').order_by('-year')
+        query_set = cls.objects.filter(subject__code=sub_code, is_approved=True).values('year', 'file').order_by('-year')
         return query_set
 
 

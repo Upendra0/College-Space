@@ -5,14 +5,10 @@
 {% endblock title %} 
 
 {% block content %}
+
+   {% include "resources/dept_sem_snippet.html" with form=form %}
+    
     <div class = "container">
-        <div class="container">
-            <form method="post">
-                {% csrf_token %} 
-                {{ form }}
-                <button type="submit"> Update </button>
-            </form>
-        </div>
         {% if subjects %}
         <div class="row">
             {% for subject in subjects %}
@@ -35,6 +31,10 @@
                             </form>
                             <form action="{% url 'reading_tutorials' %}">
                                 <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-info"> Reading Tutorials </button>
+                            </form>
+
+                            <form action="{% url 'question_papers' %}">
+                                <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-white"> Question Paper </button>
                             </form>
                                                           
                         </div>
