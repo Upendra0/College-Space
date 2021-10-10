@@ -47,7 +47,10 @@ def syllabus(request):
         dept_name = request.POST.get('dept_name')
         semester = request.POST.get('semester')
     form = DepartmentSemesterForm(data={'dept_name':dept_name, 'semester':semester})
-    view_link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
+    link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
+    view_link = None
+    if link:
+        view_link = link[0]['view_link']
     context = {'view_link': view_link, 'breadcrumbs':breadcrumbs, 'form':form}
     return render(request, template_name='resources/syllabus.html', context=context)
 
