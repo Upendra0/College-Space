@@ -49,7 +49,7 @@ class Book(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     name = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
-    view_link = models.CharField(max_length=500)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -66,7 +66,7 @@ class Book(models.Model):
 class WebTutorial(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     name = models.CharField(max_length=50)
-    view_link = models.CharField(max_length=500)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -83,7 +83,7 @@ class WebTutorial(models.Model):
 class Video(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     name = models.CharField(max_length=50)
-    view_link = models.CharField(max_length=500)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -100,10 +100,11 @@ class Video(models.Model):
 class Syllabus(models.Model):
     department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
-    view_link = models.CharField(max_length=255)
+    view_link = models.CharField(max_length=255, unique=True)
 
     class Meta:
         db_table = 'syllabus'
+        unique_together = ['department', 'semester']
     
     @classmethod
     def get_view_link(cls, dept_name, semester):
@@ -119,6 +120,7 @@ class Topic(models.Model):
 
     class Meta:
         db_table = 'topic'
+        unique_together = ['name', 'subject']
 
     def __str__(self) -> str:
         return self.name
@@ -151,6 +153,7 @@ class Note(models.Model):
 
     class Meta:
         db_table = 'note'
+        unique_together = ['topic', 'contributor']
 
     @classmethod
     def get_all_notes(cls, sub_code):
