@@ -139,10 +139,9 @@
       </nav>
 
 
-    <div class=" mb-8 ">
-      {% if breadcrumbs %} 
+    {% if breadcrumbs %} 
       <div class="container mt-3">
-        <nav aria-label="breadcrumb">
+        <nav1 aria-label="breadcrumb">
           <ol class="breadcrumb px-5">
             {% for name,url in breadcrumbs.items %} 
             {% if forloop.last  %}
@@ -152,16 +151,15 @@
             {% endif %} 
             {% endfor %} 
           </ol>
-        </nav>
+        </nav1>
       </div>
-    </div>
-      {% endif %} 
-
-
+    {% endif %} 
+    
     {% block content %} 
     <!-- Place your page content here. -->
     {% endblock content %}
 
+    
     <footer class="bg-nf text-center text-lg-start ">
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
