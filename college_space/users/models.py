@@ -35,6 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     objects = MyUserManager()
+    interval = 600
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -46,4 +47,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def generate_otp(self):
-        pass
+        return pyotp.TOTP(self.secret_key, interval=self.interval)
+
+    def verify_otp(self):
+        return pyotp.TOTP(self.secret_key, interval=self.interval).verify()
+
+    
