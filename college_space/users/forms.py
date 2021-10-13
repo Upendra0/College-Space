@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import widgets
 from .models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
@@ -43,6 +44,9 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [ 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
+        widgets = {
+            'profile_pic': forms.FileInput(attrs={'id':'myfile', 'style': 'display:None'})
+        }
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
