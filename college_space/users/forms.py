@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import widgets
 from .models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
+from django.contrib.auth import authenticate
 
 
 class UserCreationForm(UserCreationForm):
@@ -49,15 +49,46 @@ class UserChangeForm(forms.ModelForm):
         }
 
 class UserLoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
-    username = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control login-inpu', 'placeholder': '', 'id': 'email_input'}))
+    username = forms.EmailField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'id': 'username'}))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control login-inpu','placeholder': '', 'id': 'password_input',
+        attrs={
+            'class': 'form-control',
+            'placeholder': '',
+            'id': 'password',
         }
 ))
+
+    error_messages = {
+        'invalid_login': (
+            "Please enter a correct email and password. Note that both "
+            "fields is case-sensitive."
+        ),
+        'inactive': ("This account is inactive. <a href='{% url 'verify_account' %}' class='alert-link'> Click here </a> to activate."),
+    }
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            self.user_cache = authenticate(self.request, email=username, password=password)
+            if self.user_cache is None:
+                try:
+                    user_temp = User.objects.get(email=username)
+                except:
+                    user_temp = None
+
+                if user_temp is not None and user_temp.check_password(password):
+                        self.confirm_login_allowed(user_temp)
+                else:
+                    raise forms.ValidationError(
+                        self.error_messages['invalid_login'],
+                        code='invalid_login',
+                        params={'username': self.username_field.verbose_name},
+                    )
+
+        return self.cleaned_data
 
 
 

@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -25,6 +26,11 @@ def register(request):
     form = forms.UserCreationForm()
     return render(request=request, template_name='users/register.html', context={'form':form})
 
+class MyLoginView(LoginView):
+    template_name='users/login.html'
+    redirect_authenticated_user=True
+    authentication_form = forms.UserLoginForm
+
 @login_required
 def profile(request):
     breadcrumbs = {'Home':reverse('home'),  'Profile':'None'}
@@ -42,7 +48,6 @@ def profile(request):
         form = forms.UserChangeForm(user_data)
     return render(request=request, template_name='users/profile.html',context={'form':form, 'breadcrumbs':breadcrumbs})
 
-@login_required
 def verify_account(request):
     secret_key = pyotp.random_base32()
     minute = 10
