@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ValidationError
 from .managers import MyUserManager
+from django.core.mail import send_mail
 
 def validate_image_size(file):
     file_size = file.file.size
@@ -35,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     objects = MyUserManager()
-    interval = 600
+    interval = 900
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -46,10 +47,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         return self.email
 
-    def generate_otp(self):
-        return pyotp.TOTP(self.secret_key, interval=self.interval)
+    def send_otp(self):
+        otp= pyotp.TOTP(self.secret_key, interval=self.interval).now()
+        subject = "College Space - OTP for account Activation"
+        msg = "Hii " + self.email + " your otp for email verification is " + otp
+        send_mail(subject=subject, message=msg, from_email=None, recipient_list=[self.email])
 
-    def verify_otp(self):
-        return pyotp.TOTP(self.secret_key, interval=self.interval).verify()
+    def verify_otp(self, otp):
+        totp= pyotp.TOTP(self.secret_key, interval=self.interval)
+        print(totp.now())
+        return totp.verify(otp)
 
     

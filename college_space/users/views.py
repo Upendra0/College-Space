@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
-import pyotp
-
+from .models import User
+from django.contrib import messages
 # Create your views here.
 
 def register(request):
@@ -16,7 +16,7 @@ def register(request):
     if request.method=='POST':
         form = forms.UserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
             login(request, user)
             succes_massage = "Your accout was created succesfully"
             messages.success(request, succes_massage)
@@ -48,11 +48,42 @@ def profile(request):
         form = forms.UserChangeForm(user_data)
     return render(request=request, template_name='users/profile.html',context={'form':form, 'breadcrumbs':breadcrumbs})
 
-def verify_account(request):
-    secret_key = pyotp.random_base32()
-    minute = 10
-    otp = pyotp.TOTP(secret_key, interval= int(minute*60))
-    subject = "OTP for account confirmation"
-    msg = "Hii " + request.user.email + " your otp for email verification is" + otp.now()
-    send_mail(subject=subject, message=msg, from_email=None, recipient_list=[request.user.email])
-    return redirect(to='home')
+def send_otp(request, email, template):
+    form = None
+    if email:
+        form = forms.VeifyEmailForm(data={'email':email})
+        if form.is_valid():
+            user = User.objects.get(email=email)
+            user.send_otp()
+            msg = "Otp has been sent to your mail. Please check Inbox"
+            messages.success(request, message=msg)
+    else:
+        form = forms.VeifyEmailForm()
+    return render(request, template_name=template, context={'form':form})
+
+def verify_account(request, **kwargs):
+    template_name = "users/verify_account.html"
+    if request.method=='GET':
+        email = kwargs.get('email', None)
+        return send_otp(request, email, template=template_name)
+    else:
+        form = forms.VeifyEmailForm(request.POST)
+        if form.is_valid():
+            email = request.POST.get('email')
+            action = request.POST.get('action')
+            if action=='send':
+                return send_otp(request, email, template_name)
+            else:
+                otp = request.POST.get('otp')
+                user = User.objects.get(email=email)
+                if user.verify_otp(otp):
+                    user.is_active = True
+                    user.save()
+                    login(request, user)
+                    msg = "Your account is activated."
+                    messages.success(request, msg)
+                    return redirect(to='home')
+                else:
+                    form.add_error(field=None, error='OTP Does not match')
+        return render(request,template_name=template_name, context={'form':form})
+

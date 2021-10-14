@@ -120,4 +120,20 @@ class GroupAdminForm(forms.ModelForm):
         self.instance.user_set.clear()
         self.instance.user_set.add(*self.cleaned_data['users'])
 
+
+def validate_email(email):
+    try:
+        user = User.objects.get(email=email)
+        if user.is_active:
+            raise ValidationError(" This account is already activated. Please Login")
+    except User.DoesNotExist:
+        raise ValidationError("No account exist with this email!")
+    
+
+
+
+class VeifyEmailForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-group', 'id':'email'}), validators=[validate_email])
+    otp = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-group', 'id':'otp'}), required=False)
+
     
