@@ -6,7 +6,6 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse
 from django.contrib import messages
 from .models import User
-from django.contrib import messages
 
 
 def register(request):
