@@ -150,7 +150,7 @@ body{
 
   .sidebar-listing:hover{
       padding-left: 20px;
-      background-color: #39c0ed;
+      background-color: #210fbd;
       color: #fff;
 
   }
@@ -170,5 +170,12 @@ body{
     color: white;
     border: none;
     margin-right:2vw;
+  }
+
+  /* Style for logout btn */
+  .logout-btn:hover 
+  {
+      background-color: red;
+      color: white;
   }
 

@@ -48,13 +48,10 @@
   
   <body>
     <nav class="navbar navbar-light bg-nf">
+
         <div class="container-fluid">
-          {% if user.is_authenticated %}
             <a class="navbar-brand" href="{% url 'home' %}">
-          {% else%}
-            <a class="navbar-brand" href="{% url 'logout' %}">
-          {% endif %}
-          <span class="nav-title">College Space</span>
+          <span class="nav-title">College Space </span>
           {% comment %} <img
             src="https://github.com/atulya-karn/image/blob/main/A5.png?raw=true"
             height="44"
@@ -65,13 +62,12 @@
            </a>
 
 
-          {% if user.is_authenticated %}
-
-              <a class="openbtn" >
+          {% if user.is_authenticated %}     
+              <a class="openbtn">
               <img
                     onclick="openNav()"
                     src="{{ user.profile_pic.url }} "
-                    class="rounded-circle border border-primary"
+                    class="rounded-circle border border-primary border-2 border-white"
                     height="45"
                     width="45"
                     alt="proLOg"
@@ -97,8 +93,7 @@
                     <div class="col-9 ">
                       <p class="px-2" ><span style="font-size:1.4rem">{{ user.first_name }} {{ user.last_name }}</span>
                       <span class="text-muted">{{user.email}}</span>
-                      </p>
-                      
+                      </p>                     
                     </div>
                   </div>
                 </div>
@@ -107,13 +102,13 @@
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a class="sidebar-listing" href="{% url 'home' %}">Home</a>
                 <a class="sidebar-listing" href="{% url 'profile' %}">Profile</a>
-                <a class="sidebar-listing" href="{% url 'logout' %}">Logout</a>
                 <a class="sidebar-listing" href="{% url 'password_change' %}">Update Password</a>
                 {% if user.is_staff %}
                   <a class="sidebar-listing" href="/admin">Admin Page</a>
                 {% else %}
-                  <a class="sidebar-listing" href="#">Contact Us</a>
+                  <a class="sidebar-listing" href="/contribute"> Contribute </a>
                 {% endif %}
+                <a class="sidebar-listing logout-btn" href="{% url 'logout' %}">Logout</a>
               </div>
               
 
