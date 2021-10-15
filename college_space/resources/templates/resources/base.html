@@ -137,8 +137,8 @@
     <!-- Show breadcrumbs on page if data is passed by view function.-->
     {% if breadcrumbs %} 
       <div class="container mt-3">
-        <nav1 aria-label="breadcrumb">
-          <ol class="breadcrumb px-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
             {% for name,url in breadcrumbs.items %} 
             {% if forloop.last  %}
             <li class="breadcrumb-item active text-info"><b> {{ name }}</b> </li>
