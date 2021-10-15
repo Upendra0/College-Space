@@ -4,7 +4,6 @@ from .models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
 from django.contrib.auth import authenticate
-#from django.urls import reverse
 
 
 class UserCreationForm(UserCreationForm):
@@ -135,7 +134,7 @@ def validate_email(email):
 
 
 class VeifyEmailForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-group', 'id':'email'}), validators=[validate_email])
-    otp = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-group', 'id':'otp'}), required=False)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control', 'id':'email', 'placeholder':'Enter email to verify'}), validators=[validate_email])
+    otp = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'otp', 'placeholder':'Enter 6 digit otp'}), required=False)
 
     
