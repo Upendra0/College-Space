@@ -139,6 +139,7 @@
       </nav>
 
 
+    <!-- Show breadcrumbs on page if data is passed by view function.-->
     {% if breadcrumbs %} 
       <div class="container mt-3">
         <nav1 aria-label="breadcrumb">
@@ -154,6 +155,17 @@
         </nav1>
       </div>
     {% endif %} 
+
+  <!-- Show messages on a page if it is available on a request. --> 
+  {% if messages %}
+  <div class="container">
+    <ul class="messages" style="list-style-type: none;">
+      {% for message in messages %}
+      <li{% if message.tags %} class=" alert alert-{{ message.tags }}"{% endif %} role="alert">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
     
     {% block content %} 
     <!-- Place your page content here. -->

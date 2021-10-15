@@ -11,13 +11,13 @@ def validate_image_size(file):
     file_size = file.file.size
     limit_mb = 1
     if file_size > limit_mb * 1024 * 1024:
-        raise ValidationError("Max size of file is %s MB" % limit_mb)
+        raise ValidationError(f"Max size of file is { limit_mb } MB")
 
 
 def profile_directory_path(instance, filename):
     f_name, extension = os.path.splitext(filename)
-    user = instance.first_name + '( ' + instance.email + ' )' + extension
-    return 'profile_pics/' + user
+    user = f"{instance.first_name}({instance.email}){extension}"
+    return f'profile_pics/{user}'
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, primary_key=True)
@@ -50,12 +50,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def send_otp(self):
         otp= pyotp.TOTP(self.secret_key, interval=self.interval).now()
         subject = "College Space - OTP for account Activation"
-        msg = "Hii " + self.email + " your otp for email verification is " + otp
-        send_mail(subject=subject, message=msg, from_email=None, recipient_list=[self.email])
+        msg = f"Hii {self.email}  your otp for email verification is {otp}"
+        send_mail(subject=subject, message=msg, from_email=None, recipient_list=[self.email], fail_silently=True)
 
     def verify_otp(self, otp):
         totp= pyotp.TOTP(self.secret_key, interval=self.interval)
-        print(totp.now())
         return totp.verify(otp)
 
     

@@ -16,7 +16,6 @@ def register(request):
         form = forms.UserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            messages.info(request, "Please Verify your account.")
             return redirect(to='verify_account_with_email', email=user.email)
         else:
             return render(request=request, template_name='users/register.html', context={'form':form})
@@ -52,7 +51,7 @@ def send_otp(request, email, template):
         if form.is_valid():
             user = User.objects.get(email=email)
             user.send_otp()
-            msg = "A 6 digit Otp has been sent to your mail. Please check Inbox"
+            msg = "A 6 digit Otp has been sent to your mail. Please check Inbox. (Check Spam folder if it is not showing)"
             messages.success(request, message=msg)
     else:
         form = forms.VeifyEmailForm()
@@ -76,8 +75,6 @@ def verify_account(request, email=None):
                     user.is_active = True
                     user.save()
                     login(request, user)
-                    msg = "Your account is activated."
-                    messages.success(request, msg)
                     return redirect(to='home')
                 else:
                     form.add_error(field=None, error='OTP Does not match')
