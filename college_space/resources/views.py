@@ -14,19 +14,22 @@ def home(request):
 @login_required
 def subjects(request):
     breadcrumbs = {'Home':reverse('home'), 'Subject':'None'}
-    dept_name = None
-    semester = None
-    if request.method=='GET':
-        if request.user.department is None or request.user.semester is None:
-            next_url = 'subjects'
-            return redirect(to='get_department_semester', next_url=next_url) 
-        else:
-            dept_name = request.user.department.name
-            semester = request.user.semester
-    else:
+    dept_name = request.user.department
+    semester = request.user.semester
+    if dept_name is None:
+        dept_name = request.session.get('department', None)
+    if semester is None:
+        semester = request.session.get('semester', None)
+    if request.method=='GET' and (dept_name is None or semester is None):
+        next_url = 'subjects'
+        return redirect(to='get_department_semester', next_url=next_url)   
+    elif request.method == 'POST':
         dept_name = request.POST.get('dept_name')
         semester = request.POST.get('semester')
-    form = DepartmentSemesterForm(data={'dept_name':dept_name, 'semester':semester})
+        request.session['department'] = dept_name
+        request.session['semester'] = semester
+    form_data = {'dept_name':dept_name, 'semester':semester}
+    form = DepartmentSemesterForm(data=form_data)
     subjects = Taught.get_subjects(dept_name= dept_name, semester=semester)
     context= {'subjects': subjects, 'breadcrumbs':breadcrumbs, 'form':form}
     return render(request=request, template_name='resources/subjects.html', context=context)
@@ -34,19 +37,23 @@ def subjects(request):
 @login_required
 def syllabus(request):
     breadcrumbs = {'Home':reverse('home'), 'Syllabus':'None'}
-    dept_name = None
-    semester = None
-    if request.method == 'GET':
-        if request.user.department is None or request.user.semester is None:
-            next_url = 'syllabus'
-            return redirect(to='get_department_semester', next_url=next_url)
-        else:
-            dept_name = request.user.department.name
-            semester = request.user.semester
-    else:
+    dept_name = request.user.department
+    semester = request.user.semester
+    if dept_name is None:
+        dept_name = request.session.get('department', None)
+    if semester is None:
+        semester = request.session.get('semester', None)
+    if request.method=='GET' and (dept_name is None or semester is None):
+        next_url = 'syllabus'
+        return redirect(to='get_department_semester', next_url=next_url)  
+    elif request.method=='POST':
         dept_name = request.POST.get('dept_name')
         semester = request.POST.get('semester')
-    form = DepartmentSemesterForm(data={'dept_name':dept_name, 'semester':semester})
+        request.session['department'] = dept_name
+        request.session['semester'] = semester
+
+    form_data = {'dept_name':dept_name, 'semester':semester}
+    form = DepartmentSemesterForm(data=form_data)
     link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
     view_link = None
     if link:
