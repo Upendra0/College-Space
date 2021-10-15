@@ -4,6 +4,7 @@ from .models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
 from django.contrib.auth import authenticate
+#from django.urls import reverse
 
 
 class UserCreationForm(UserCreationForm):
@@ -57,14 +58,15 @@ class UserLoginForm(AuthenticationForm):
             'placeholder': '',
             'id': 'password',
         }
-))
+        ))
 
+    inactive_link = "<a href=" + "'"+ "http://127.0.0.1:8000/user/verify_account/" +"'" +"class='alert-link'> Click Here </a>"
     error_messages = {
         'invalid_login': (
             "Please enter a correct email and password. Note that both "
             "fields is case-sensitive."
         ),
-        'inactive': ("This account is inactive. <a href='{% url 'verify_account' %}' class='alert-link'> Click here </a> to activate."),
+        'inactive': ("This account is inactive."+inactive_link),
     }
 
     def clean(self):

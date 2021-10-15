@@ -5,10 +5,9 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse
 from django.contrib import messages
-from django.core.mail import send_mail
 from .models import User
 from django.contrib import messages
-# Create your views here.
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -16,11 +15,9 @@ def register(request):
     if request.method=='POST':
         form = forms.UserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save(commit=False)
-            login(request, user)
-            succes_massage = "Your accout was created succesfully"
-            messages.success(request, succes_massage)
-            return redirect(to='home')
+            user = form.save()
+            messages.info(request, "Please Verify your account.")
+            return redirect(to='verify_account_with_email', email=user.email)
         else:
             return render(request=request, template_name='users/register.html', context={'form':form})
     form = forms.UserCreationForm()
@@ -55,16 +52,15 @@ def send_otp(request, email, template):
         if form.is_valid():
             user = User.objects.get(email=email)
             user.send_otp()
-            msg = "Otp has been sent to your mail. Please check Inbox"
+            msg = "A 6 digit Otp has been sent to your mail. Please check Inbox"
             messages.success(request, message=msg)
     else:
         form = forms.VeifyEmailForm()
     return render(request, template_name=template, context={'form':form})
 
-def verify_account(request, **kwargs):
+def verify_account(request, email=None):
     template_name = "users/verify_account.html"
     if request.method=='GET':
-        email = kwargs.get('email', None)
         return send_otp(request, email, template=template_name)
     else:
         form = forms.VeifyEmailForm(request.POST)
