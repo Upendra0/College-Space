@@ -7,46 +7,69 @@
 {% block content %}
   <div class="container my-4">
     <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-4 register-overviews-container">
-        
-
+      <div class="col-md-5 offset-md-1 register-overviews-container">
       </div>
-      <div class="col-md-4 bg-nf py-4 register-form-container ">
+      <div class="col-md-5 bg-nf py-4 register-form-container ">
         <form method="POST" class="form-group px-4 register-form" autocompletes="off" enctype="multipart/form-data">
-          <h2 class="text-center text-info ">Create your account</h2>
-          {% csrf_token %} {{ form.non_field_errors }}
-            {{ form.first_name.errors }}
-              <label for="name_input"> First Name </label>
-            {{ form.first_name }}
+          {% csrf_token %}
 
-            {{ form.last_name.errors }}
-              <label for="name_input"> Last Name </label>
-            {{ form.last_name }}
+          <div class="row">
+            <h2 class="text-center text-info ">Create your account</h2>
+            {% if form.non_field_errors %}
+            <ul class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                 {% autoescape off %}
+                <li> <strong> {{ error}} </li> </strong>
+                {% endautoescape %}
+            {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
 
-            {{ form.email.errors }}
-              <label for="email_input"> Email* </label>
-            {{ form.email }}
-
-            {{ form.password1.errors }}
-              <label for="password1_input"> Password </label>
-            {{ form.password1}}
-
-            {{ form.password2.errors }}
-              <label for="password2_input"> Confirm Password </label>
-            {{ form.password2 }}
-
-            {{ form.department.errors }}
-              <label for="department_input"> Department </label>
-            {{ form.department }}
-
-            {{ form.semester.errors }}
-              <label for="semester_input"> Semester </label>
-            {{ form.semester }}
-
-            {{ form.profile_pic.errors }}
+          <div class="row">
+            <dif class="col-md">
               <label for="profile_pic_input"> Profile Picture </label>
-            {{ form.profile_pic }}
+              {{ form.profile_pic }}
+              {{ form.profile_pic.errors }}
+            </dif>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <label for="{{ form.first_name.id_for_label}}"> First Name </label>
+              {{ form.first_name }}
+              {{ form.first_name.errors }}
+            </div>
+            <div class="col-md">
+              <label for="{{ form.last_name.id_for_label}}"> Last Name </label>
+              {{ form.last_name }}
+              {{ form.last_name.errors }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <label for="{{ form.email.id_for_label}}"> Email </label>
+              {{ form.email }}
+              {{ form.email.errors }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <label for="{{ form.password1.id_for_label}}"> Password </label>
+               {{ form.password1}}
+               {{ form.password1.errors }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md">
+              <label for="{{ form.password2.id_for_label}}"> Confirm Password </label>
+               {{ form.password2 }}
+               {{ form.password2.errors }}
+            </div>
+          </div>
 
             <div>
               <a class=" float-start p-2 text-info" href="{% url 'login'  %}">Log in instead</a>
