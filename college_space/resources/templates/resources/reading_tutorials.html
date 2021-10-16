@@ -1,21 +1,21 @@
 {% extends "resources/base.html" %}  
 
 {% block title %} 
+<title> College Space | Reading Tutorials </title>
 {% endblock title %} 
 
 {% block content %} 
 
 
 <div class="container p-2 mt-3">
-    {% comment %} Books container start {% endcomment %}
+    <!--Books container start -->
     <div class="container mt-4">
-        <h4 class="text-center"> BOOKS </h4>
-        <table class="table table-striped table-hover table-bordered mt-1 text-center">
+        <h4 class="text-center"> Books </h4>
+        <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
             <thead  class="">
                 <tr>
                 <th scope="col" class="col-5">Name</th>
                 <th scope="col" class="col-4" >Author</th>
-                <th scope="col" class="col-1">Rating</th>
                 <th scope="col"  class="col-2" >Download link</th>
                 </tr>
             </thead>
@@ -24,40 +24,35 @@
                 <tr>
                 <td>{{ book.name }} </td>
                 <td>{{ book.author }}</td>
-                <td><span style="font-size:1.5em;">{{ book.rating }}</span> ⭐ </td>
-                <td><a href=" {{ book.link }}" class="btn btn-info">Download </a></td>
+                <td><a href=" {{ book.view_link }}" class="btn btn-info" target="_blank">Download </a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    {% comment %} End books container {% endcomment %}
+    <!--- End books container -->
 
 
-    {% comment %} Start web tutorials {% endcomment %}
+    <!--Start web tutorials -->
     <div class="container mt-5">
-        <h4 class="text-center"> WEB TUTORIALS </h4>
-        <table class="table table-striped table-hover table-bordered mt-1 text-center">
+        <h4 class="text-center"> Web Tutorials </h4>
+        <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
             <thead  class="">
                 <tr>
                 <th scope="col" class="col-5">Name</th>
-                <th scope="col" class="col-4" >Author</th>
-                <th scope="col" class="col-1">Rating</th>
-                <th scope="col"  class="col-2" >Download link</th>
+                <th scope="col"  class="col-2" > Link</th>
                 </tr>
             </thead>
             <tbody>
             {% for web_tutorial in web_tutorials %}
                 <tr>
                 <td>{{ web_tutorial.name }} </td>
-                <td>{{ web_tutorial.author }}</td>
-                <td><span style="font-size:1.5em;">{{ web_tutorial.rating }}</span> ⭐ </td>
-                <td><a href=" {{ web_tutorial.link }}" class="btn btn-info">Download </a></td>
+                <td><a href=" {{ web_tutorial.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    {% comment %} End web tutorials {% endcomment %}
+    <!-- End web tutorials -->
 </div>
 {% endblock content %} 

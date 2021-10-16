@@ -1,25 +1,35 @@
 {% extends "resources/base.html" %}  
 
 {% block title %} 
+<title> College Space | Videos </title>
 {% endblock title %} 
 
 {% block content %} 
 
-<div class="container p-2 mt-3">
-    {% comment %} start video container {% endcomment %}
-    <div class="container mt-4">
-        <h4 class="text-center"> SEE ALL VIDEO LECTURE HERE {{ subject.name }} </h4>
-    </div>
+{% if videos %}
+<div class="container mt-5">
+    <h4 class="text-center"> Video Tutorials </h4>
+    <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
+        <thead  class="">
+            <tr>
+            <th scope="col" class="col-md-2">Name</th>
+            <th scope="col"  class="col-md-1" > Link</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for video in videos %}
+            <tr>
+            <td>{{ video.name }} </td>
+            <td><a href=" {{ video.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<h2> Create video template below </h2>
+{% else %} 
 <div class="container">
-    {% for video in vidoes %}
-    <h2> Name {{ video.name }} </h2> 
-    <h6> Author {{ video.author }} </h6>
-    <a href="{{ video.link }} "> Video Link </a>
-    <h6> Rating {{ video.rating }}</h6>
-    {% endfor %} 
-</div> 
+    <h2> Video Lectures will be uploaded Soon!</h2>
+</div>
+{% endif %}
 
 {% endblock content %} 

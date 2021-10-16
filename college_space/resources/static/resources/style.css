@@ -178,3 +178,9 @@ body{
       background-color: red;
       color: white;
   }
+
+  input
+  {
+      background-color: #111;
+      color: black;
+  }

@@ -12,7 +12,7 @@
         {% if subjects %}
             <div class="row"  >
                 {% for subject in subjects %}
-                    <div class="col-md-5 card mx-auto border my-3 text-white bg-dark" >
+                    <div class="col-md-5 card border my-3 text-white bg-dark me-md-3 shadow-lg" >
                         <div class="card-header text-center p-3">
                         <h3> {{ subject.subject__name }} </h3>
                         </div>
@@ -24,18 +24,18 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <form action="{% url 'videos' %}">
-                                    <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-secondary"> Video Tutorials </button>
+                                    <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-secondary"> Video Tutorials </button>
                                 </form>
                                 <form action="{% url 'notes' %}">
-                                    <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-secondary"> Notes </button>
+                                    <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-secondary"> Notes </button>
                                 </form>
                                 <form action="{% url 'reading_tutorials' %}">
-                                    <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-secondary"> Reading Tutorials </button>
+                                    <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-secondary"> Reading Tutorials </button>
                                 </form>                    
                             </div>
                             <div class=" mt-2">
                                 <form action="{% url 'question_papers' %}">
-                                    <button name="subject_code" type="submit" value="{{ subject.code }}" class="btn btn-primary  btn-block"> Question Paper </button>
+                                    <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-primary  btn-block"> Question Paper </button>
                                 </form>
                             </div>
                                 

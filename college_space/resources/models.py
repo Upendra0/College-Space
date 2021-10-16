@@ -27,6 +27,13 @@ class Subject(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @classmethod
+    def get_name(cls, sub_code):
+        try:
+            return cls.objects.get(code=sub_code).name
+        except Subject.DoesNotExist:
+            return None
+
 class Taught(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
@@ -75,7 +82,7 @@ class WebTutorial(models.Model):
 
     @classmethod
     def get_web_tutorials(cls, sub_code):
-        return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'view_link')
+        return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name','view_link')
 
     def __str__(self) -> str:
         return self.name
@@ -157,7 +164,14 @@ class Note(models.Model):
 
     @classmethod
     def get_all_notes(cls, sub_code):
-        return cls.objects.filter(topic__subject__code=sub_code, is_approved=True).values('topic__name', 'file', 'contributor')
+        notes_set= cls.objects.filter(topic__subject__code=sub_code, is_approved=True).order_by('topic__name')
+        notes = []
+        for note in notes_set:
+            topic_name = note.topic.name
+            contributor = f'{note.contributor.first_name} {note.contributor.last_name}'
+            view_link = note.file.url
+            notes.append({'topic_name':topic_name, 'contributor':contributor, 'view_link':view_link})
+        return notes
 
     def __str__(self) -> str:
         return self.topic.name
@@ -188,8 +202,14 @@ class QuestionPaper(models.Model):
 
     @classmethod
     def get_question_papers(cls, sub_code):
-        query_set = cls.objects.filter(subject__code=sub_code, is_approved=True).values('year', 'file').order_by('-year')
-        return query_set
+        question_set = cls.objects.filter(subject__code=sub_code, is_approved=True).order_by('-year')
+        questions= []
+        for question in question_set:
+            year = question.year
+            view_link = question.file.url
+            contributor = f'{ question.contributor.first_name} {question.contributor.last_name}'
+            questions.append({'year':year, 'contributor':contributor, 'view_link':view_link})
+        return questions
 
 
 

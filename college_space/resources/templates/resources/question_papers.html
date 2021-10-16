@@ -1,0 +1,41 @@
+{% extends "resources/base.html" %}
+
+{% block title %}
+<title> College Space | Question Paper </title>
+{% endblock title %}
+
+{% block content %} 
+<div class="container p-2 mt-3">
+   
+    <!--Start Question table -->
+    {% if question_papers %}
+    <div class="container mt-5">
+        <h4 class="text-center"> Question Papers </h4>
+        <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
+            <thead  class="">
+                <tr>
+                <th scope="col" class="col-md-1"> Year </th>
+                <th scope="col" class="col-md-2"> Contributor </th>
+                <th scope="col"  class="col-md-1" > View Link </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in question_papers %}
+                <tr>
+                <td>{{ question.year }} </td>
+                <td>{{ question.contributor }}</td>
+                <td><a href="{{ question.view_link }} " class="btn btn-info" target="_blank"> Download </a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %} 
+    <div class="container">
+        <h2> Video Lectures will be uploaded Soon!</h2>
+    </div>
+    {% endif %}
+    <!--End Question table -->
+</div>  
+
+{% endblock content %} 
