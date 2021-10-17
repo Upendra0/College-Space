@@ -133,7 +133,7 @@ body{
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
-  }
+}
   
   /* The sidepanel links */
   .sidepanel a {
@@ -143,44 +143,42 @@ body{
     color: #818181;
     display: block;
     transition: 0.3s;
-  }
+}
   
-  /* When you mouse over the navigation links, change their color */
+/* When you mouse over the navigation links, change their color */
   
 
-  .sidebar-listing:hover{
+.sidebar-listing:hover{
       padding-left: 20px;
       background-color: #210fbd;
       color: #fff;
+}
 
-  }
-  
-  /* Position and style the close button (top right corner) */
-  .sidepanel .closebtn {
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-  }
+}
   
-  /* Style the button that is used to open the sidepanel */
-  .openbtn {
+/* Style the button that is used to open the sidepanel */
+.openbtn {
     background-color: #151515;
     color: white;
     border: none;
     margin-right:2vw;
-  }
+}
 
-  /* Style for logout btn */
-  .logout-btn:hover 
-  {
-      background-color: red;
-      color: white;
-  }
+/* Style for logout btn */
+.logout-btn:hover 
+{
+    background-color: red;
+    color: white;
+}
 
-  input
-  {
-      background-color: #111;
-      color: black;
-  }
+.dark-text
+{
+    color: rgb(167, 177, 177);
+}
