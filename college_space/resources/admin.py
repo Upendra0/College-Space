@@ -50,7 +50,7 @@ class WebTutorialAdmin(admin.ModelAdmin):
     search_fields = ['name', 'subject__name','contributor__email']
     actions = [make_resource_verified]
 
-class VideoAdmin(admin.ModelAdmin):
+class VideoTutorialAdmin(admin.ModelAdmin):
     list_display = ['subject', 'name', 'view_link', 'contributor', 'is_approved']
     list_filter = ['is_approved', 'contributor']
     ordering = ['name']
@@ -73,5 +73,5 @@ admin.site.register(models.Syllabus, SyllabusAdmin)
 admin.site.register(models.Note, NoteAdmin)
 admin.site.register(models.Book, BookAdmin)
 admin.site.register(models.WebTutorial, WebTutorialAdmin)
-admin.site.register(models.Video, VideoAdmin)
+admin.site.register(models.VideoTutorial, VideoTutorialAdmin)
 admin.site.register(models.QuestionPaper, QuestionPaperAdmin)

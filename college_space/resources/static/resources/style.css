@@ -182,3 +182,18 @@ body{
 {
     color: rgb(167, 177, 177);
 }
+
+.container 
+{
+    margin-left: 6%;
+}
+
+.content-container
+{
+    transition: 1s;
+}
+
+.content-container:hover
+{
+    transform: scale(1.019);
+}

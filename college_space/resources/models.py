@@ -87,7 +87,7 @@ class WebTutorial(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class Video(models.Model):
+class VideoTutorial(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     name = models.CharField(max_length=50)
     view_link = models.CharField(max_length=500, unique=True)

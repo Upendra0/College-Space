@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Note, Subject, Taught,Book, Syllabus, WebTutorial, Video, QuestionPaper
+from .models import Note, Subject, Taught,Book, Syllabus, WebTutorial, VideoTutorial, QuestionPaper
 from .forms import DepartmentSemesterForm
 
 # Create your views here.
@@ -62,23 +62,23 @@ def syllabus(request):
     return render(request, template_name='resources/syllabus.html', context=context)
 
 @login_required
-def reading_tutorials(request):
+def online_tutorials(request):
     sub_code = request.GET.get('subject_code', '??')
-    books = Book.get_books(sub_code=sub_code)
+    video_tutorials = VideoTutorial.get_videos(sub_code=sub_code)
     web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Reading Tutorials-{sub_name}':'None'}
-    context = {'books':books, 'web_tutorials': web_tutorials, 'breadcrumbs':breadcrumbs}
-    return render(request=request, template_name='resources/reading_tutorials.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Online Tutorials-{sub_name}':'None'}
+    context = {'videos': video_tutorials, 'web_tutorials': web_tutorials, 'breadcrumbs':breadcrumbs}
+    return render(request=request, template_name='resources/online_tutorials.html', context=context)
 
 @login_required
-def video_tutorials(request):
+def books(request):
     sub_code = request.GET.get('subject_code', '??')
-    video_tutorials = Video.get_videos(sub_code=sub_code)
+    books = Book.get_books(sub_code=sub_code)    
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Video Tutorials-{sub_name}':'None'}
-    context = {'videos': video_tutorials, 'breadcrumbs':breadcrumbs}
-    return render(request=request, template_name='resources/videos.html', context=context)
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books-{sub_name}':'None'}
+    context = {'books':books, 'breadcrumbs':breadcrumbs}
+    return render(request=request, template_name='resources/books.html', context=context)
 
 
 @login_required
@@ -105,3 +105,7 @@ def get_department_semester(request, next_url):
     form = DepartmentSemesterForm()
     context = {'form':form, 'next_url': next_url}
     return render(request=request, template_name='resources/department_semester_form.html', context=context)
+
+
+def team(request):
+    return render(request, template_name="resources/team.html")

@@ -1,13 +1,12 @@
 {% extends "resources/base.html" %}  
 
 {% block title %} 
-<title> College Space | Reading Tutorials </title>
+<title> College Space | Book </title>
 {% endblock title %} 
 
 {% block content %} 
 
-
-<div class="container p-2 mt-3">
+{% if books %}
     <!--Books container start -->
     <div class="container mt-4">
         <h4 class="text-center"> Books </h4>
@@ -31,28 +30,10 @@
         </table>
     </div>
     <!--- End books container -->
-
-
-    <!--Start web tutorials -->
-    <div class="container mt-5">
-        <h4 class="text-center"> Web Tutorials </h4>
-        <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
-            <thead  class="">
-                <tr>
-                <th scope="col" class="col-5">Name</th>
-                <th scope="col"  class="col-2" > Link</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for web_tutorial in web_tutorials %}
-                <tr>
-                <td>{{ web_tutorial.name }} </td>
-                <td><a href=" {{ web_tutorial.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <!-- End web tutorials -->
+{% else %} 
+<div class="container">
+    <h2> Books will be uploaded Soon!</h2>
 </div>
+{% endif %}
+
 {% endblock content %} 
