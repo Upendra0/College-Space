@@ -14,6 +14,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+#Admin page settings for header, title.
+admin.site.site_header = 'College Space Administration' 
+admin.site.index_title = 'College Space'
+admin.site.site_title = 'Adminsitration'
+
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('resources.urls')),
