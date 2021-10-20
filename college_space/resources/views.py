@@ -62,42 +62,87 @@ def syllabus(request):
     return render(request, template_name='resources/syllabus.html', context=context)
 
 @login_required
-def online_tutorials(request):
-    sub_code = request.GET.get('subject_code', '??')
-    video_tutorials = VideoTutorial.get_videos(sub_code=sub_code)
-    web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
+def online_tutorials(request, sub_code):
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Online Tutorials-{sub_name}':'None'}
-    context = {'videos': video_tutorials, 'web_tutorials': web_tutorials, 'breadcrumbs':breadcrumbs}
+    context = {}
+    error_message = None
+    if sub_name is None:
+        sub_name = ""
+        error_message = "This subject does not exist."
+    else:
+        video_tutorials = VideoTutorial.get_videos(sub_code=sub_code)
+        web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
+        sub_name = "-" + sub_name
+        if (not video_tutorials) and (not web_tutorials):
+            error_message = "Tutorials are not available now, but will be uploaded soon."
+        else:
+            context['videos'] = video_tutorials
+            context['web_tutorials'] = web_tutorials
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Online Tutorials {sub_name}':'None'}
+    context['error'] = error_message
+    context['breadcrumbs'] = breadcrumbs
     return render(request=request, template_name='resources/online_tutorials.html', context=context)
 
 @login_required
-def books(request):
-    sub_code = request.GET.get('subject_code', '??')
-    books = Book.get_books(sub_code=sub_code)    
+def books(request, sub_code):
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books-{sub_name}':'None'}
-    context = {'books':books, 'breadcrumbs':breadcrumbs}
+    context = {}
+    error_message = None
+    if sub_name is None:
+        sub_name = ""
+        error_message = "This subject does not exist."
+    else:
+        books = Book.get_books(sub_code=sub_code) 
+        sub_name = "-"+sub_name
+        if not books:
+            error_message = "Books are not available now, but will be uploaded soon."  
+        else:
+            context['books'] = books 
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
+    context['error'] = error_message
+    context['breadcrumbs'] = breadcrumbs
     return render(request=request, template_name='resources/books.html', context=context)
 
 
 @login_required
-def notes(request):
-    sub_code = request.GET.get('subject_code', '??')
-    notes = Note.get_all_notes(sub_code=sub_code)
+def notes(request, sub_code):
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Notes-{sub_name}':'None'}
-    context = {'notes':notes, 'breadcrumbs':breadcrumbs}
-    return render(request, template_name='resources/notes.html', context=context)
+    context = {}
+    error_message = None
+    if sub_name is None:
+        sub_name = ""
+        error_message = "This subject does not exist."
+    else:
+        notes = Note.get_all_notes(sub_code=sub_code)
+        sub_name = "-"+sub_name
+        if not notes:
+            error_message = "Notes are not available now, but will be uploaded soon."  
+        else:
+            context['notes'] = notes 
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
+    context['error'] = error_message
+    context['breadcrumbs'] = breadcrumbs
+    return render(request=request, template_name='resources/notes.html', context=context)
 
 @login_required
-def question_papers(request):
-    sub_code = request.GET.get('subject_code', '??')
-    question_papers = QuestionPaper.get_question_papers(sub_code=sub_code)
+def question_papers(request, sub_code):
     sub_name = Subject.get_name(sub_code=sub_code)
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Question Papers-{sub_name}':'None'}
-    context = {'question_papers':question_papers, 'breadcrumbs':breadcrumbs}
-    return render(request, template_name='resources/question_papers.html', context=context)
+    context = {}
+    error_message = None
+    if sub_name is None:
+        sub_name = ""
+        error_message = "This subject does not exist."
+    else:
+        question_papers = QuestionPaper.get_question_papers(sub_code=sub_code)
+        sub_name = "-"+sub_name
+        if not question_papers:
+            error_message = "Question papers are not available now, but will be uploaded soon."  
+        else:
+            context['question_papers'] = question_papers
+    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
+    context['error'] = error_message
+    context['breadcrumbs'] = breadcrumbs
+    return render(request=request, template_name='resources/question_papers.html', context=context)
 
 @login_required
 def get_department_semester(request, next_url):

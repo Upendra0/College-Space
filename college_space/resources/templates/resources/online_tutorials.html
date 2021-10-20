@@ -8,6 +8,12 @@
 
 
 <div class="container p-2 mt-3">
+    {% if error %} 
+    <div class="container alert alert-info">
+        <h5>{{ error }} </h5>
+    </div>
+    {% else %} 
+
     {% if videos %} 
     <div class="container mt-5">
         <h4 class="text-center"> Video Tutorials </h4>
@@ -28,8 +34,9 @@
             </tbody>
         </table>
     </div>
+    {% endif %} 
 
-    {% elif web_tutorial %}
+    {% if web_tutorials %}
     <!--Start web tutorials -->
     <div class="container mt-5">
         <h4 class="text-center"> Web Tutorials </h4>
@@ -51,11 +58,8 @@
         </table>
     </div>
     <!-- End web tutorials -->
-     {% else %} 
-     <div class="container">
-         OOps!
-     </div>
+    {% endif %} 
 
-     {% endif %}
+    {% endif %}
 </div>
 {% endblock content %} 

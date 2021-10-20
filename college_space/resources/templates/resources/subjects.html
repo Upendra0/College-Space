@@ -12,7 +12,7 @@
         {% if subjects %}
             <div class="row border-danger">
                 {% for subject in subjects %}
-                    <div class="col-md-5 col-lg-4 mb-1 card border text-white bg-dark content-container" >
+                    <div class="col-md-5 col-lg-4 mb-1 card border text-white bg-dark">
                         <div class=" text-center pt-3">
                         <h3> {{ subject.subject__name }} </h3>
                         </div>
@@ -26,27 +26,19 @@
 
                             <div class="row">
                                 <div class="col align-self-start">
-                                    <form action="{% url 'notes' %}">
-                                        <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-primary btn-block mb-2"> Notes </button>
-                                    </form>
+                                    <a href="{% url 'notes' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Notes </a>  
                                 </div>
                                 <div class="col align-self-end">
-                                    <form action="{% url 'online_tutorials' %}">
-                                        <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-primary btn-block mb-2"> Online Tutorials </button>
-                                    </form>                 
+                                    <a href="{% url 'books' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Books </a>              
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col align-self-start">
-                                    <form action="{% url 'books' %}">
-                                        <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-primary btn-block mb-2"> Books </button>
-                                    </form>  
+                                    <a href="{% url 'online_tutorials' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Online Tutorials </a>  
                                 </div>
                                 <div class="col align-self-end"> 
-                                    <form action="{% url 'question_papers' %}">
-                                        <button name="subject_code" type="submit" value="{{ subject.subject__code }}" class="btn btn-primary btn-block mb-2"> Question Paper </button>
-                                    </form>
+                                    <a href="{% url 'question_papers' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Question Papers </a>  
                                 </div>
                             </div>   
                         </div>

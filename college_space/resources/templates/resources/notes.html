@@ -6,7 +6,11 @@
 
 {% block content %} 
 <div class="container p-2 mt-1">
-   
+    {% if error %} 
+    <div class="container alert alert-info">
+        <h5>{{ error }} </h5>
+    </div>
+    {% else %}    
     <!--Start Notes table -->
     {% if notes %}
     <div class="container mt-2">
@@ -30,10 +34,7 @@
             </tbody>
         </table>
     </div>
-    {% else %} 
-    <div class="container">
-        <h2> Video Lectures will be uploaded Soon!</h2>
-    </div>
+    {% endif %} 
     {% endif %}
     <!--End notes table -->
 </div>  
