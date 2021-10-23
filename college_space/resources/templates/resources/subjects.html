@@ -8,17 +8,18 @@
 
    {% include "resources/dept_sem_snippet.html" with form=form %}
     
-    <div class = "container">
+    <div class = "container mb-2 " >
         {% if subjects %}
-            <div class="row border-danger">
+            <div class="row d-flex justify-content-around " style="min-height:63vh">
                 {% for subject in subjects %}
-                    <div class="col-md-5 col-lg-4 mb-1 card border text-white bg-dark">
+                <div class=" col-12 col-md-4  mb-3">
+                    <div class="card border text-white bg-dark p-2" style="height:300px">
                         <div class=" text-center pt-3">
                         <h3> {{ subject.subject__name }} </h3>
                         </div>
 
                         <div class="card-body mt-0">
-                            <hr>
+                            <hr style="color:#013ADF; height:0.2rem">
                             <div class="d-flex justify-content-between">
                                 <p class="card-text">Code : {{ subject.subject__code  }}</span></p>
                                 <p class="card-text">Credit:{{ subject.subject__credit }}</span></p>
@@ -43,10 +44,11 @@
                             </div>   
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             </div>
         {% else %} 
-        <div  class="container mt-5 text-center">
+        <div  class="container mt-5 text-center" style="min-height:59vh">
             <h2> No subjects available! Sorry </h2>
         </div>
         

@@ -6,7 +6,7 @@
 
 {% block content %}
 {% include "resources/dept_sem_snippet.html" with form=form %}
-    <div class = "container mt-4">
+    <div class = "container mt-5"  style="min-height:60vh">
         {% if view_link %}
         <div class="row">
             <a href="{{view_link}}">
@@ -14,7 +14,7 @@
             </a>
         </div>
         {% else %} 
-        <h2> Syllabus is not available! We will upload soon. </h2>
+        <h3 class='text-center text-muted'> Syllabus is not available! We will upload soon. </h3>
         {% endif %} 
     </div>
 {% endblock content %} 
