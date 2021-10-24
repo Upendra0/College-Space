@@ -1,0 +1,22 @@
+{% extends "resources/base.html" %}
+
+{% block title %}
+<title> College Space | Resources </title>
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    <h5> Choose Resource type </h5>
+    <div class="row">
+        {% for url in urls %} 
+        <div class="col-md-5 m-1 message-succes">
+            <a href="{{ url.url }}">
+                <div class="col">
+                    <h5> {{ url.name }}</h5>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

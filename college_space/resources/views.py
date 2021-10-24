@@ -1,156 +1,252 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Note, Subject, Taught,Book, Syllabus, WebTutorial, VideoTutorial, QuestionPaper
-from .forms import DepartmentSemesterForm
+from django.urls.base import reverse_lazy
+from django.views.generic.edit import CreateView
+from .models import Note, Subject, Taught, Book, Syllabus, WebTutorial, VideoTutorial, QuestionPaper
+from .forms import BookForm, DepartmentSemesterForm, NoteForm, QuestionPaperForm, VideoTutorialForm
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 # Create your views here.
-def home(request):
-    template_name = 'resources/home.html'
-    if request.user.is_authenticated:
-        template_name = 'resources/dashboard.html'        
-    return render(request=request, template_name= template_name)
+class HomeView(TemplateView):
+    
+    http_method_names = ['get']
 
-@login_required
-def subjects(request):
-    breadcrumbs = {'Home':reverse('home'), 'Subject':'None'}
-    dept_name = request.user.department
-    semester = request.user.semester
-    if dept_name is None:
-        dept_name = request.session.get('department', None)
-    if semester is None:
-        semester = request.session.get('semester', None)
-    if request.method=='GET' and (dept_name is None or semester is None):
-        next_url = 'subjects'
-        return redirect(to='get_department_semester', next_url=next_url)   
-    elif request.method == 'POST':
+    def get(self, request, **kwargs):
+        template_name = 'resources/home.html'
+        if request.user.is_authenticated:
+            template_name = 'resources/dashboard.html'
+        return render(request=request, template_name=template_name)
+
+
+class SyllabusView(LoginRequiredMixin, TemplateView):
+    template_name = 'resources/syllabus.html'
+
+    def get(self, request, *args, **kwargs):
+        dept_name = request.user.get_department(request)
+        semester = request.user.get_semester(request)
+        if dept_name is None or semester is None:
+            msg = "Please Update your profile to include department and semester."
+            messages.warning(request, msg)
+            dept_name = "Computer Science & Engineering"
+            semester = 1
+        context = self.get_context_data(dept_name, semester, **kwargs)
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request, *args, **kwargs):
         dept_name = request.POST.get('dept_name')
         semester = request.POST.get('semester')
-        request.session['department'] = dept_name
+        request.session['dept_name'] = dept_name
         request.session['semester'] = semester
-    form_data = {'dept_name':dept_name, 'semester':semester}
-    form = DepartmentSemesterForm(data=form_data)
-    subjects = Taught.get_subjects(dept_name= dept_name, semester=semester)
-    context= {'subjects': subjects, 'breadcrumbs':breadcrumbs, 'form':form}
-    return render(request=request, template_name='resources/subjects.html', context=context)
+        context = self.get_context_data(dept_name, semester, **kwargs)
+        return render(request, template_name=self.template_name, context=context)
 
-@login_required
-def syllabus(request):
-    breadcrumbs = {'Home':reverse('home'), 'Syllabus':'None'}
-    dept_name = request.user.department
-    semester = request.user.semester
-    if dept_name is None:
-        dept_name = request.session.get('department', None)
-    if semester is None:
-        semester = request.session.get('semester', None)
-    if request.method=='GET' and (dept_name is None or semester is None):
-        next_url = 'syllabus'
-        return redirect(to='get_department_semester', next_url=next_url)  
-    elif request.method=='POST':
+    def get_context_data(self, dept_name, semester, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        breadcrumbs = {'Home': reverse('home'), 'Syllabus': 'None'}
+        form_data = {'dept_name': dept_name, 'semester': semester}
+        form = DepartmentSemesterForm(data=form_data)
+        link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
+        view_link = None
+        if link:
+            view_link = link[0]['view_link']
+        context['view_link'] = view_link
+        context['breadcrumbs'] = breadcrumbs
+        context['form'] = form
+        return context
+
+
+class ResourceListView(LoginRequiredMixin, TemplateView):
+
+    template_name = "resources/resources.html"
+
+    def get_context_data(self, **kwargs: dict) -> dict:
+        context = super().get_context_data(**kwargs)
+        views = ['notes', 'books', 'online_tutorials', 'question_papers']
+        urls = []
+        for view in views:
+            urls.append({'name': view, 'url': reverse(view)})
+        context['urls'] = urls
+        return context
+
+class SubjectView(LoginRequiredMixin, TemplateView):
+    template_name = "resources/subjects.html"
+
+    def get(self, request, *args, **kwargs):
+        dept_name = request.user.get_department(request)
+        semester = request.user.get_semester(request)
+        if dept_name is None or semester is None:
+            dept_name = "Computer Science & Engineering"
+            semester = 1
+        context = self.get_context_data(dept_name, semester, **kwargs)
+        return render(request, template_name=self.template_name, context=context)
+
+    def post(self, request, *args, **kwargs):
         dept_name = request.POST.get('dept_name')
         semester = request.POST.get('semester')
-        request.session['department'] = dept_name
+        request.session['dept_name'] = dept_name
         request.session['semester'] = semester
+        context = self.get_context_data(dept_name, semester, **kwargs)
+        return render(request, template_name=self.template_name, context=context)
 
-    form_data = {'dept_name':dept_name, 'semester':semester}
-    form = DepartmentSemesterForm(data=form_data)
-    link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
-    view_link = None
-    if link:
-        view_link = link[0]['view_link']
-    context = {'view_link': view_link, 'breadcrumbs':breadcrumbs, 'form':form}
-    return render(request, template_name='resources/syllabus.html', context=context)
+    def get_context_data(self, dept_name, semester, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        form_data = {'dept_name': dept_name, 'semester': semester}
+        form = DepartmentSemesterForm(data=form_data)
+        subjects = Taught.get_subjects(dept_name= dept_name, semester=semester)
+        next_url = self.kwargs.get('next_url')
+        breadcrumbs = {'Home': reverse('home'), next_url: 'None'}
+        context['subjects'] = subjects
+        context['form'] = form
+        context['next_url'] = next_url
+        context['breadcrumbs'] = breadcrumbs
+        return context
 
-@login_required
-def online_tutorials(request, sub_code):
-    sub_name = Subject.get_name(sub_code=sub_code)
-    context = {}
-    error_message = None
-    if sub_name is None:
-        sub_name = ""
-        error_message = "This subject does not exist."
-    else:
-        video_tutorials = VideoTutorial.get_videos(sub_code=sub_code)
-        web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
-        sub_name = "-" + sub_name
-        if (not video_tutorials) and (not web_tutorials):
-            error_message = "Tutorials are not available now, but will be uploaded soon."
+
+class ResourceAbstractView(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, **kwargs):
+        sub_code = self.kwargs.get('sub_code', None)
+        context = self.get_context_data(**kwargs)
+        if sub_code is None:
+            return redirect(to='subjects', next_url = self.url)
         else:
-            context['videos'] = video_tutorials
-            context['web_tutorials'] = web_tutorials
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Online Tutorials {sub_name}':'None'}
-    context['error'] = error_message
-    context['breadcrumbs'] = breadcrumbs
-    return render(request=request, template_name='resources/online_tutorials.html', context=context)
+            return render(request, template_name=self.template_name, context=context)
 
-@login_required
-def books(request, sub_code):
-    sub_name = Subject.get_name(sub_code=sub_code)
-    context = {}
-    error_message = None
-    if sub_name is None:
-        sub_name = ""
-        error_message = "This subject does not exist."
-    else:
-        books = Book.get_books(sub_code=sub_code) 
-        sub_name = "-"+sub_name
-        if not books:
-            error_message = "Books are not available now, but will be uploaded soon."  
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        sub_code = self.kwargs.get('sub_code')
+        error_message = None
+        if sub_code is None:
+            context['next_url'] = self.url 
         else:
-            context['books'] = books 
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
-    context['error'] = error_message
-    context['breadcrumbs'] = breadcrumbs
-    return render(request=request, template_name='resources/books.html', context=context)
+            sub_name = Subject.get_name(sub_code=sub_code)
+            if sub_name is None:
+                sub_name = ""
+                error_message = "This subject does not exist."
+            else:
+                breadcrumbs = {'Home': reverse('home'), 'Resources':reverse('resources'),self.url:reverse(self.url) ,f'{sub_name}':'None'}
+                context['breadcrumbs'] = breadcrumbs
+        context['error'] = error_message
+        return context
 
 
-@login_required
-def notes(request, sub_code):
-    sub_name = Subject.get_name(sub_code=sub_code)
-    context = {}
-    error_message = None
-    if sub_name is None:
-        sub_name = ""
-        error_message = "This subject does not exist."
-    else:
-        notes = Note.get_all_notes(sub_code=sub_code)
-        sub_name = "-"+sub_name
-        if not notes:
-            error_message = "Notes are not available now, but will be uploaded soon."  
-        else:
-            context['notes'] = notes 
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
-    context['error'] = error_message
-    context['breadcrumbs'] = breadcrumbs
-    return render(request=request, template_name='resources/notes.html', context=context)
+class OnlineTutorialView(ResourceAbstractView):
 
-@login_required
-def question_papers(request, sub_code):
-    sub_name = Subject.get_name(sub_code=sub_code)
-    context = {}
-    error_message = None
-    if sub_name is None:
-        sub_name = ""
-        error_message = "This subject does not exist."
-    else:
-        question_papers = QuestionPaper.get_question_papers(sub_code=sub_code)
-        sub_name = "-"+sub_name
-        if not question_papers:
-            error_message = "Question papers are not available now, but will be uploaded soon."  
-        else:
-            context['question_papers'] = question_papers
-    breadcrumbs = {'Home':reverse('home'), 'Subject':reverse('subjects'), f'Books{sub_name}':'None'}
-    context['error'] = error_message
-    context['breadcrumbs'] = breadcrumbs
-    return render(request=request, template_name='resources/question_papers.html', context=context)
+    template_name = "resources/online_tutorials.html"
+    url = "online_tutorials"
 
-@login_required
-def get_department_semester(request, next_url):
-    next_url = reverse(next_url)
-    form = DepartmentSemesterForm()
-    context = {'form':form, 'next_url': next_url}
-    return render(request=request, template_name='resources/department_semester_form.html', context=context)
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        sub_code = self.kwargs.get('sub_code')
+        if not context['error']:
+            video_tutorials = VideoTutorial.get_videos(sub_code=sub_code)
+            web_tutorials = WebTutorial.get_web_tutorials(sub_code=sub_code)
+            if (not video_tutorials) and (not web_tutorials):
+                error_message = "Tutorials are not available now, but will be uploaded soon."
+                context['error'] = error_message
+            else:
+                context['videos'] = video_tutorials
+                context['web_tutorials'] = web_tutorials
+        return context
 
 
-def team(request):
-    return render(request, template_name="resources/team.html")
+class BookView(ResourceAbstractView):
+
+    template_name = "resources/books.html"
+    url = "books"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        sub_code = self.kwargs.get('sub_code')
+        if not context['error']:
+            books = Book.get_books(sub_code=sub_code)
+            if not books:
+                error_message = "Books are not available now, but will be uploaded soon."
+                context['error'] = error_message
+            else:
+                context['books'] = books
+        return context
+
+
+class NoteView(ResourceAbstractView):
+    template_name = "resources/notes.html"
+    url = 'notes'
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        sub_code = self.kwargs.get('sub_code')
+        if not context['error']:
+            notes = Note.get_all_notes(sub_code=sub_code)
+            if not notes:
+                error_message = "Notes are not available now, but will be uploaded soon."
+                context['error'] = error_message
+            else:
+                context['notes'] = notes
+        return context
+
+
+class QuestionPaperView(ResourceAbstractView):
+
+    template_name = "resources/question_papers.html"
+    url = "question_papers"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(heading="Question Papers", **kwargs)
+        sub_code = self.kwargs.get('sub_code')
+        if not context['error']:
+            question_papers = QuestionPaper.get_question_papers(
+                sub_code=sub_code)
+            if not question_papers:
+                error_message = "Question Papers are not available now, but will be uploaded soon."
+                context['error'] = error_message
+            else:
+                context['question_papers'] = question_papers
+        return context
+
+class ContributeView(LoginRequiredMixin, TemplateView):
+    template_name = "resources/contribute.html"
+
+
+class ContributeFormView(LoginRequiredMixin, CreateView):
+
+    def form_valid(self, form):
+        form.instance.contributor = self.request.user
+        msg = "Your request is submitted succesfully. After a succesfull review by our team, this will be uploaded."
+        messages.success(self.request, msg)
+        return super().form_valid(form)
+
+
+class ContributeNoteView(ContributeFormView):
+    form_class = NoteForm
+    template_name = "resources/contribute_notes.html"
+    success_url = reverse_lazy('contribute-notes')
+
+
+class ContributeQuestionPaperView(ContributeFormView):
+    form_class = QuestionPaperForm
+    template_name = "resources/contribute_question_paper.html"
+    success_url = reverse_lazy('contribute-question_paper')
+
+
+class ContributeBookView(ContributeFormView):
+    form_class = BookForm
+    template_name = "resources/contribute_books.html"
+    success_url = reverse_lazy('contribute-books')
+
+
+class ContributeVideoTutorialView(ContributeFormView):
+    form_class = VideoTutorialForm
+    template_name = "resources/contribute_video_tutorials.html"
+    success_url = reverse_lazy('contribute-video_tutorials')
+
+
+class ContributeNoteView(ContributeFormView):
+    form_class = WebTutorial
+    template_name = "resources/contribute_web_tutorials.html"
+    success_url = reverse_lazy('contribute-web_tutorials')
+
+
+class TeamView(LoginRequiredMixin, TemplateView):
+    template_name = "resources/team.html"
