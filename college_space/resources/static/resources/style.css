@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 *{
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 body{
     background-color: black;
     color: white;
     
+}
+/* Navbar Style */
+.navbar{
+    width: 100%;
+    height:10vh;
 }
 .nav-title{
     padding: 0px 0px 0px 25px;
@@ -19,108 +24,6 @@ body{
     font-weight: bolder;
     font-family: 'Fleur De Leah', curive;
 }
-.bg-nf{
-    background-color: #151515;
-    color: #fff;
-}
-.register-overviews-container{
-    background-image: url("https://github.com/atulya-karn/image/blob/main/registerbg.jpg?raw=true");
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 10px 0px 0px 10px;
-}
-.register-form-container{
-    border-radius: 0px 10px 10px 0px;
-}
-.register-form label{
-    padding-bottom: 0.4rem;
-}
-.form_input{
-    margin-bottom: 1rem;
-    padding: 6px;
-}
-.login-container{
-    background-color: #151515;
-    border-radius: 10px;
-}
-.login-formo label{
-    color: #fff;
-    font-family:sans-serif;
-    font-weight: bold;
-    text-transform: capitalize;
-}
-.login-inpu{
-    margin-top: 7px;
-    margin-bottom: 20px;
-}
-.errorlist > li
-{
-    color: red;
-}
-
-.change-pass label{
-    color: #fff;
-    padding-bottom: 7px;
-}
-.change-pass input{
-    margin-bottom: 20px;
-}
-
-.pass-reset label{
-    color: #fff;
-    padding-bottom: 7px;
-}
-.pass-reset input{
-    margin-bottom: 20px;
-}
-
-.home-bg-container{
-    background-image: url("https://raw.githubusercontent.com/atulya-karn/image/main/home_bg_image.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
- /* Portrait mobiles */
-@media (max-width: 580px) {
-
-    .home-bg-container { display: none; }
-    .register-overviews-container { display: none; }
-
-}
-
-
-
-.home-container h1{
-    font-family: 'Poppins', sans-serif;
-    font-size: 3.6rem;
-}
-
-.login-btn{
-    padding: 0.8rem 3.6rem 0.8rem 3.6rem;
-    background-color: black;
-    border: 2px solid #39C0ED;
-    color: #39C0ED;
-    font-size: 1rem;
-
-}
-
-.login-btn:hover{
-    background-color: #39C0ED;
-    color: black;
-}
-
-.signup-btn{
-    padding: 0.8rem 1.6rem 0.8rem 1.6rem;
-    background-color: black;
-    border: 2px solid #39C0ED;
-    color: #39C0ED;
-    font-size: 1rem;
-}
-
-.signup-btn:hover{
-    background-color: #39C0ED;
-    color: black;
-}
-
 /* The sidepanel menu */
 .sidepanel {
     height: 100vh; /* Specify a height */
@@ -178,26 +81,91 @@ body{
     color: white;
 }
 
-.dark-text
-{
-    color: rgb(167, 177, 177);
+/* Main Container Part Style */
+.main-container{
+    max-width: 100vw;
+    min-height: 82vh;
 }
 
-.container 
-{
-    margin-left: 6%;
+/* home page Style */
+.home-bg-container{
+    background-image: url("https://raw.githubusercontent.com/atulya-karn/image/main/home_bg_image.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.home-container h1{
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.6rem;
+}
+.login-btn{
+    padding: 0.8rem 3.6rem 0.8rem 3.6rem;
+    background-color: black;
+    border: 2px solid #39C0ED;
+    color: #39C0ED;
+    font-size: 1rem;
+}
+.login-btn:hover{
+    background-color: #39C0ED;
+    color: black;
+}
+.signup-btn{
+    padding: 0.8rem 1.6rem 0.8rem 1.6rem;
+    background-color: black;
+    border: 2px solid #39C0ED;
+    color: #39C0ED;
+    font-size: 1rem;
 }
 
-.content-container
-{
-    transition: 1s;
+.signup-btn:hover{
+    background-color: #39C0ED;
+    color: black;
 }
 
-.content-container:hover
-{
-    transform: scale(1.019);
+/* Login page Style */
+.login-container{
+    background-color: #151515;
+    border-radius: 10px;
+}
+.login-formo label{
+    color: #fff;
+    font-family:sans-serif;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.login-inpu{
+    margin-top: 7px;
+    margin-bottom: 20px;
 }
 
+/* Register page Style */
+.form_input{
+    margin-bottom: 1rem;
+    padding: 6px;
+}
+.register-overviews-container{
+    background-image: url("https://github.com/atulya-karn/image/blob/main/registerbg.jpg?raw=true");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px 0px 0px 10px;
+}
+ /* Portrait mobiles */
+ @media (max-width: 580px) {
+    .home-bg-container { display: none; }
+    .register-overviews-container { display: none; }
+}
+.register-form-container{
+    border-radius: 0px 10px 10px 0px;
+}
+.register-form label{
+    padding-bottom: 0.4rem;
+}
+
+/* Error List  */
+.errorlist li{
+    color: red;
+}
+
+/* Team page Style */
 .our-team {
     padding: 30px 0 40px;
     margin-bottom: 30px;
@@ -205,17 +173,17 @@ body{
     text-align: center;
     overflow: hidden;
     position: relative;
-  }
+}
   
-  .our-team .picture {
+.our-team .picture {
     display: inline-block;
     height: 170px;
     width: 170px;
     margin-bottom: 50px;
     position: relative;
-  }
+}
   
-  .our-team .picture::before {
+.our-team .picture::before {
     content: "";
     width: 100%;
     height: 0;
@@ -228,34 +196,34 @@ body{
     opacity: 0.9;
     transform: scale(3);
     transition: all 0.3s linear 0s;
-  }
+}
   
-  .our-team:hover .picture::before {
+.our-team:hover .picture::before {
     height: 100%;
-  }
+}
   
   
-  .our-team .picture img {
+.our-team .picture img {
     width: 100%;
     height: auto;
     border-radius: 50%;
     transform: scale(1);
     transition: all 0.9s ease 0s;
-  }
+}
   
-  .our-team:hover .picture img {
+.our-team:hover .picture img {
     box-shadow: 0 0 0 14px #f7f5ec;
     transform: scale(0.7);
-  }
+}
   
-  .our-team .title {
+.our-team .title {
     display: block;
     font-size: 15px;
     color: #4e5052;
     text-transform: capitalize;
-  }
+}
   
-  .our-team .social {
+.our-team .social {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -264,27 +232,62 @@ body{
     bottom: -100px;
     left: 0;
     transition: all 0.5s ease 0s;
-  }
+}
   
-  .our-team:hover .social {
+.our-team:hover .social {
     bottom: 0;
-  }
+}
   
-  .our-team .social li {
+.our-team .social li {
     display: inline-block;
-  }
+}
   
-  .our-team .social li a {
+.our-team .social li a {
     display: block;
     padding: 10px;
     font-size: 17px;
     color: white;
     transition: all 0.3s ease 0s;
     text-decoration: none;
-  }
+}
   
-  .our-team .social li a:hover {
+.our-team .social li a:hover {
     color: #1369ce;
     background-color: #f7f5ec;
-  }
+}
+
+.change-pass label{
+    color: #fff;
+    padding-bottom: 7px;
+}
+.change-pass input{
+    margin-bottom: 20px;
+}
+
+.pass-reset label{
+    color: #fff;
+    padding-bottom: 7px;
+}
+.pass-reset input{
+    margin-bottom: 20px;
+}
+
+
+.bg-nf{
+    background-color: #151515;
+    color: #fff;
+}
+
+
+.dark-text
+{
+    color: rgb(167, 177, 177);
+}
+
+/* footer Style */
+.footer{
+    width: 100%;
+    height:8vh;
+}
+
   

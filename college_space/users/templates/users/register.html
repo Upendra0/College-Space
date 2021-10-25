@@ -27,7 +27,7 @@
           </div>
 
           <div class="row">
-            <dif class="col-md">
+            <dif class="col">
               <label for="profile_pic_input"> Profile Picture </label>
               {{ form.profile_pic }}
               {{ form.profile_pic.errors }}
@@ -35,12 +35,12 @@
           </div>
 
           <div class="row">
-            <div class="col-md">
+            <div class="col">
               <label for="{{ form.first_name.id_for_label}}"> First Name </label>
               {{ form.first_name }}
               {{ form.first_name.errors }}
             </div>
-            <div class="col-md">
+            <div class="col">
               <label for="{{ form.last_name.id_for_label}}"> Last Name </label>
               {{ form.last_name }}
               {{ form.last_name.errors }}
@@ -48,7 +48,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md">
+            <div class="col">
               <label for="{{ form.email.id_for_label}}"> Email </label>
               {{ form.email }}
               {{ form.email.errors }}
@@ -56,7 +56,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md">
+            <div class="col">
               <label for="{{ form.password1.id_for_label}}"> Password </label>
                {{ form.password1}}
                {{ form.password1.errors }}
@@ -64,25 +64,19 @@
           </div>
 
           <div class="row">
-            <div class="col-md">
+            <div class="col">
               <label for="{{ form.password2.id_for_label}}"> Confirm Password </label>
                {{ form.password2 }}
                {{ form.password2.errors }}
             </div>
           </div>
 
-            <div>
-              <a class=" float-start p-2 text-info" href="{% url 'login'  %}">Log in instead</a>
-              <button type="submit" class="btn btn-primary mt-1 float-end">Create Account</button>
-            </div>
-
-            
+          <div>
+            <a class=" float-start p-2 text-info" href="{% url 'login'  %}">Log in instead</a>
+            <button type="submit" class="btn btn-primary mt-1 float-end">Create Account</button>
+          </div>
         </form>
       </div>
-      <div class="col-md-2"></div>
     </div>
   </div>
-<div class="container mt-3">
-  
-</div>
 {% endblock content %}
