@@ -57,4 +57,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         totp= pyotp.TOTP(self.secret_key, interval=self.interval)
         return totp.verify(otp)
 
+    def get_department(self, request):
+        # Return department of user from profile or from session or none.
+        if self.department:
+            return self.department
+        return request.session.get('dept_name', None)
+
+    def get_semester(self, request):
+        # Return semester of user from profile or from session or none.
+        if self.semester:
+            return self.department
+        return request.session.get('semester', None)
+
     

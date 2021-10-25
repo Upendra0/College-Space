@@ -2,56 +2,37 @@
 
 {% block title %}
 <title> College Space | Subjects </title>
-{% endblock title %} 
+{% endblock title %}
 
 {% block content %}
 
-   {% include "resources/dept_sem_snippet.html" with form=form %}
-    
-    <div class = "container mb-2 " >
-        {% if subjects %}
-            <div class="row d-flex justify-content-around " style="min-height:63vh">
-                {% for subject in subjects %}
-                <div class=" col-12 col-md-4  mb-3">
-                    <div class="card border text-white bg-dark p-2" style="height:300px">
-                        <div class=" text-center pt-3">
+{% include "resources/dept_sem_snippet.html" with form=form %}
+
+<div class="container">
+    <h2> Choose Subject </h2>
+    {% if subjects %}
+    <div class="row">
+        {% for subject in subjects %}
+        <div class="col-md-5 col-lg-4 m-1 text-white bg-dark">
+            <div class="col">
+                <a href="{% url next_url subject.subject__code %}">
+                    <div class=" text-center pt-3">
                         <h3> {{ subject.subject__name }} </h3>
-                        </div>
-
-                        <div class="card-body mt-0">
-                            <hr style="color:#013ADF; height:0.2rem">
-                            <div class="d-flex justify-content-between">
-                                <p class="card-text">Code : {{ subject.subject__code  }}</span></p>
-                                <p class="card-text">Credit:{{ subject.subject__credit }}</span></p>
-                            </div>
-
-                            <div class="row">
-                                <div class="col align-self-start">
-                                    <a href="{% url 'notes' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Notes </a>  
-                                </div>
-                                <div class="col align-self-end">
-                                    <a href="{% url 'books' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Books </a>              
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col align-self-start">
-                                    <a href="{% url 'online_tutorials' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Online Tutorials </a>  
-                                </div>
-                                <div class="col align-self-end"> 
-                                    <a href="{% url 'question_papers' subject.subject__code %}" class="btn btn-primary btn-block mb-2" role="button"> Question Papers </a>  
-                                </div>
-                            </div>   
-                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Code : {{ subject.subject__code }}</span></p>
+                        <p>Credit:{{ subject.subject__credit }}</span></p>
                     </div>
                 </div>
-                {% endfor %}
+                </a>
             </div>
-        {% else %} 
-        <div  class="container mt-5 text-center" style="min-height:59vh">
-            <h2> No subjects available! Sorry </h2>
-        </div>
-        
-        {% endif %} 
+        {% endfor %}
     </div>
-{% endblock content %} 
+    {% else %}
+    <div class="container mt-5 text-center">
+        <h2> No subjects available for this department and semester </h2>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock content %}

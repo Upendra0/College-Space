@@ -1,0 +1,22 @@
+{% extends "resources/base.html" %}
+
+{% block title %}
+<title> College Space | Resources </title>
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+    <h5> Choose Resource type </h5>
+    <div class="row">
+        {% for view in views %} 
+        <div class="col-md-5 m-1 message-succes">
+            <a href="{{ view.view_url}}">
+                <div class="col">
+                    <h5> {{ view.view_name }}</h5>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
