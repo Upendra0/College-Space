@@ -7,11 +7,11 @@
 {% block content %} 
 
 
-<div class="container p-2 mt-3">
+<div class="container">
     {% if error %} 
-    <div class="container alert alert-info">
-        <h5>{{ error }} </h5>
-    </div>
+        <div class="container " style="min-height:72vh">
+            <h5 class="alert alert-info mt-5">{{ error }} </h5>
+        </div>
     {% else %} 
 
     {% if videos %} 
