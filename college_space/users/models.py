@@ -66,7 +66,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_semester(self, request):
         # Return semester of user from profile or from session or none.
         if self.semester:
-            return self.department
+            return self.semester
         return request.session.get('semester', None)
 
     
