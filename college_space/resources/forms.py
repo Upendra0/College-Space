@@ -37,7 +37,7 @@ class BookForm(forms.ModelForm):
             'subject': forms.Select(attrs={'class':'form-select', 'id':'subject', 'placeholder':'select subject name'}),
             'name': forms.TextInput(attrs={'class':'form-control', 'id':'name', 'placeholder':"Book's Name"}),
             'author': forms.TextInput(attrs={'class':'form-control', 'id':'author', 'placeholder':"Author's Name"}),
-            'link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Book's Link"}),
+            'view_link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Book's Link"}),
         }
 
 class VideoTutorialForm(forms.ModelForm):
@@ -46,8 +46,8 @@ class VideoTutorialForm(forms.ModelForm):
         fields = ['subject', 'name', 'view_link']
         widgets = {
             'subject': forms.Select(attrs={'class':'form-select', 'id':'subject', 'placeholder':'select subject name'}),
-            'name': forms.TextInput(attrs={'class':'form-control', 'id':'name', 'placeholder':"Book's Name"}),
-            'link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Book's Link"}),
+            'name': forms.TextInput(attrs={'class':'form-control', 'id':'name', 'placeholder':"Tutorials's Name"}),
+            'view_link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Tutorials's Link"}),
         }
 
 class WebTutorialForm(forms.ModelForm):
@@ -56,6 +56,6 @@ class WebTutorialForm(forms.ModelForm):
         fields = ['subject', 'name', 'view_link']
         widgets = {
             'subject': forms.Select(attrs={'class':'form-select', 'id':'subject', 'placeholder':'select subject name'}),
-            'name': forms.TextInput(attrs={'class':'form-control', 'id':'name', 'placeholder':"Book's Name"}),
-            'link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Book's Link"}),
+            'name': forms.TextInput(attrs={'class':'form-control', 'id':'name', 'placeholder':"Tutorials's Name"}),
+            'view_link': forms.TextInput(attrs={'class':'form-control', 'id':'view_link', 'placeholder':"Tutorials's Link"}),
         }

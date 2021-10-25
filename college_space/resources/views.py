@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import CreateView
 from .models import Note, Subject, Taught, Book, Syllabus, WebTutorial, VideoTutorial, QuestionPaper
-from .forms import BookForm, DepartmentSemesterForm, NoteForm, QuestionPaperForm, VideoTutorialForm
+from .forms import BookForm, DepartmentSemesterForm, NoteForm, QuestionPaperForm, VideoTutorialForm, WebTutorialForm
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -61,13 +61,16 @@ class ResourceListView(LoginRequiredMixin, TemplateView):
 
     template_name = "resources/resources.html"
 
+    def get_view_context(self, **kwargs):
+        views = ['notes', 'books', 'online_tutorials', 'question_papers']
+        views_list = []
+        for view in views:
+            views_list.append({'view_name':view, 'view_url':reverse(view)})
+        return views_list
+
     def get_context_data(self, **kwargs: dict) -> dict:
         context = super().get_context_data(**kwargs)
-        views = ['notes', 'books', 'online_tutorials', 'question_papers']
-        urls = []
-        for view in views:
-            urls.append({'name': view, 'url': reverse(view)})
-        context['urls'] = urls
+        context['views'] = self.get_view_context()
         return context
 
 class SubjectView(LoginRequiredMixin, TemplateView):
@@ -126,7 +129,7 @@ class ResourceAbstractView(LoginRequiredMixin, TemplateView):
                 sub_name = ""
                 error_message = "This subject does not exist."
             else:
-                breadcrumbs = {'Home': reverse('home'), 'Resources':reverse('resources'),self.url:reverse(self.url) ,f'{sub_name}':'None'}
+                breadcrumbs = {'Home': reverse('home'),self.url:reverse(self.url) ,f'{sub_name}':'None'}
                 context['breadcrumbs'] = breadcrumbs
         context['error'] = error_message
         return context
@@ -205,9 +208,15 @@ class QuestionPaperView(ResourceAbstractView):
                 context['question_papers'] = question_papers
         return context
 
-class ContributeView(LoginRequiredMixin, TemplateView):
-    template_name = "resources/contribute.html"
-
+class ContributeView(ResourceListView):
+    
+    def get_view_context(self, **kwargs):
+        views = ['contribute-notes', 'contribute-question_papers', 'contribute-books', 'contribute-video_tutorials', 'contribute-web_tutrials']
+        view_name = ['Note', 'Question Paper', 'Book', 'VideoTutorial', 'WebTutorial']
+        views_list = []
+        for i in range(len(views)):
+            views_list.append({'view_name':view_name[i], 'view_url':reverse('subjects',kwargs= {'next_url':views[i]})})
+        return views_list
 
 class ContributeFormView(LoginRequiredMixin, CreateView):
 
@@ -219,33 +228,38 @@ class ContributeFormView(LoginRequiredMixin, CreateView):
 
 
 class ContributeNoteView(ContributeFormView):
+    model = Note
     form_class = NoteForm
     template_name = "resources/contribute_notes.html"
-    success_url = reverse_lazy('contribute-notes')
+    success_url = reverse_lazy('contribute')
 
 
 class ContributeQuestionPaperView(ContributeFormView):
+    model = QuestionPaper
     form_class = QuestionPaperForm
     template_name = "resources/contribute_question_paper.html"
-    success_url = reverse_lazy('contribute-question_paper')
+    success_url = reverse_lazy('contribute')
 
 
 class ContributeBookView(ContributeFormView):
+    model = Book
     form_class = BookForm
     template_name = "resources/contribute_books.html"
-    success_url = reverse_lazy('contribute-books')
+    success_url = reverse_lazy('contribute')
 
 
 class ContributeVideoTutorialView(ContributeFormView):
+    model = VideoTutorial
     form_class = VideoTutorialForm
     template_name = "resources/contribute_video_tutorials.html"
-    success_url = reverse_lazy('contribute-video_tutorials')
+    success_url = reverse_lazy('contribute')
 
 
-class ContributeNoteView(ContributeFormView):
-    form_class = WebTutorial
+class ContributeWebTutorialView(ContributeFormView):
+    model = WebTutorial
+    form_class = WebTutorialForm
     template_name = "resources/contribute_web_tutorials.html"
-    success_url = reverse_lazy('contribute-web_tutorials')
+    success_url = reverse_lazy('contribute')
 
 
 class TeamView(LoginRequiredMixin, TemplateView):
