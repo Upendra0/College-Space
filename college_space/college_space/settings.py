@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'college_space.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'college_space',
-        'HOST': '127.0.0.1',
+        'NAME': 'college_space_database',
+        'HOST': 'college-space-db.ck5kkop4jxad.ap-south-1.rds.amazonaws.com',
         'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': 'Siri@123',
+        'USER': 'mcet_space_admin',
+        'PASSWORD': 'Collegespace2021',
     }
 }
 
