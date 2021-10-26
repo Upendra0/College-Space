@@ -8,7 +8,6 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 
-# Create your views here.
 class HomeView(TemplateView):
     
     http_method_names = ['get']
@@ -29,8 +28,6 @@ class SyllabusView(LoginRequiredMixin, TemplateView):
         if dept_name is None or semester is None:
             msg = "Please Update your profile to include department and semester."
             messages.warning(request, msg)
-            dept_name = "Computer Science & Engineering"
-            semester = 1
         context = self.get_context_data(dept_name, semester, **kwargs)
         return render(request, template_name=self.template_name, context=context)
 
@@ -47,7 +44,7 @@ class SyllabusView(LoginRequiredMixin, TemplateView):
         breadcrumbs = {'Home': reverse('home'), 'Syllabus': 'None'}
         form_data = {'dept_name': dept_name, 'semester': semester}
         form = DepartmentSemesterForm(data=form_data)
-        link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
+        link = Syllabus.get_view_link(dept_name=None, semester=None)
         view_link = None
         if link:
             view_link = link[0]['view_link']
@@ -80,8 +77,8 @@ class SubjectView(LoginRequiredMixin, TemplateView):
         dept_name = request.user.get_department(request)
         semester = request.user.get_semester(request)
         if dept_name is None or semester is None:
-            dept_name = "Computer Science & Engineering"
-            semester = 1
+            msg = "Please Update your profile to include department and semester."
+            messages.warning(request, msg)
         context = self.get_context_data(dept_name, semester, **kwargs)
         return render(request, template_name=self.template_name, context=context)
 
@@ -222,7 +219,7 @@ class ContributeFormView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.contributor = self.request.user
-        msg = "Your request is submitted succesfully. After a succesfull review by our team, this will be uploaded."
+        msg = "Your request is submitted succesfully. After a succesfull review by our team, this will be uploaded. Thanks!"
         messages.success(self.request, msg)
         return super().form_valid(form)
 
