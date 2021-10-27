@@ -80,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'college_space_database',
-        'HOST': 'college-space-db.ck5kkop4jxad.ap-south-1.rds.amazonaws.com',
+        'HOST': 'college-space-instance.ck5kkop4jxad.ap-south-1.rds.amazonaws.com',
         'PORT': '3306',
-        'USER': 'mcet_space_admin',
+        'USER': 'mcet_admin',
         'PASSWORD': 'Collegespace2021',
     }
 }
