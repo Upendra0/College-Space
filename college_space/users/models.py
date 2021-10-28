@@ -14,10 +14,7 @@ def validate_image_size(file):
         raise ValidationError(f"Max size of file is { limit_mb } MB")
 
 
-def profile_directory_path(instance, filename):
-    f_name, extension = os.path.splitext(filename)
-    user = f"{instance.first_name}({instance.email}){extension}"
-    return f'profile_pics/{user}'
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, primary_key=True)

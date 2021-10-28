@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=255)),
                 ('last_name', models.CharField(max_length=255)),
                 ('semester', models.SmallIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(8)])),
-                ('profile_pic', models.ImageField(default='profile_pics/default.jpeg', upload_to=users.models.profile_directory_path, validators=[users.models.validate_image_size])),
+                ('profile_pic', models.ImageField(default='profile_pics/default.jpeg', upload_to='profile_pics/', validators=[users.models.validate_image_size])),
                 ('secret_key', models.CharField(default=pyotp.random_base32, max_length=35)),
                 ('date_joined', models.DateField(auto_now_add=True)),
                 ('is_superuser', models.BooleanField(default=False)),

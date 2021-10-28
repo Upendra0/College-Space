@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
             name='Note',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(db_column='view_link', upload_to=resources.models.notes_directory_path, validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf']), resources.models.validate_file_size])),
+                ('file', models.FileField(db_column='view_link', upload_to="notes/", validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf']), resources.models.validate_file_size])),
                 ('is_approved', models.BooleanField(default=False)),
             ],
             options={
@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('year', models.IntegerField(validators=[django.core.validators.MinValueValidator(2015)])),
-                ('file', models.FileField(db_column='view_link', upload_to=resources.models.question_directory_path, validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf']), resources.models.validate_file_size])),
+                ('file', models.FileField(db_column='view_link', upload_to="question_Papers/", validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf']), resources.models.validate_file_size])),
                 ('is_approved', models.BooleanField(default=False)),
             ],
             options={

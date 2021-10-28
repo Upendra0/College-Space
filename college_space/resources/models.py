@@ -141,12 +141,6 @@ def validate_file_size(file):
         raise ValidationError("Max size of file is %s MB" % limit_mb)
 
 
-def notes_directory_path(instance, filename):
-    user = instance.contributor.email
-    f_name, extension = os.path.splitext(filename)
-    new_file_name =  instance.topic.name + extension
-    return 'Notes/' + user + '/' + new_file_name
-
 
 class Note(models.Model):
     topic = models.ForeignKey(to=Topic, on_delete=models.CASCADE, db_column='topic_id')
@@ -176,11 +170,7 @@ class Note(models.Model):
     def __str__(self) -> str:
         return self.topic.name
 
-def question_directory_path(instance, filename):
-    user = instance.contributor.email
-    f_name, extension = os.path.splitext(filename)
-    new_file_name =  instance.subject.name + extension
-    return 'Question_Papers/' + user + '/' + new_file_name
+
 
 class QuestionPaper(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
