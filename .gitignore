@@ -1,5 +1,4 @@
 .vscode/
 env/
 **/__pycache__
-**/migrations
 college_space/media
