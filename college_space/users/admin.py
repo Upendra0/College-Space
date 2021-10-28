@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
-    list_display = ['email', 'first_name', 'last_name', 'profile_pic', 'department', 'semester']
+    list_display = ['email', 'first_name', 'last_name', 'department', 'semester', 'profile_pic']
     list_filter = ['department', 'is_staff', 'is_superuser']
 
     fieldsets = [
