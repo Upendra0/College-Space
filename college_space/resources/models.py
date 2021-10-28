@@ -151,7 +151,7 @@ def notes_directory_path(instance, filename):
 class Note(models.Model):
     topic = models.ForeignKey(to=Topic, on_delete=models.CASCADE, db_column='topic_id')
     file = models.FileField(
-        upload_to=notes_directory_path,
+        upload_to="notes/",
         validators=[FileExtensionValidator(allowed_extensions=['pdf']),
          validate_file_size],
          db_column='view_link')
@@ -186,7 +186,7 @@ class QuestionPaper(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
     year = models.IntegerField(validators=[MinValueValidator(2015)])
     file = models.FileField(
-        upload_to=question_directory_path,
+        upload_to="question_Papers/",
         validators=[FileExtensionValidator(allowed_extensions=['pdf']),
          validate_file_size],
          db_column='view_link')

@@ -26,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     department = models.ForeignKey(to='resources.department', db_column='dept_name', on_delete=models.SET_NULL, null=True, blank=True)
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)], null=True, blank=True)
     profile_pic = models.ImageField(default='profile_pics/default.jpeg',
-                                    upload_to=profile_directory_path,
+                                    upload_to='profile_pics/',
                                     validators=[validate_image_size]
                                     )
     secret_key = models.CharField(max_length=35, default=pyotp.random_base32)
