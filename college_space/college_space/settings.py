@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,17 @@ EMAIL_HOST_USER = 'mcetcollegespace@gmail.com'
 EMAIL_HOST_PASSWORD = 'obitgkzhyzrqnjmp'
 
 LOGOUT_REDIRECT_URL='home'
+
+
+
+# AWS S3 Setting
+
+AWS_ACCESS_KEY_ID = 'AKIA2YIC4PM27VVKK3JS'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'college-space'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_REGION_NAME='ap-south-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERIFY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
