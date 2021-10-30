@@ -107,7 +107,7 @@ class VideoTutorial(models.Model):
 class Syllabus(models.Model):
     department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
-    view_link = models.CharField(max_length=255, unique=True)
+    view_link = models.CharField(max_length=255)
 
     class Meta:
         db_table = 'syllabus'
