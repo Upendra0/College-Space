@@ -44,7 +44,7 @@ class SyllabusView(LoginRequiredMixin, TemplateView):
         breadcrumbs = {'Home': reverse('home'), 'Syllabus': 'None'}
         form_data = {'dept_name': dept_name, 'semester': semester}
         form = DepartmentSemesterForm(data=form_data)
-        link = Syllabus.get_view_link(dept_name=None, semester=None)
+        link = Syllabus.get_view_link(dept_name=dept_name, semester=semester)
         view_link = None
         if link:
             view_link = link[0]['view_link']
