@@ -111,7 +111,6 @@ class Syllabus(models.Model):
 
     class Meta:
         db_table = 'syllabus'
-        unique_together = ['department', 'semester']
     
     @classmethod
     def get_view_link(cls, dept_name, semester):

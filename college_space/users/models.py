@@ -13,18 +13,16 @@ def validate_image_size(file):
     if file_size > limit_mb * 1024 * 1024:
         raise ValidationError(f"Max size of file is { limit_mb } MB")
 
-
-
-
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     department = models.ForeignKey(to='resources.department', db_column='dept_name', on_delete=models.SET_NULL, null=True, blank=True)
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)], null=True, blank=True)
-    profile_pic = models.ImageField(default='profile_pics/default.jpeg',
-                                    upload_to='profile_pics/',
-                                    validators=[validate_image_size]
+    profile_pic = models.ImageField(upload_to='profile_pics/',
+                                    validators=[validate_image_size],
+                                    null = True,
+                                    blank = True,
                                     )
     secret_key = models.CharField(max_length=35, default=pyotp.random_base32)
     date_joined = models.DateField(auto_now_add=True)

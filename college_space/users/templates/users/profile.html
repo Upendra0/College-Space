@@ -40,7 +40,11 @@
       <div class="col-4"></div>
       <div class="col-3 text-center">
         <img
-          src="{{ user.profile_pic.url }} "
+        {% if user.profile_pic %}
+        src="{{ user.profile_pic.url }}"
+        {% else %}
+        src = "https://college-space.s3.amazonaws.com/profile_pics/default.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2YIC4PM27VVKK3JS%2F20211030%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20211030T024147Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=76fff0f96432e781b8d81ecf544eda4a25b9138fcd9933829d9575529aac208d"
+        {% endif %}
           class="rounded-circle border border-primary"
           height="150"
           width="150"
