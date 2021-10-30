@@ -166,7 +166,7 @@
       <!-- Show messages on a page if it is available on a request. --> 
       {% if messages %}
         <div class="container">
-          <ul class="messages" style="list-style-type: none;">
+          <ul class="d-flex justify-content-center messages mt-2" style="list-style-type: none;">
             {% for message in messages %}
               <li{% if message.tags %} class=" alert alert-{{ message.tags }}"{% endif %} role="alert">{{ message }}</li>
             {% endfor %}
