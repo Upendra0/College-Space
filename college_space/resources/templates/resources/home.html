@@ -5,25 +5,20 @@
 {% endblock title %}
 
 {% block content %}
-  <div class="container text-white">
-    <div class="row p-5">
-      <div class="col-md-4 offset-md-2 home-container">
-        <h1>Your learning journey starts here.</h1>
-        <h5 class="dark-text">Signup to start your learning process on College Space</h5>
-        <a class="btn mt-3 login-btn"href="{% url 'login' %}">Login</a>
-        <a class="btn mt-3 ms-3 signup-btn"href="{% url 'register' %}">Sign up</a>
-      </div>
-      <div class="col-md-5 home-bg-container pt-5"></div>   
-      </div>
+<div class="container  text-white">
+  <div class="row p-5 ">
+    <div class="col-md-4 offset-md-1 home-container">
+      <h1>Your learning journey starts here.</h1>
+      <h5 class="dark-text">Signup to start your learning process on College Space</h5>
+      <h6 class=" dark-text">We at College Space accumulated resources from the internet, with help of your seniors
+        , to provide you a single plateform to excel your academics journey, " right from 1st year noob
+        to 4th year peer.</h6>
+      <a class="btn mt-3 login-btn" href="{% url 'login' %}">Login</a>
+      <a class="btn mt-3 ms-3 signup-btn" href="{% url 'register' %}">Sign up</a>
+    </div>
+    <div class="col-md-5 offset-md-1  home-bg-container pt-5">
 
-      <div class="row">
-        <div class = "container dark-text about my-5 border border-primary rounded p-3">
-          <h2> We at College Space accumulated resources from the internet, with help of your seniors
-              , to provide you a single plateform to excel your academics journey, " right from 1st year noob
-              to 4th year peer."
-            <h3 style="text-align: end;" class="py-1"> -Team College Space </h3>
-          </h2>
-        </div>
     </div>
   </div>
+</div>
 {% endblock content %}

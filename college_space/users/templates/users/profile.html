@@ -1,24 +1,33 @@
-{% extends "resources/base.html" %} 
+{% extends "resources/base.html" %}
 
 {% block title%}
 <title>College Space | Register</title>
 {% endblock title %}
 
 {% block content %}
-
-  <div class="container" style="min-height:76vh">
-    <div class="row">
-      <div class="col-5 mt-3">
-        <h3 >Profile Settings</h3>
+<div class="container rounded extra-form-design">
+  <div class="row justify-content-center">
+    <div class="col-md-3 border-right">
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+          width="150px" {% if user.profile_pic %} src="{{ user.profile_pic.url }}" {% else %}
+          src="https://college-space.s3.ap-south-1.amazonaws.com/profile_pics/default.jpeg" {% endif %}><span
+          class="font-weight-bold">{{user.first_name}}</span><span class="text-center">{{user.email}}</span><span>
+        </span></div>
+    </div>
+    <div class="col-md-5 border-right">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">Profile Settings</h4>
+        </div>
         <form method="POST" class="d-flex flex-column form-group p-3 register-form mt-3" enctype="multipart/form-data">
-          {% csrf_token %} 
+          {% csrf_token %}
           {{ form.non_field_errors }}
 
           <label for="name_input"> First Name :</label>
           {{ form.first_name }}
           {{ form.first_name.errors }}
 
-          <label for="name_input"  class="mt-2"> Last Name : </label>
+          <label for="name_input" class="mt-2"> Last Name : </label>
           {{ form.last_name }}
           {{ form.last_name.errors }}
 
@@ -37,24 +46,11 @@
 
         </form>
       </div>
-      <div class="col-4"></div>
-      <div class="col-3 text-center">
-        <img
-        {% if user.profile_pic %}
-        src="{{ user.profile_pic.url }}"
-        {% else %}
-        src = "https://college-space.s3.ap-south-1.amazonaws.com/profile_pics/default.jpeg"
-        {% endif %}
-          class="rounded-circle border border-primary"
-          height="150"
-          width="150"
-          alt="Profile_img"
-          loading="lazy"
-        />
-        <h5 class="mt-2">{{user.first_name}}</h5>
-        <p class="mt-2  text-center"> {{user.email}}</p>
-      </div>
     </div>
+
   </div>
+</div>
+</div>
+</div>
 
 {% endblock content %}

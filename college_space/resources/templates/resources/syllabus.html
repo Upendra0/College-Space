@@ -2,19 +2,19 @@
 
 {% block title %}
 <title> College Space | Syllabus </title>
-{% endblock title %} 
+{% endblock title %}
 
 {% block content %}
 {% include "resources/dept_sem_snippet.html" with form=form %}
-    <div class = "container mt-5">
-        {% if view_link %}
-        <div class="row">
-            <a href="{{view_link}}">
-                <button class="btn btn-primary"> Download Syllabus </button>
-            </a>
-        </div>
-        {% else %} 
-        <h3 class='text-center text-muted'> Syllabus is not available! We will upload soon. </h3>
-        {% endif %} 
+<div class="container mt-5">
+    {% if view_link %}
+    <div class="row">
+        <a href="{{view_link}}">
+            <button class="btn btn-primary"> Download Syllabus </button>
+        </a>
     </div>
-{% endblock content %} 
+    {% else %}
+    <h3 class='text-center text-muted'> Syllabus is not available! We will upload soon. </h3>
+    {% endif %}
+</div>
+{% endblock content %}

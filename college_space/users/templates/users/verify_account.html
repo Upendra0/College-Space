@@ -1,55 +1,55 @@
 {% extends "resources/base.html" %}
 
-{% block title %} 
-<title> College Space | Verify Account   </title>
-{% endblock title %} 
+{% block title %}
+<title> College Space | Verify Account </title>
+{% endblock title %}
 
 {% block content %}
 
-  <div class="container mt-5" style="min-height:68vh">
-    <div class="row justify-content-center">
-      <div class="col-md-6 p-5 align-self-center login-container">
-        <form method="POST" class="login-formo ">
-          {% csrf_token %}
+<div class="container ">
+  <div class="row justify-content-center">
+    <div class="col-md-6 p-5 mt-5 align-self-center extra-form-design">
+      <form method="POST" class="login-formo ">
+        {% csrf_token %}
 
-          <div class="form-row ">
-            {% if form.non_field_errors %}
-            <ul class="alert alert-danger" role="alert">
+        <div class="form-row ">
+          {% if form.non_field_errors %}
+          <ul class="alert alert-danger" role="alert">
             {% for error in form.non_field_errors %}
-                {% autoescape off %}
-                <li> <strong> {{ error}} </li> </strong>
-                {% endautoescape %}
+            {% autoescape off %}
+            <li> <strong> {{ error}} </li> </strong>
+            {% endautoescape %}
             {% endfor %}
-            </ul>
-            {% endif %}
-            {{ form.email.errors }}
-            {{ form.otp.errors }}
-          </div>
+          </ul>
+          {% endif %}
+          {{ form.email.errors }}
+          {{ form.otp.errors }}
+        </div>
 
-          <div class="row">
-            <label for="{{ form.email.id_for_label}}"> Email </label>
-            <div class="col-8">
-              {{ form.email }}
-            </div>
-            <div class="col-4">
-              <button type="submit" class="btn btn-dark" name="action" value="send"> Send Otp </button>
-            </div>
+        <div class="row">
+          <label for="{{ form.email.id_for_label}}"> email </label>
+          <div class="col-8">
+            {{ form.email }}
           </div>
-
-          <div class="row mt-3">
-            <label for="{{ form.otp.id_for_lable}}"> Otp </label>
-            <div class="col-8">
-              {{ form.otp }}
-            </div>
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary" name="action" value="verify"> Verify </button>
-            </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-dark" name="action" value="send"> Send Otp </button>
           </div>
+        </div>
 
-        </form>
-      </div>
+        <div class="row mt-3">
+          <label for="{{ form.otp.id_for_lable}}"> Enter OTP </label>
+          <div class="col-8">
+            {{ form.otp }}
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary" name="action" value="verify"> Verify </button>
+          </div>
+        </div>
+
+      </form>
     </div>
   </div>
+</div>
 
 
 {% endblock content %}

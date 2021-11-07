@@ -1,42 +1,42 @@
-{% extends "resources/base.html" %}  
+{% extends "resources/base.html" %}
 
-{% block title %} 
+{% block title %}
 <title> College Space | Book </title>
-{% endblock title %} 
+{% endblock title %}
 
-{% block content %} 
+{% block content %}
 
-{% if error %} 
-<div class="container " style="min-height:72vh">
+{% if error %}
+<div class="container ">
     <h5 class="alert alert-info mt-5">{{ error }} </h5>
 </div>
-{% else %} 
+{% else %}
 
 {% if books %}
-    <!--Books container start -->
-    <div class="container mt-4"  style="min-height:63vh">
-        <h4 class="text-center"> Books </h4>
-        <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
-            <thead  class="">
-                <tr>
+<!--Books container start -->
+<div class="container mt-4">
+    <h4 class="text-center"> Books </h4>
+    <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
+        <thead class="">
+            <tr>
                 <th scope="col" class="col-5">Name</th>
-                <th scope="col" class="col-4" >Author</th>
-                <th scope="col"  class="col-2" >Download link</th>
-                </tr>
-            </thead>
-            <tbody>
+                <th scope="col" class="col-4">Author</th>
+                <th scope="col" class="col-2">Download link</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for book in books %}
-                <tr>
+            <tr>
                 <td>{{ book.name }} </td>
                 <td>{{ book.author }}</td>
                 <td><a href=" {{ book.view_link }}" class="btn btn-info" target="_blank">Download </a></td>
-                </tr>
+            </tr>
             {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <!--- End books container -->
+        </tbody>
+    </table>
+</div>
+<!--- End books container -->
 {% endif  %}
 {% endif %}
 
-{% endblock content %} 
+{% endblock content %}

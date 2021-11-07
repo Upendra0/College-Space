@@ -1,65 +1,65 @@
-{% extends "resources/base.html" %}  
+{% extends "resources/base.html" %}
 
-{% block title %} 
+{% block title %}
 <title> College Space | Online Tutorials </title>
-{% endblock title %} 
+{% endblock title %}
 
-{% block content %} 
+{% block content %}
 
 
 <div class="container">
-    {% if error %} 
-        <div class="container ">
-            <h5 class="alert alert-info mt-5">{{ error }} </h5>
-        </div>
-    {% else %} 
+    {% if error %}
+    <div class="container ">
+        <h5 class="alert alert-info mt-5">{{ error }} </h5>
+    </div>
+    {% else %}
 
-    {% if videos %} 
+    {% if videos %}
     <div class="container mt-5">
         <h4 class="text-center"> Video Tutorials </h4>
         <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
-            <thead  class="">
+            <thead class="">
                 <tr>
-                <th scope="col" class="col-md-2">Name</th>
-                <th scope="col"  class="col-md-1" > Link</th>
+                    <th scope="col" class="col-md-2">Name</th>
+                    <th scope="col" class="col-md-1"> Link</th>
                 </tr>
             </thead>
             <tbody>
-            {% for video in videos %}
+                {% for video in videos %}
                 <tr>
-                <td>{{ video.name }} </td>
-                <td><a href=" {{ video.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
+                    <td>{{ video.name }} </td>
+                    <td><a href=" {{ video.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
-    {% endif %} 
+    {% endif %}
 
     {% if web_tutorials %}
     <!--Start web tutorials -->
     <div class="container mt-5">
         <h4 class="text-center"> Web Tutorials </h4>
         <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
-            <thead  class="">
+            <thead class="">
                 <tr>
-                <th scope="col" class="col-5">Name</th>
-                <th scope="col"  class="col-2" > Link</th>
+                    <th scope="col" class="col-5">Name</th>
+                    <th scope="col" class="col-2"> Link</th>
                 </tr>
             </thead>
             <tbody>
-            {% for web_tutorial in web_tutorials %}
+                {% for web_tutorial in web_tutorials %}
                 <tr>
-                <td>{{ web_tutorial.name }} </td>
-                <td><a href=" {{ web_tutorial.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
+                    <td>{{ web_tutorial.name }} </td>
+                    <td><a href=" {{ web_tutorial.view_link }}" class="btn btn-info" target="_blank"> Visit </a></td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
     <!-- End web tutorials -->
-    {% endif %} 
+    {% endif %}
 
     {% endif %}
 </div>
-{% endblock content %} 
+{% endblock content %}

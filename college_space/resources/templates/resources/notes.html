@@ -4,39 +4,39 @@
 <title> College Space | Notes </title>
 {% endblock title %}
 
-{% block content %} 
+{% block content %}
 <div class="container">
-    {% if error %} 
+    {% if error %}
     <div class="container ">
         <h5 class="alert alert-info mt-5">{{ error }} </h5>
     </div>
-    {% else %}    
+    {% else %}
     <!--Start Notes table -->
     {% if notes %}
     <div class="container mt-2">
         <h4 class="text-center"> Notes </h4>
         <table class="table table-striped table-hover table-bordered mt-1 text-center table-dark">
-            <thead  class="">
+            <thead class="">
                 <tr>
-                <th scope="col" class="col-md-2"> Topic </th>
-                <th scope="col" class="col-md-2"> Contributed by </th>
-                <th scope="col"  class="col-md-1" > Download Link </th>
+                    <th scope="col" class="col-md-2"> Topic </th>
+                    <th scope="col" class="col-md-2"> Contributed by </th>
+                    <th scope="col" class="col-md-1"> Download Link </th>
                 </tr>
             </thead>
             <tbody>
-            {% for note in notes %}
+                {% for note in notes %}
                 <tr>
-                <td>{{ note.topic_name }} </td>
-                <td>{{ note.contributor}}</td>
-                <td><a href="{{ note.view_link }} " class="btn btn-info" target="_blank"> Download </a></td>
+                    <td>{{ note.topic_name }} </td>
+                    <td>{{ note.contributor}}</td>
+                    <td><a href="{{ note.view_link }} " class="btn btn-info" target="_blank"> Download </a></td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
-    {% endif %} 
+    {% endif %}
     {% endif %}
     <!--End notes table -->
-</div>  
+</div>
 
-{% endblock content %} 
+{% endblock content %}

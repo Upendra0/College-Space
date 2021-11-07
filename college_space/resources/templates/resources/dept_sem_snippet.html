@@ -3,14 +3,14 @@
 <div class="container mb-4">
     <form method="post" class="form-inline">
         {% csrf_token %}
-        
+
         <div class="row">
             <div class="col-6 col-md-4  ">
                 <label for="{{ form.dept_name.id_for_label }}"> Department </label>
                 {{ form.dept_name }}
             </div>
             <div class="col-3 col-md-2 ">
-                <label for="{{ form.semester.id_for_label }}"> Semester  </label>
+                <label for="{{ form.semester.id_for_label }}"> Semester </label>
                 {{ form.semester }}
             </div>
             <div class="col-2 col-md-2  pt-4">

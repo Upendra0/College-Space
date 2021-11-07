@@ -4,22 +4,17 @@
 <title> College Space </title>
 {% endblock title %}
 
- {% block content %}
-<div
-  class="p-5 text-center bg-image"
-  style="
+{% block content %}
+<div class="p-5 text-center bg-image" style="
     background-image: url('https://github.com/atulya-karn/image/blob/main/edbak.jpg?raw=true');
     height: 70vh;
-  "
->
+  ">
   <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
     <div class="d-flex justify-content-center align-items-center h-100">
       <div class="text-white">
         <h1 class="mb-3"> College Space </h1>
-        <h4 class="mb-3"> See all study resources at your finger tip  </h4>
-        <a class="btn btn-outline-light btn-lg" href="#dashbord-menu" role="button"
-          >Let's Start</a
-        >
+        <h4 class="mb-3"> See all study resources at your finger tip </h4>
+        <a class="btn btn-outline-light btn-lg" href="#dashbord-menu" role="button">Let's Start</a>
       </div>
     </div>
   </div>
@@ -31,21 +26,21 @@
   <div class="row">
     <div class="col-md-6">
       <a href="{% url 'resources'%}">
-      <div class="card text-white bg-primary mb-3">
-        <div class="card-header"> Resources </div>
-        <div class="card-body">
-          <p class="card-text" > View all resources. </p>
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header"> Resources </div>
+          <div class="card-body">
+            <p class="card-text"> View all resources. </p>
+          </div>
         </div>
-      </div>
       </a>
     </div>
 
     <div class="col-md-6">
       <a href="{% url 'syllabus'%}">
         <div class="card text-white bg-primary mb-3">
-          <div class="card-header"> Syllabus  </div>
+          <div class="card-header"> Syllabus </div>
           <div class="card-body">
-          <p class="card-text" >Download Syllabus for this semester. </p>
+            <p class="card-text">Download Syllabus for this semester. </p>
           </div>
         </div>
       </a>
@@ -55,12 +50,12 @@
   <div class="row">
     <div class="col-md-6">
       <a href="{% url 'contribute' %}">
-      <div class="card text-white bg-primary mb-3">
-        <div class="card-header"> Contribution </div>
-        <div class="card-body">
-          <p class="card-text" > Contribute and help others. </p>
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header"> Contribution </div>
+          <div class="card-body">
+            <p class="card-text"> Contribute and help others. </p>
+          </div>
         </div>
-      </div>
       </a>
     </div>
 
@@ -69,7 +64,7 @@
         <div class="card text-white bg-primary mb-3">
           <div class="card-header"> Teams </div>
           <div class="card-body">
-          <p class="card-text" > Meet our team.</p>
+            <p class="card-text"> Meet our team.</p>
           </div>
         </div>
       </a>
@@ -79,4 +74,3 @@
 </div>
 
 {% endblock content %}
-

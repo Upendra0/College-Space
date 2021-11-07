@@ -6,20 +6,23 @@
 
 {% block content %}
 <div class="container">
-    <div class="card text-center login-container p-3">
-        <h5 class="text-info "> Choose Resource type </h5>
-        <div class="row justify-content-center align-self-center">
-            {% for view in views %} 
-            <div class="col-md-5 message-succes card text-center m-3">
-                <a href="{{ view.view_url}}">
-                    <div class="col bg-dark text-white p-2 text-uppercase text-justify">
-                        <h1> {{ view.view_name }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-12 p-5 extra-form-design">
+            <div class="card text-center p-3" style="background-color: #151515;">
+                <h5 class="text-info mt-5"> Choose Resource type </h5>
+                <div class="row justify-content-center mt-5">
+                    {% for view in views %}
+                    <div class="col-md-5 message-succes card text-center m-3">
+                        <a href="{{ view.view_url}}">
+                            <div class="col bg-dark text-white p-2 text-uppercase text-justify ">
+                                <h1> {{ view.view_name }}</h1>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
         </div>
     </div>
-    
 </div>
 {% endblock content %}
