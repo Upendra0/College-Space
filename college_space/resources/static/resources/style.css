@@ -346,3 +346,62 @@ body {
     height: 8vh;
     background-color: var(--secondary-color);
 }
+
+/* Subjects.html page */
+.subject {
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    box-shadow: 0 10px 10px rgba(68, 67, 67, 0.2);
+    display: flex;
+    max-width: 100%;
+    margin: 20px;
+    color: #fff;
+    height: 250px;
+}
+.subject-preview {
+    background-color: #2A265F;
+    color: #fff;
+    padding: 30px;
+    max-width: 250px;
+}
+
+.subject-preview h6 {
+    opacity: 0.7;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.subject-preview p {
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    opacity: 0.6;
+    margin-top: 120px;
+    text-decoration: none;
+}
+
+.subject-info {
+    padding: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.subject-info h2 {
+    position: absolute;
+    letter-spacing: 1px;
+}
+
+.subject-info .btn {
+    background-color: #2A265F;
+    border: 0;
+    border-radius: 50px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 25px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    letter-spacing: 1px;
+}
