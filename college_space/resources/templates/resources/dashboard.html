@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<div class="p-5 text-center bg-image" style="
+<!-- <div class="p-5 text-center bg-image" style="
     background-image: url('https://github.com/atulya-karn/image/blob/main/edbak.jpg?raw=true');
     height: 70vh;
   ">
@@ -19,58 +19,132 @@
     </div>
   </div>
 </div>
-</div>
+</div> -->
 
-<div class="conatiner m-5" id="dashbord-menu">
-
-  <div class="row">
-    <div class="col-md-6">
+<div class="container" id="dashbord-menu">
+  <div class="row p-5 dashboard-head-row ">
+    <div class="col-md-6  dashboard-header-img "></div>
+    <div class="col-md-5 offset-md-1 dashboard-header-content">
+      <h1  class="text-info">Now, you can start your learning journey  here 👇.</h1>
+      <h5 class="text-muted">CollegeSpace, the Socio-Academic Portal of MCET, is the most frequently visited website of
+        MCET. We aim to make the life of every MCETian simpler & turn these four years into a smoother ride!</h5>
+    </div>
+  </div>
+  <hr class="text-info my-5">
+  <div class="row ">
+    <div class="col-md-6 mt-5 ">
       <a href="{% url 'resources'%}">
-        <div class="card text-white bg-primary mb-3">
-          <div class="card-header"> Resources </div>
-          <div class="card-body">
-            <p class="card-text"> View all resources. </p>
-          </div>
+        <div class="dash-card card-front">
+          <div class="initials">Resources</div>
+          <div class="desc">View all resources</div>
         </div>
       </a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 mt-5">
       <a href="{% url 'syllabus'%}">
-        <div class="card text-white bg-primary mb-3">
-          <div class="card-header"> Syllabus </div>
-          <div class="card-body">
-            <p class="card-text">Download Syllabus for this semester. </p>
-          </div>
+        <div class="dash-card card-front">
+          <div class="initials">Syllabus</div>
+          <div class="desc">Download Syllabus for this semester</div>
         </div>
       </a>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 mt-5">
       <a href="{% url 'contribute' %}">
-        <div class="card text-white bg-primary mb-3">
-          <div class="card-header"> Contribution </div>
-          <div class="card-body">
-            <p class="card-text"> Contribute and help others. </p>
-          </div>
+        <div class="dash-card card-front">
+          <div class="initials">Contribution</div>
+          <div class="desc">Contribute and help others</div>
         </div>
       </a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 mt-5">
       <a href="{% url 'team'%}">
-        <div class="card text-white bg-primary mb-3">
-          <div class="card-header"> Teams </div>
-          <div class="card-body">
-            <p class="card-text"> Meet our team.</p>
-          </div>
+        <div class="dash-card card-front">
+          <div class="initials">Teams</div>
+          <div class="desc">Meet our team</div>
         </div>
       </a>
     </div>
   </div>
 
+  <hr class="text-info my-5">
+  <!-- Contact Section -->
+  <section id="contact">
+    <h1 class="section-header">Contact</h1>
+    <div class="row justify-content-center">
+      <!-- left contact page -->
+      <div class="col-md-5 ">
+        <form id="contact-form" class="form-horizontal" role="form">
+
+          <div class="form-group">
+            <div class="col-sm-12">
+              <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value="" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-12">
+              <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value="" required>
+            </div>
+          </div>
+
+          <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
+
+          <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+            <div class="alt-send-button">
+              <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
+            </div>
+
+          </button>
+
+        </form>
+      </div>
+      <!-- Right Contact form -->
+      <div class="col-md-5">
+        <div class="direct-contact-container">
+
+          <ul class="contact-list">
+            <li class="list-item"><i class="fa fa-map-marker fa-2x text-info"><span class="contact-text text-center place">MCET,
+                  Murshidabad</span></i></li>
+
+            <li class="list-item"><i class="fa fa-phone fa-2x text-info"><span class="contact-text phone"><a href="tel:0000000000"
+                    title="Give me a call">+91 7797640000</a></span></i></li>
+
+            <li class="list-item"><i class="fa fa-envelope fa-2x text-info"><span class="contact-text gmail"><a
+                    href="mailto:mcetcollegespace@gmail.com"
+                    title="Send me an email">mcetcollegespace@gmail.com</a></span></i></li>
+
+          </ul>
+
+          <hr>
+          <ul class="social-media-list">
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fab fa-github" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fab fa-facebook" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fab fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+          <hr>
+
+          <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
+
 
 {% endblock content %}

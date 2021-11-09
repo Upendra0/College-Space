@@ -46,7 +46,7 @@
       <a class="openbtn">
         <img onclick="openNav()" {% if user.profile_pic %} src="{{ user.profile_pic.url }}" {% else %}
           src="https://college-space.s3.ap-south-1.amazonaws.com/profile_pics/default.jpeg" {% endif %}
-          class="rounded-circle border border-primary border-2 border-white" height="45" width="45" alt="proLOg"
+          class="rounded-circle border border-primary border-2 border-white" height="45" width="45" alt="profile_pic"
           loading="lazy" onMouseOver="this.style.hover='pointer'" />
       </a>
 
@@ -54,11 +54,11 @@
       <div id="mySidepanel" class="sidepanel">
         <div class="container ">
           <div class="row">
-            <div class="col-2 pt-2">
+            <div class="col-2 pt-2 opennav-img">
               <img onclick="openNav()" {% if user.profile_pic %} src="{{ user.profile_pic.url }}" {% else %}
                 src="https://college-space.s3.ap-south-1.amazonaws.com/profile_pics/default.jpeg" {% endif %}
-                class="rounded-circle border border-primary" height="45" width="45" alt="proLOg" loading="lazy"
-                onMouseOver="this.style.hover='pointer'" />
+                class="rounded-circle border border-primary " height="45" width="45" alt="proLOg" loading="lazy"
+                 />
             </div>
 
             <div class="col-9 ">

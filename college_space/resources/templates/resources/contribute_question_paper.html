@@ -6,11 +6,16 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <button type="submit" class="btn btn-primary mt-2"> Request </button>
-    </form>
+<div class="container contribute">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-5 mt-5 extra-form-design p-5">
+            <h2 class="contribute-header text-info text-center my-2">Contribute for others</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-5 "> Request </button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}
