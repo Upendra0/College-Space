@@ -63,12 +63,18 @@ class Book(models.Model):
     class Meta:
         db_table = 'book'
 
-    def __str__(self) -> str:
-        return self.name
+    @classmethod
+    def total_not_verified(cls, user):
+        # Return total Books contributed by user which is not approved.
+        return len(cls.objects.filter(contributor=user, is_approved=False))
 
     @classmethod
     def get_books(cls, sub_code):
         return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'author', 'view_link')
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class WebTutorial(models.Model):
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
@@ -83,6 +89,11 @@ class WebTutorial(models.Model):
     @classmethod
     def get_web_tutorials(cls, sub_code):
         return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name','view_link')
+
+    @classmethod
+    def total_not_verified(cls, user):
+        # Return total Web tutorials contributed by user which is not approved.
+        return len(cls.objects.filter(contributor=user, is_approved=False))
 
     def __str__(self) -> str:
         return self.name
@@ -100,6 +111,11 @@ class VideoTutorial(models.Model):
     @classmethod
     def get_videos(cls, sub_code):
         return cls.objects.filter(subject__code=sub_code, is_approved=True).values('name', 'view_link')
+
+    @classmethod
+    def total_not_verified(cls, user):
+        # Return total video tutorials contributed by user which is not approved.
+        return len(cls.objects.filter(contributor=user, is_approved=False))
 
     def __str__(self) -> str:
         return self.name
@@ -166,6 +182,11 @@ class Note(models.Model):
             notes.append({'topic_name':topic_name, 'contributor':contributor, 'view_link':view_link})
         return notes
 
+    @classmethod
+    def total_not_verified(cls, user):
+        # Return total notes contributed by user which is not approved.
+        return len(cls.objects.filter(contributor=user, is_approved=False))
+
     def __str__(self) -> str:
         return self.topic.name
 
@@ -199,6 +220,11 @@ class QuestionPaper(models.Model):
             contributor = f'{ question.contributor.first_name} {question.contributor.last_name}'
             questions.append({'year':year, 'contributor':contributor, 'view_link':view_link})
         return questions
+
+    @classmethod
+    def total_not_verified(cls, user):
+        # Return total Question Papers contributed by user which is not approved.
+        return len(cls.objects.filter(contributor=user, is_approved=False))
 
 
 

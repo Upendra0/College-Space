@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import CreateView
-from .models import Note, Subject, Taught, Book, Syllabus, WebTutorial, VideoTutorial, QuestionPaper
+from .models import Note, Subject, Taught, Book, Syllabus, Topic, WebTutorial, VideoTutorial, QuestionPaper
 from .forms import BookForm, DepartmentSemesterForm, NoteForm, QuestionPaperForm, VideoTutorialForm, WebTutorialForm
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,11 +12,11 @@ class HomeView(TemplateView):
     
     http_method_names = ['get']
 
-    def get(self, request, **kwargs):
+    def get_template_names(self):
         template_name = 'resources/home.html'
-        if request.user.is_authenticated:
+        if self.request.user.is_authenticated:
             template_name = 'resources/dashboard.html'
-        return render(request=request, template_name=template_name)
+        return template_name
 
 
 class SyllabusView(LoginRequiredMixin, TemplateView):
@@ -223,12 +223,33 @@ class ContributeFormView(LoginRequiredMixin, CreateView):
         messages.success(self.request, msg)
         return super().form_valid(form)
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.can_contribute():
+            msg = f"You have contributed {request.user.contribution_limit} items which are not verified yet.Once they are verified, you will be egligble to contribute again. Till then, Wait!"
+            messages.warning(request, msg)
+            return redirect(to='contribute')
+        return super().get(request, *args, **kwargs)
+
 
 class ContributeNoteView(ContributeFormView):
     model = Note
     form_class = NoteForm
     template_name = "resources/contribute_notes.html"
     success_url = reverse_lazy('contribute')
+
+    def form_valid(self, form):
+        try:
+            Note.objects.get(topic__name=form.cleaned_data['topic'])
+            form.add_error(None, 'You already have uploaded notes for this topic.')
+            return self.form_invalid(form)
+        except Note.DoesNotExist:
+            return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        topics = Topic.objects.filter(subject__code=self.kwargs['sub_code'])
+        form.fields['topic'].queryset = topics
+        return form
 
 
 class ContributeQuestionPaperView(ContributeFormView):
@@ -237,12 +258,30 @@ class ContributeQuestionPaperView(ContributeFormView):
     template_name = "resources/contribute_question_paper.html"
     success_url = reverse_lazy('contribute')
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        try:
+            subject = Subject.objects.get(code=self.kwargs['sub_code'])
+        except Subject.DoesNotExist:
+            subject = None
+        form['subject'].initial = subject
+        return form
+
 
 class ContributeBookView(ContributeFormView):
     model = Book
     form_class = BookForm
     template_name = "resources/contribute_books.html"
     success_url = reverse_lazy('contribute')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        try:
+            subject = Subject.objects.get(code=self.kwargs['sub_code'])
+        except Subject.DoesNotExist:
+            subject = None
+        form['subject'].initial = subject
+        return form
 
 
 class ContributeVideoTutorialView(ContributeFormView):
@@ -251,12 +290,30 @@ class ContributeVideoTutorialView(ContributeFormView):
     template_name = "resources/contribute_video_tutorials.html"
     success_url = reverse_lazy('contribute')
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        try:
+            subject = Subject.objects.get(code=self.kwargs['sub_code'])
+        except Subject.DoesNotExist:
+            subject = None
+        form['subject'].initial = subject
+        return form
+
 
 class ContributeWebTutorialView(ContributeFormView):
     model = WebTutorial
     form_class = WebTutorialForm
     template_name = "resources/contribute_web_tutorials.html"
     success_url = reverse_lazy('contribute')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        try:
+            subject = Subject.objects.get(code=self.kwargs['sub_code'])
+        except Subject.DoesNotExist:
+            subject = None
+        form['subject'].initial = subject
+        return form
 
 
 class TeamView(LoginRequiredMixin, TemplateView):
