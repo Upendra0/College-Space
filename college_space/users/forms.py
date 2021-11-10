@@ -1,10 +1,12 @@
+''' Contain the User and Group model's form.'''
+
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import widgets
-from .models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import admin
 from django.contrib.auth import authenticate
+
+from .models import User
 
 
 class UserCreationForm(UserCreationForm):
@@ -21,35 +23,39 @@ class UserCreationForm(UserCreationForm):
     password2 - To verify the password.
     """
 
-    password1 = forms.CharField(label="Password",
-                                widget=forms.PasswordInput(attrs={'class': 'form_input form-control', 'id': 'password1_input', 'placeholder': 'Password'}), required=True)
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class': 'form_input form-control', 'id': 'password1_input', 'placeholder': 'Password'}),
+        required=True
+        )
     password2 = forms.CharField(
-        label="Confirm Password", widget=forms.PasswordInput(attrs={'class': 'form_input form-control', 'id': 'password2_input', 'placeholder': 'Confirm Password'}), required=True)
+        label="Confirm Password", 
+        widget=forms.PasswordInput(attrs={'class': 'form_input form-control', 'id': 'password2_input', 'placeholder': 'Confirm Password'}), 
+        required=True
+        )
 
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'profile_pic']
         widgets = {
-            'email':forms.EmailInput(attrs={'class': 'form_input form-control', 'id': 'email_input', 'placeholder': 'Enter email'}),
-            'first_name': forms.TextInput(attrs={'id':'first_name', 'class':'form_input form-control', 'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'id':'last_name', 'class':'form_input form-control', 'placeholder': 'Last Name'}),
-            'profile_pic': forms.FileInput(attrs={'id': 'profile_pic_input', 'class':'form-input form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form_input form-control', 'id': 'email_input', 'placeholder': 'Enter email'}),
+            'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form_input form-control', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form_input form-control', 'placeholder': 'Last Name'}),
+            'profile_pic': forms.FileInput(attrs={'id': 'profile_pic_input', 'class': 'form-input form-control'}),
         }
 
-    def save(self, commit=True):
-        """
-        Create and save the user from form-input into user table.
-        """
+    def save(self, commit: bool=True) -> User:
+        """Overriden the default form save to save password."""
+
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
 
-    def clean_password2(self):
-
+    def clean_password2(self) -> str:
         """
-        Check that the two password entries match and return the password.
+        Overrided the default clean_password2 to Check that the two password entries match and return the password.
         If passwords don't match, raises a form validation error.
         """
 
@@ -62,9 +68,9 @@ class UserCreationForm(UserCreationForm):
 
 class UserChangeForm(forms.ModelForm):
 
-    """
-    Django model form to change user. 
-    Fields are -
+    """Django model form to change user. 
+
+    Fields:
     first_name, last_name - to change user's name,
     department - to change user's department,
     semester - to change user's semester.
@@ -72,20 +78,29 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name',
-                  'department', 'semester', 'profile_pic']
+        fields = ['first_name', 'last_name', 'department', 'semester', 'profile_pic']
         widgets = {
-            'first_name': forms.TextInput(attrs={'id':'first_name', 'class':'form-control'}),
-            'last_name': forms.TextInput(attrs={'id':'last_name', 'class':'form-control'}),
-            'department': forms.Select(attrs={'id':'department', 'class':'form-select'}),
-            'semester': forms.TextInput(attrs={'id':'semester', 'class':'form-control'}),
-            'profile_pic': forms.FileInput(attrs={'id': 'profile_pic', 'class':'form-file'}),
+            'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form-control'}),
+            'department': forms.Select(attrs={'id': 'department', 'class': 'form-select'}),
+            'semester': forms.TextInput(attrs={'id': 'semester', 'class': 'form-control'}),
+            'profile_pic': forms.FileInput(attrs={'id': 'profile_pic', 'class': 'form-file'}),
         }
 
 
 class UserLoginForm(AuthenticationForm):
+
+    '''Login form
+
+    Validate that user's account is active and  email addresss, password are mathched
+    else raise error.
+    Fields:
+    username - User's email address.
+    Password - User's password.
+    '''
+
     username = forms.EmailField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': '', 'id': 'username'}))
+        attrs={'class': 'form-control', 'placeholder': 'Email Address', 'id': 'username'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
@@ -93,9 +108,11 @@ class UserLoginForm(AuthenticationForm):
             'id': 'password',
         }
     ))
-    
+
+    # LInk to verify account for a inactive account
     link = "/user/verify_account"
     anchor_tag = f'<a href="{link}" class="alert-link"> Click Here </a>'
+
     error_messages = {
         'invalid_login': (
             "Please enter a correct email and password. Note that both "
@@ -105,6 +122,8 @@ class UserLoginForm(AuthenticationForm):
     }
 
     def clean(self):
+        ''' Match the username and password to login and return dict containing email, password.'''
+
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
@@ -130,10 +149,12 @@ class UserLoginForm(AuthenticationForm):
 
 
 class GroupAdminForm(forms.ModelForm):
+    
     """
     ModelForm that adds an additional multiple select field for managing
     the users in the group.
     """
+
     users = forms.ModelMultipleChoiceField(
         User.objects.all(),
         widget=admin.widgets.FilteredSelectMultiple('Users', False),
@@ -154,19 +175,30 @@ class GroupAdminForm(forms.ModelForm):
         self.instance.user_set.clear()
         self.instance.user_set.add(*self.cleaned_data['users'])
 
+def validate_email(email: str) -> None:
+    ''' Validate an email exits and is inactive.'''
 
-def validate_email(email):
     try:
         user = User.objects.get(email=email)
-        if user.is_active:
-            raise ValidationError(
-                " This account is already activated. Please Login")
     except User.DoesNotExist:
         raise ValidationError("No account exist with this email!")
-
+    else:
+        if user.is_active:
+            raise ValidationError(" This account is already activated. Please Login")
 
 class VeifyEmailForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-                             'class': 'form-control', 'id': 'email', 'placeholder': 'Enter email to verify'}), validators=[validate_email])
-    otp = forms.IntegerField(widget=forms.TextInput(attrs={
-                             'class': 'form-control', 'id': 'otp', 'placeholder': 'Enter 6 digit otp'}), required=False)
+
+    ''' Form to verify email address.
+    
+    Fields:
+    email - Email address to send otp.
+    otp - otp sent to user's email address.
+    '''
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'id': 'email', 'placeholder': 'Enter email to verify'}), 
+        validators=[validate_email]
+        )
+    otp = forms.IntegerField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'otp', 'placeholder': 'Enter 6 digit otp'}),
+        required=False
+        )
