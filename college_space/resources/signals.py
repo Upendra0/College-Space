@@ -1,6 +1,10 @@
+""" Singnal's to delete resources's old file."""
+
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
+
 from .models import Note, QuestionPaper
+
 
 @receiver(pre_save)
 def delete_file_on_update(sender, instance, **kwargs):
@@ -28,9 +32,10 @@ def delete_file_on_update(sender, instance, **kwargs):
     
     try:
         old_file.delete(save=False)
-        return True
     except Exception:
         return False
+    else:
+        return True
 
 @receiver(post_delete)
 def delete_file_on_model_delete(sender, instance, **kwargs):
@@ -52,6 +57,7 @@ def delete_file_on_model_delete(sender, instance, **kwargs):
 
     try:
         instance.file.delete(save=False)
-        return True
     except Exception:
         return False
+    else:
+        return True

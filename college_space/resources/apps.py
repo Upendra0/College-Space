@@ -1,3 +1,5 @@
+""" Resource App configuration."""
+
 from django.apps import AppConfig
 
 
@@ -6,5 +8,6 @@ class ResourcesConfig(AppConfig):
     name = 'resources'
 
     def ready(self) -> None:
+        #Signals to delete image and file field of resources.
         from resources import signals
         return super().ready()

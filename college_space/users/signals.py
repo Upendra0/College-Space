@@ -1,5 +1,8 @@
+''' Signal to auto delete user's profile pic.'''
+
 from django.db.models.signals import pre_save, post_delete
 from django.dispatch import receiver
+
 from .models import User
 
 @receiver(pre_save, sender=User)
@@ -23,13 +26,14 @@ def delete_file_on_update(sender, instance, **kwargs):
     
     try:
         old_file.delete(save=False)
-        return True
     except Exception:
         return False
+    else:
+        return True
 
 @receiver(post_delete, sender=User)
 def delete_file_on_model_delete(sender, instance, **kwargs):
-
+    
     """
     Delete the user's profile pic file when a user instance is deleted and return a status True or
     False i.e wheteher pic is deleted or not.
@@ -41,6 +45,7 @@ def delete_file_on_model_delete(sender, instance, **kwargs):
 
     try:
         instance.profile_pic.delete(save=False)
-        return True
     except Exception:
         return False
+    else:
+        return True
