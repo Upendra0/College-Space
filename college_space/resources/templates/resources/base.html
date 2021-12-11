@@ -22,6 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gwendolyn:wght@700&display=swap" rel="stylesheet">
 
   <!-- Custom style css -->
   <link rel="stylesheet" href="{% static 'resources/style.css' %}" />
@@ -36,10 +37,12 @@
   <nav class="navbar">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'home' %}">
-        <span class="nav-title">College Space </span>
-        <!-- <img src="https://github.com/atulya-karn/image/blob/main/A5.png?raw=true" height="44" alt="LOGO"
-        style="margin-top: -1px;
-        border-radius: 25px;" /> -->
+        <span class="nav-title">
+          <img src="/static/img/LOGO_1_low.jpg" height="44" alt="LOGO"
+          style="border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: -9px;"
+          />
+          College Space 
+        </span>
       </a>
 
       {% if user.is_authenticated %}
