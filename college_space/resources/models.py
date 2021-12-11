@@ -9,7 +9,7 @@ class Department(models.Model):
 
     ''' Department model, store each department information '''
 
-    name = models.CharField(max_length=255, primary_key=True)
+    name = models.CharField(max_length=50, primary_key=True)
     class Meta:
         db_table = 'department'
 
@@ -35,8 +35,8 @@ class Subject(models.Model):
     credit - subject's credit
     '''
 
-    code = models.CharField(max_length=64, primary_key=True)
-    name = models.CharField(max_length=255)
+    code = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=50)
     credit = models.FloatField(validators=[MinValueValidator(0)])
 
     class Meta:
@@ -96,9 +96,9 @@ class Book(models.Model):
     '''
 
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
-    name = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    view_link = models.CharField(max_length=1000, unique=True)
+    name = models.CharField(max_length=50)
+    author = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -135,8 +135,8 @@ class WebTutorial(models.Model):
     '''
 
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
-    name = models.CharField(max_length=255)
-    view_link = models.CharField(max_length=1000, unique=True)
+    name = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -171,8 +171,8 @@ class VideoTutorial(models.Model):
     '''
 
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, db_column='sub_code')
-    name = models.CharField(max_length=255)
-    view_link = models.CharField(max_length=1000, unique=True)
+    name = models.CharField(max_length=50)
+    view_link = models.CharField(max_length=500, unique=True)
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
 
@@ -202,7 +202,7 @@ class Syllabus(models.Model):
 
     department = models.ForeignKey(to=Department, on_delete=models.CASCADE, db_column='dept_name')
     semester = models.SmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(8)])
-    view_link = models.CharField(max_length=255)
+    view_link = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'syllabus'
@@ -262,7 +262,7 @@ class Note(models.Model):
     topic = models.ForeignKey(to=Topic, on_delete=models.CASCADE, db_column='topic_id')
     file = models.FileField(
         upload_to="notes/",
-        validators=[FileExtensionValidator(allowed_extensions=['pdf','ppt']),
+        validators=[FileExtensionValidator(allowed_extensions=['pdf','ppt','pptx','pptm','docx']),
          validate_file_size],
          db_column='view_link')
     contributor = models.ForeignKey(to='users.User', on_delete=models.CASCADE)
