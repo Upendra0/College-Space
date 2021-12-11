@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.core.mail import send_mail
 
 from .models import Note, Subject, Taught, Book, Syllabus, Topic, WebTutorial, VideoTutorial, QuestionPaper
 from .forms import BookForm, DepartmentSemesterForm, NoteForm, QuestionPaperForm, VideoTutorialForm, WebTutorialForm
@@ -15,8 +16,8 @@ class HomeView(TemplateView):
 
     '''View for home route.'''
     
-    #Only get method is acceptable.
-    http_method_names = ['get']
+    #get method to show page, post method to send mail.
+    http_method_names = ['get', 'post']
 
     def get_template_names(self):
         '''Return the template to render.'''
@@ -27,6 +28,16 @@ class HomeView(TemplateView):
         if self.request.user.is_authenticated:
             template_name = 'resources/dashboard.html'
         return template_name
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            name = f'{request.user.first_name} {request.user.last_name}'
+            email = request.user.email
+            to_email = 'mcetcollegespace@gmail.com'
+            subject = f'Query from {name}'
+            msg = request.POST['message']
+            send_mail(subject=subject, message=msg, from_email=email, recipient_list=[to_email], fail_silently=False)
+        return redirect(to='home')
 
 
 class SyllabusView(LoginRequiredMixin, TemplateView):
