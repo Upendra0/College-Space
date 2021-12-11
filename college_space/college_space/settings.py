@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 from pathlib import Path
 import os
+import json
+
+json_file = open('college_space/config.json')
+config = json.load(json_file)
+json_file.close()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7@3&e_&deprh5!0ez9p1^(t$8dp+&uj3c!u%wm=2n1jciujjn+'
+SECRET_KEY = config.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,11 +85,11 @@ WSGI_APPLICATION = 'college_space.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'college_space_database',
-        'HOST': 'college-space-instance.ck5kkop4jxad.ap-south-1.rds.amazonaws.com',
+        'NAME': config.get("DATABASE_NAME"),
+        'HOST': config.get("DATABASE_HOST"),
         'PORT': '3306',
-        'USER': 'mcet_admin',
-        'PASSWORD': 'Collegespace2021',
+        'USER': config.get("DATABASE_USER"),
+        'PASSWORD': config.get("DATABASE_PASSWORD"),
     }
 }
 
@@ -146,8 +151,8 @@ EMAIL_BACKEND= "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mcetcollegespace@gmail.com'
-EMAIL_HOST_PASSWORD = 'obitgkzhyzrqnjmp'
+EMAIL_HOST_USER = config.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config.get('EMAIL_HOST_PASSWORD')
 
 LOGOUT_REDIRECT_URL='home'
 
@@ -155,9 +160,9 @@ LOGOUT_REDIRECT_URL='home'
 
 # AWS S3 Setting
 
-AWS_ACCESS_KEY_ID = 'AKIA2YIC4PM27VVKK3JS'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'college-space'
+AWS_ACCESS_KEY_ID = config.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config.get("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_REGION_NAME='ap-south-1'
 AWS_QUERYSTRING_AUTH=False

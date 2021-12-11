@@ -3,3 +3,4 @@ env/
 **/__pycache__
 **/migrations
 college_space/media
+college_space/college_space/config.json
