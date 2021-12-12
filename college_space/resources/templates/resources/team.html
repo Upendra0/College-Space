@@ -1,5 +1,5 @@
 {% extends "resources/base.html" %}
-
+{% load static %}
 {% block title %}
 <title>College Space | Teams </title>
 {% endblock title %}
@@ -10,7 +10,7 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-5">
             <div class="our-team">
                 <div class="picture">
-                    <img class="img-fluid" src="/static/img/team/jawed.jpg"
+                    <img class="img-fluid" src="{% static 'img/team/jawed.jpg' %}"
                     style="height:170px; width:170px">
                 </div>
                 <div class="team-content">
@@ -30,7 +30,7 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-5">
             <div class="our-team">
                 <div class="picture">
-                    <img class="img-fluid" src="/static/img/team/upendra.jpg"
+                    <img class="img-fluid" src="{% static 'img/team/upendra.jpg' %}"
                     style="height:170px; width:170px">
                 </div>
                 <div class="team-content">
@@ -50,7 +50,7 @@
             <div class="our-team">
                 <div class="picture">
                     <img class="img-fluid"
-                        src="/static/img/team/atulyak.jpg"
+                        src="{% static 'img/team/atulyak.jpg' %}"
                         style="height:170px; width:170px">
                 </div>
                 <div class="team-content">
@@ -70,7 +70,7 @@
             <div class="our-team">
                 <div class="picture">
                     <img class="img-fluid"
-                        src="/static/img/team/Himashu.jpeg"
+                        src="{% static 'img/team/Himashu.jpeg' %}"
                         style="height:170px; width:170px">
                 </div>
                 <div class="team-content">
