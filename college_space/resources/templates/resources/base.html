@@ -39,9 +39,8 @@
       <a class="navbar-brand" href="{% url 'home' %}">
         <span class="nav-title">
           <img src="/static/img/LOGO_1_low.jpg" height="44" alt="LOGO"
-          style="border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: -9px;"
-          />
-          College Space 
+            style="border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: -9px;" />
+          College Space
         </span>
       </a>
 
@@ -60,8 +59,7 @@
             <div class="col-2 pt-2 opennav-img">
               <img onclick="openNav()" {% if user.profile_pic %} src="{{ user.profile_pic.url }}" {% else %}
                 src="https://college-space.s3.ap-south-1.amazonaws.com/profile_pics/default.jpeg" {% endif %}
-                class="rounded-circle border border-primary " height="45" width="45" alt="proLOg" loading="lazy"
-                 />
+                class="rounded-circle border border-primary " height="45" width="45" alt="proLOg" loading="lazy" />
             </div>
 
             <div class="col-9 ">
@@ -91,9 +89,9 @@
 
       {% else %}
       <div class="d-flex">
-        <a class="btn btn-link px-3 me-2" href="{% url 'login' %}" role="button">Login</a>
+        <a class="btn btn-link  me-2 nav-login-btn" href="{% url 'login' %}" role="button">Login</a>
 
-        <a class="btn btn-primary me-3" href="{% url 'register' %}" role="button">Sign up for free</a>
+        <a class="btn btn-primary me-3" href="{% url 'register' %}" role="button">Sign up</a>
 
       </div>
       {% endif %}

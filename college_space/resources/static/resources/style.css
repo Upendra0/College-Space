@@ -34,7 +34,6 @@ body {
 
 .nav-title {
     padding: 0px 0px 0px 25px;
-    margin-left: 15px;
     font-size: 1.8rem;
     background: -webkit-linear-gradient(#a8c0ff, #3f2b96);
     -webkit-background-clip: text;
@@ -153,6 +152,16 @@ body {
     border: 2px solid #39C0ED;
     color: #39C0ED;
     font-size: 1rem;
+}
+
+@media (max-width: 450px) {
+    .login-btn {
+        padding: 0.8rem 1.6rem 0.8rem 1.6rem;
+    }
+
+    .nav-login-btn {
+        display: none;
+    }
 }
 
 .signup-btn:hover {
@@ -324,6 +333,13 @@ body {
     background-color: #f7f5ec;
 }
 
+@media screen and (max-width: 573px) {
+    .our-team .name {
+        display: block;
+        margin: auto;
+    }
+}
+
 .change-pass label {
     color: #fff;
     padding-bottom: 7px;
@@ -418,7 +434,31 @@ body {
     right: 30px;
     letter-spacing: 1px;
 }
-
+@media screen and (max-width:468px) {
+    .subject {
+        margin: 20px 0 20px 0;
+        height: 290px;
+    }
+    .subject-preview h6 {
+        opacity: 0.6;
+        margin: 0;
+        letter-spacing: 0.2px;
+    }
+    
+    .subject-info {
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    .subject-info .btn {
+        font-size: 10px;
+        padding: 12px 25px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
 .dashboard-head-row,
 .dashboard-main-content {
     height: 90vh;
@@ -472,6 +512,20 @@ body {
     width: 100%;
     padding-bottom: 20px;
     text-align: center;
+}
+
+@media screen and (max-width: 420px) {
+    .initials {
+        font-size: 2.4em;
+        color: #fff;
+        font-weight: 200;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        text-align: center;
+        border-bottom: 1px solid red;
+        margin-bottom: 0.5rem;
+    }
 }
 
 /* Contact section */
@@ -535,7 +589,17 @@ textarea {
     display: block;
     margin-top: 10px;
     font: 700 12px 'Lato', sans-serif;
-    letter-spacing: 2px;
+    letter-spacing: 5px;
+}
+@media screen and (max-width:420px) {
+    .send-button {
+        width: 300px;
+    }
+    
+    .alt-send-button {
+        width: 300px;
+    }
+    
 }
 
 .alt-send-button:hover {
@@ -724,5 +788,8 @@ textarea {
 @media screen and (max-width: 410px) {
     .send-button {
         width: 99%;
+    }
+    .direct-contact-container .contact-text {
+        font: 200 15px 'Lato', sans-serif;
     }
 }
