@@ -5,7 +5,7 @@
  * Aim
  * Features
  * Tech Stack
- * Run on Local
+ * Run on Local Machine
 
  ## Introduction
  College Space is a web application which provides educational resources like notes , online tutorials and books link,  previous 
@@ -29,12 +29,20 @@
 - Python and Django framework is used for server-side programming. 
 - HTML, CSS, Javascript is used for Front-End development.
 - Database used is MySql and git is used for version control sytem.
+- See [requirements.txt](https://github.com/Upendra0/College-Space/blob/master/requirements.txt) file to see all libraries and with exact version.
  
-## Run on local Machine
+## Run on Local Machine
 1. Import the project using url.
-2. Open the terminal and install the following dependencies: 
 ```bash
-pip install Django
+git clone https://github.com/Upendra0/College-Space.git
+```
+2. Open the terminal in project folder (where requirements.txt file is present) and install the dependencies: 
+```bash
+pip install -r requirements.txt
+```
+3. Start the django project
+```bash
+python manage.py runserver
 ```
 ## Final Note
 Suggesitions, ideas are welcomed here [Contact Us](mailto:uk06704@gmail.com) <br>
